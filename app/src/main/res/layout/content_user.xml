@@ -23,7 +23,7 @@
     android:layout_marginLeft="@dimen/activity_horizontal_margin"
     android:layout_marginRight="@dimen/activity_horizontal_margin"
     android:layout_marginTop="@dimen/activity_vertical_margin"
-    tools:context="com.amazonaws.youruserpools.UserActivity">
-    
+    tools:context="com.iot.letthingsspeak.aws.UserActivity">
+
 
 </RelativeLayout>

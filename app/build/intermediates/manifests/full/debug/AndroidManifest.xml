@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.amazonaws.youruserpools.CognitoYourUserPoolsDemo"
+    package="com.iot.letthingsspeak"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -20,7 +20,7 @@
         android:testOnly="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.amazonaws.youruserpools.MainActivity"
+            android:name="com.iot.letthingsspeak.aws.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,42 +29,42 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amazonaws.youruserpools.UserActivity"
+            android:name="com.iot.letthingsspeak.aws.UserActivity"
             android:label="@string/title_activity_user"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.amazonaws.youruserpools.RegisterUser"
+            android:name="com.iot.letthingsspeak.aws.RegisterUser"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.amazonaws.youruserpools.AboutApp"
+            android:name="com.iot.letthingsspeak.aws.AboutApp"
             android:label="@string/title_activity_about_app"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.amazonaws.youruserpools.SignUpConfirm"
+            android:name="com.iot.letthingsspeak.aws.SignUpConfirm"
             android:label="@string/title_activity_sign_up_confirm"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.amazonaws.youruserpools.MFAActivity"
+            android:name="com.iot.letthingsspeak.aws.MFAActivity"
             android:label="@string/title_activity_mfa"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.amazonaws.youruserpools.ForgotPasswordActivity"
+            android:name="com.iot.letthingsspeak.aws.ForgotPasswordActivity"
             android:label="@string/title_activity_forgot_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.amazonaws.youruserpools.ChangePasswordActivity"
+            android:name="com.iot.letthingsspeak.aws.ChangePasswordActivity"
             android:label="@string/title_activity_change_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.amazonaws.youruserpools.NewPassword"
+            android:name="com.iot.letthingsspeak.aws.NewPassword"
             android:label="@string/title_activity_new_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.amazonaws.youruserpools.ChooseMFA"
+            android:name="com.iot.letthingsspeak.aws.ChooseMFA"
             android:label="@string/title_activity_choose_mfa"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.amazonaws.youruserpools.UserProfile"
+            android:name="com.iot.letthingsspeak.aws.UserProfile"
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

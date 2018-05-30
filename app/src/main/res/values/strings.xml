@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cognito Identity</string>
+    <string name="app_name">Let Things Speak</string>
     <string name="app_main_screen">Sign in</string>
     <string name="app_main_screen_title">Cognito Identity</string>
     <string name="app_main_desc">A sample app to showcase Cognito Identity and the SDK for Android.</string>

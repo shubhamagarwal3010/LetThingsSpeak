@@ -5,7 +5,7 @@ android {
     buildToolsVersion '27.0.3'
 
     defaultConfig {
-        applicationId "com.amazonaws.youruserpools.CognitoYourUserPoolsDemo"
+        applicationId "com.iot.letthingsspeak"
         minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
