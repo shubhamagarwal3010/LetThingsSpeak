@@ -177,9 +177,6 @@ public class UserActivity extends AppCompatActivity {
                 // Sign out from this account
                 signOut();
                 break;
-            case R.id.nav_user_trusted_devices:
-                showTrustedDevices();
-                break;
             case R.id.nav_user_about:
                 // For the inquisitive
                 Intent aboutAppActivity = new Intent(this, AboutApp.class);
@@ -244,11 +241,6 @@ public class UserActivity extends AppCompatActivity {
     private void attributesVerification() {
         Intent attrbutesActivity = new Intent(this,VerifyActivity.class);
         startActivityForResult(attrbutesActivity, 21);
-    }
-
-    private void showTrustedDevices() {
-        Intent trustedDevicesActivity = new Intent(this, DeviceSettings.class);
-        startActivity(trustedDevicesActivity);
     }
 
     // Sign out user

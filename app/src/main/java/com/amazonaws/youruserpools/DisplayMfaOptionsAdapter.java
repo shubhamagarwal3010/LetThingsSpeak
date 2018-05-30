@@ -32,7 +32,6 @@ import com.amazonaws.youruserpools.CognitoYourUserPoolsDemo.R;
  */
 
 public class DisplayMfaOptionsAdapter extends BaseAdapter {
-    private String TAG = "DisplayDevicesAdapter";
     private Context context;
     private int count;
     private static LayoutInflater layoutInflater;
