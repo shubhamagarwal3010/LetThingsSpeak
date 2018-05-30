@@ -470,7 +470,6 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_sign_up_confirm">SignUpConfirm</string>
     <string name="title_activity_user">UserActivity</string>
-    <string name="title_activity_verify">VerifyActivity</string>
     <style name="AWSCognitoTheme" parent="AppTheme">
         <item name="android:colorBackground">@color/toolbar_background</item>
         <item name="android:textColor">@color/toolbar_items</item>

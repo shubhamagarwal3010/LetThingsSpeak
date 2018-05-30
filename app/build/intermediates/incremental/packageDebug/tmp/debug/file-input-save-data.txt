@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Wed May 30 22:01:29 IST 2018
+#Wed May 30 22:27:11 IST 2018
 2.base=/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/build/intermediates/transforms/dexMerger/debug/13
 5.set=DEX
 0.path=classes.dex

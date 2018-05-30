@@ -168,11 +168,6 @@ public class UserActivity extends AppCompatActivity {
                 // Change password
                 changePassword();
                 break;
-            case R.id.nav_user_verify_attribute:
-                // Confirm new user
-                // confirmUser();
-                attributesVerification();
-                break;
             case R.id.nav_user_sign_out:
                 // Sign out from this account
                 signOut();
@@ -235,12 +230,6 @@ public class UserActivity extends AppCompatActivity {
     private void changePassword() {
         Intent changePssActivity = new Intent(this, ChangePasswordActivity.class);
         startActivity(changePssActivity);
-    }
-
-    // Verify attributes
-    private void attributesVerification() {
-        Intent attrbutesActivity = new Intent(this,VerifyActivity.class);
-        startActivityForResult(attrbutesActivity, 21);
     }
 
     // Sign out user

@@ -56,10 +56,6 @@
             android:label="@string/title_activity_change_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.amazonaws.youruserpools.VerifyActivity"
-            android:label="@string/title_activity_verify"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name="com.amazonaws.youruserpools.NewPassword"
             android:label="@string/title_activity_new_password"
             android:theme="@style/AppTheme.NoActionBar" />
