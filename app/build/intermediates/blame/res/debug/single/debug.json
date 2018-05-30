@@ -60,6 +60,10 @@
         "source": "/Users/shubhama/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/80ed25c885a5cead948aebc9f3a51e3c/res/color/abc_primary_text_disable_only_material_dark.xml"
     },
     {
+        "merged": "/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/build/intermediates/res/merged/debug/layout_activity_user_profile.xml.flat",
+        "source": "/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/res/layout/activity_user_profile.xml"
+    },
+    {
         "merged": "/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_visibility_off_black.png.flat",
         "source": "/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/res/mipmap-mdpi/ic_visibility_off_black.png"
     },
@@ -414,6 +418,10 @@
     {
         "merged": "/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4_abc_textfield_search_default_mtrl_alpha.9.png.flat",
         "source": "/Users/shubhama/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/80ed25c885a5cead948aebc9f3a51e3c/res/drawable-xxhdpi-v4/abc_textfield_search_default_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/build/intermediates/res/merged/debug/layout_content_user_profile.xml.flat",
+        "source": "/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/res/layout/content_user_profile.xml"
     },
     {
         "merged": "/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_abc_scrubber_track_mtrl_alpha.9.png.flat",

@@ -2,6 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group
+        android:id="@+id/group_user_profile"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_user_profile"
+            android:title="Profile" />
+    </group>
+
+    <group
         android:id="@+id/group_user_change_password"
         android:checkableBehavior="single">
         <item

@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-60:12
-INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-60:12
-INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-60:12
-INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-60:12
+ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-64:12
+INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-64:12
+INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-64:12
+INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-64:12
 MERGED from [com.android.support:design:23.4.0] /Users/shubhama/.gradle/caches/transforms-1/files-1.1/design-23.4.0.aar/67b1f804ecaff13ed470df13b27145a5/AndroidManifest.xml:17:1-24:12
 MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/shubhama/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/80ed25c885a5cead948aebc9f3a51e3c/AndroidManifest.xml:17:1-27:12
 MERGED from [com.android.support:cardview-v7:23.4.0] /Users/shubhama/.gradle/caches/transforms-1/files-1.1/cardview-v7-23.4.0.aar/5f5a141c92e78f522386d8f7d202d333/AndroidManifest.xml:17:1-24:12
@@ -12,20 +12,20 @@ MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /Users/shub
 MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/shubhama/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/63ca04f6d7393180bea077ac20a0d34d/AndroidManifest.xml:2:1-9:12
 MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/shubhama/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/0dcd05514d42691ca0bc14ccb92c77d8/AndroidManifest.xml:2:1-9:12
 MERGED from [com.android.support:support-v4:23.4.0] /Users/shubhama/.gradle/caches/transforms-1/files-1.1/support-v4-23.4.0.aar/af9e782203d699128aa393a4c6157224/AndroidManifest.xml:17:1-24:12
-INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-60:12
-INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-60:12
-INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-60:12
+INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-64:12
+INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-64:12
+INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-64:12
 	package
 		ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:3:5-67
 		INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml
 	android:versionName
 		INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml
-		ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-60:12
+		ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-64:12
 		INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml
-		ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-60:12
+		ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:1-64:12
 		INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:2:11-69
@@ -38,7 +38,7 @@ ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-andro
 	android:name
 		ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:6:22-76
 application
-ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:8:5-58:19
+ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:8:5-62:19
 MERGED from [com.android.support:design:23.4.0] /Users/shubhama/.gradle/caches/transforms-1/files-1.1/design-23.4.0.aar/67b1f804ecaff13ed470df13b27145a5/AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:design:23.4.0] /Users/shubhama/.gradle/caches/transforms-1/files-1.1/design-23.4.0.aar/67b1f804ecaff13ed470df13b27145a5/AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/shubhama/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/80ed25c885a5cead948aebc9f3a51e3c/AndroidManifest.xml:25:5-20
@@ -149,6 +149,14 @@ ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-andro
 		ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:57:13-56
 	android:name
 		ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:55:13-65
+activity#com.amazonaws.youruserpools.UserProfile
+ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:58:9-61:59
+	android:label
+		ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:60:13-64
+	android:theme
+		ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:61:13-56
+	android:name
+		ADDED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml:59:13-67
 uses-sdk
 INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/AndroidManifest.xml

@@ -164,6 +164,10 @@ public class UserActivity extends AppCompatActivity {
 
         // Find which item was selected
         switch(item.getItemId()) {
+            case R.id.nav_user_profile:
+                // Change password
+                userProfile();
+                break;
             case R.id.nav_user_change_password:
                 // Change password
                 changePassword();
@@ -230,6 +234,12 @@ public class UserActivity extends AppCompatActivity {
     private void changePassword() {
         Intent changePssActivity = new Intent(this, ChangePasswordActivity.class);
         startActivity(changePssActivity);
+    }
+
+    // Show User Profile
+    private void userProfile() {
+        Intent userProfileActivity = new Intent(this, UserProfile.class);
+        startActivity(userProfileActivity);
     }
 
     // Sign out user

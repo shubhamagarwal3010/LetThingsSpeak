@@ -63,6 +63,10 @@
             android:name="com.amazonaws.youruserpools.ChooseMFA"
             android:label="@string/title_activity_choose_mfa"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.amazonaws.youruserpools.UserProfile"
+            android:label="@string/title_activity_user_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
             android:name="com.android.tools.ir.server.InstantRunContentProvider"

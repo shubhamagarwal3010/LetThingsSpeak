@@ -21,4 +21,5 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>
     <string name="title_activity_new_password">NewPassword</string>
+    <string name="title_activity_user_profile">Profile</string>
 </resources>
