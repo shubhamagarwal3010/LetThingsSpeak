@@ -24,37 +24,6 @@
     android:layout_marginRight="@dimen/activity_horizontal_margin"
     android:layout_marginTop="@dimen/activity_vertical_margin"
     tools:context="com.amazonaws.youruserpools.UserActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="You are signed in"
-        android:textStyle="bold"
-        android:id="@+id/textViewUserDetailsMessage"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/activity_inter_group_separation"
-        android:layout_below="@+id/textViewUserDetailsMessage"
-        android:layout_alignParentStart="true"
-        android:id="@+id/space3" />
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/listViewUserAttributes"
-        android:layout_below="@+id/space3"
-        android:layout_alignEnd="@id/space4"
-        android:backgroundTint="@color/grey_100"
-        android:background="@drawable/text_border_selected"/>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/activity_intra_group_separation"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/space4" />
+    
 
 </RelativeLayout>

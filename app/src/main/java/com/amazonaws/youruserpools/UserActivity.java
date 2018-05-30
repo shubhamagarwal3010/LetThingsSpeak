@@ -110,22 +110,6 @@ public class UserActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Find which menu item was selected
-        int menuItem = item.getItemId();
-
-        // Do the task
-        if(menuItem == R.id.user_update_attribute) {
-            //updateAllAttributes();
-            showWaitDialog("Updating...");
-            getDetails();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onBackPressed() {
         exit();
     }
@@ -139,7 +123,6 @@ public class UserActivity extends AppCompatActivity {
                 if(resultCode == RESULT_OK) {
                     boolean refresh = data.getBooleanExtra("refresh", true);
                     if (refresh) {
-                        showAttributes();
                     }
                 }
                 break;
@@ -184,51 +167,6 @@ public class UserActivity extends AppCompatActivity {
         }
     }
 
-    // Get user details from CIP service
-    private void getDetails() {
-        AppHelper.getPool().getUser(username).getDetailsInBackground(detailsHandler);
-    }
-
-    // Show user attributes from CIP service
-    private void showAttributes() {
-        final UserAttributesAdapter attributesAdapter = new UserAttributesAdapter(getApplicationContext());
-        final ListView attributesListView;
-        attributesListView = (ListView) findViewById(R.id.listViewUserAttributes);
-        attributesListView.setAdapter(attributesAdapter);
-        attributesList = attributesListView;
-
-        attributesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView data = (TextView) view.findViewById(R.id.editTextUserDetailInput);
-                String attributeType = data.getHint().toString();
-                String attributeValue = data.getText().toString();
-                showUserDetail(attributeType, attributeValue);
-            }
-        });
-    }
-
-    // Update attributes
-    private void updateAttribute(String attributeType, String attributeValue) {
-
-        if(attributeType == null || attributeType.length() < 1) {
-            return;
-        }
-        CognitoUserAttributes updatedUserAttributes = new CognitoUserAttributes();
-        updatedUserAttributes.addAttribute(attributeType, attributeValue);
-        Toast.makeText(getApplicationContext(), attributeType + ": " + attributeValue, Toast.LENGTH_LONG);
-        showWaitDialog("Updating...");
-        AppHelper.getPool().getUser(AppHelper.getCurrUser()).updateAttributesInBackground(updatedUserAttributes, updateHandler);
-    }
-
-
-    // Delete attribute
-    private void deleteAttribute(String attributeName) {
-        showWaitDialog("Deleting...");
-        List<String> attributesToDelete = new ArrayList<>();
-        attributesToDelete.add(attributeName);
-        AppHelper.getPool().getUser(AppHelper.getCurrUser()).deleteAttributesInBackground(attributesToDelete, deleteHandler);
-    }
 
     // Change user password
     private void changePassword() {
@@ -254,176 +192,8 @@ public class UserActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         username = AppHelper.getCurrUser();
         user = AppHelper.getPool().getUser(username);
-        getDetails();
     }
 
-    GetDetailsHandler detailsHandler = new GetDetailsHandler() {
-        @Override
-        public void onSuccess(CognitoUserDetails cognitoUserDetails) {
-            closeWaitDialog();
-            // Store details in the AppHandler
-            AppHelper.setUserDetails(cognitoUserDetails);
-            showAttributes();
-            // Trusted devices?
-            handleTrustedDevice();
-        }
-
-        @Override
-        public void onFailure(Exception exception) {
-            closeWaitDialog();
-            showDialogMessage("Could not fetch user details!", AppHelper.formatException(exception), true);
-        }
-    };
-
-    private void handleTrustedDevice() {
-        CognitoDevice newDevice = AppHelper.getNewDevice();
-        if (newDevice != null) {
-            AppHelper.newDevice(null);
-            trustedDeviceDialog(newDevice);
-        }
-    }
-
-    private void updateDeviceStatus(CognitoDevice device) {
-        device.rememberThisDeviceInBackground(trustedDeviceHandler);
-    }
-
-    private void trustedDeviceDialog(final CognitoDevice newDevice) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Remember this device?");
-        //final EditText input = new EditText(UserActivity.this);
-
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-
-        //input.setLayoutParams(lp);
-        //input.requestFocus();
-        //builder.setView(input);
-
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                try {
-                    //String newValue = input.getText().toString();
-                    showWaitDialog("Remembering this device...");
-                    updateDeviceStatus(newDevice);
-                    userDialog.dismiss();
-                } catch (Exception e) {
-                    // Log failure
-                }
-            }
-        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                try {
-                    userDialog.dismiss();
-                } catch (Exception e) {
-                    // Log failure
-                }
-            }
-        });
-        userDialog = builder.create();
-        userDialog.show();
-    }
-
-    // Callback handlers
-
-    UpdateAttributesHandler updateHandler = new UpdateAttributesHandler() {
-        @Override
-        public void onSuccess(List<CognitoUserCodeDeliveryDetails> attributesVerificationList) {
-            // Update successful
-            if(attributesVerificationList.size() > 0) {
-                showDialogMessage("Updated", "The updated attributes has to be verified",  false);
-            }
-            getDetails();
-        }
-
-        @Override
-        public void onFailure(Exception exception) {
-            // Update failed
-            closeWaitDialog();
-            showDialogMessage("Update failed", AppHelper.formatException(exception), false);
-        }
-    };
-
-    GenericHandler deleteHandler = new GenericHandler() {
-        @Override
-        public void onSuccess() {
-            closeWaitDialog();
-            // Attribute was deleted
-            Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT);
-
-            // Fetch user details from the the service
-            getDetails();
-        }
-
-        @Override
-        public void onFailure(Exception e) {
-            closeWaitDialog();
-            // Attribute delete failed
-            showDialogMessage("Delete failed", AppHelper.formatException(e), false);
-
-            // Fetch user details from the service
-            getDetails();
-        }
-    };
-
-    GenericHandler trustedDeviceHandler = new GenericHandler() {
-        @Override
-        public void onSuccess() {
-            // Close wait dialog
-            closeWaitDialog();
-        }
-
-        @Override
-        public void onFailure(Exception exception) {
-            closeWaitDialog();
-            showDialogMessage("Failed to update device status", AppHelper.formatException(exception), true);
-        }
-    };
-
-    private void showUserDetail(final String attributeType, final String attributeValue) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(attributeType);
-        final EditText input = new EditText(UserActivity.this);
-        input.setText(attributeValue);
-
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-
-        input.setLayoutParams(lp);
-        input.requestFocus();
-        builder.setView(input);
-
-        builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                try {
-                    String newValue = input.getText().toString();
-                    if(!newValue.equals(attributeValue)) {
-                        showWaitDialog("Updating...");
-                        updateAttribute(AppHelper.getSignUpFieldsC2O().get(attributeType), newValue);
-                    }
-                    userDialog.dismiss();
-                } catch (Exception e) {
-                    // Log failure
-                }
-            }
-        }).setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                try {
-                    userDialog.dismiss();
-                    deleteAttribute(AppHelper.getSignUpFieldsC2O().get(attributeType));
-                } catch (Exception e) {
-                    // Log failure
-                }
-            }
-        });
-        userDialog = builder.create();
-        userDialog.show();
-    }
 
     private void showWaitDialog(String message) {
         closeWaitDialog();

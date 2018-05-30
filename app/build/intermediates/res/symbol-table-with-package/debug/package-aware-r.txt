@@ -996,12 +996,11 @@ int id up 0x7f070123
 int id useLogo 0x7f070124
 int id user_drawer_layout 0x7f070125
 int id user_profile_toolbar_title 0x7f070126
-int id user_update_attribute 0x7f070127
-int id view_offset_helper 0x7f070128
-int id webViewLicense 0x7f070129
-int id withText 0x7f07012a
-int id wrap 0x7f07012b
-int id wrap_content 0x7f07012c
+int id view_offset_helper 0x7f070127
+int id webViewLicense 0x7f070128
+int id withText 0x7f070129
+int id wrap 0x7f07012a
+int id wrap_content 0x7f07012b
 int integer abc_config_activityDefaultDur 0x7f080000
 int integer abc_config_activityShortDur 0x7f080001
 int integer abc_max_action_buttons 0x7f080002

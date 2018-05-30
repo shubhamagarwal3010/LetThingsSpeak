@@ -3390,12 +3390,11 @@ public final class R {
     public static final int useLogo=0x7f070124;
     public static final int user_drawer_layout=0x7f070125;
     public static final int user_profile_toolbar_title=0x7f070126;
-    public static final int user_update_attribute=0x7f070127;
-    public static final int view_offset_helper=0x7f070128;
-    public static final int webViewLicense=0x7f070129;
-    public static final int withText=0x7f07012a;
-    public static final int wrap=0x7f07012b;
-    public static final int wrap_content=0x7f07012c;
+    public static final int view_offset_helper=0x7f070127;
+    public static final int webViewLicense=0x7f070128;
+    public static final int withText=0x7f070129;
+    public static final int wrap=0x7f07012a;
+    public static final int wrap_content=0x7f07012b;
   }
   public static final class integer {
     public static final int abc_config_activityDefaultDur=0x7f080000;
