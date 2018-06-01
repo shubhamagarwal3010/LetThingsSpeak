@@ -36,7 +36,7 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserAttributes;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserCodeDeliveryDetails;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.SignUpHandler;
-import com.amazonaws.youruserpools.CognitoYourUserPoolsDemo.R;
+import com.iot.letthingsspeak.R;
 
 public class RegisterUser extends AppCompatActivity {
     private final String TAG = "SignUp";

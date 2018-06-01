@@ -30,7 +30,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.amazonaws.youruserpools.CognitoYourUserPoolsDemo.R;
+import com.iot.letthingsspeak.R;
+
 
 public class MFAActivity extends AppCompatActivity {
     private TextView mfaScreenText;

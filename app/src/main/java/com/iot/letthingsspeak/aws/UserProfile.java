@@ -26,7 +26,7 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserSession
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GenericHandler;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GetDetailsHandler;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.UpdateAttributesHandler;
-import com.amazonaws.youruserpools.CognitoYourUserPoolsDemo.R;
+import com.iot.letthingsspeak.R;
 
 import java.util.ArrayList;
 import java.util.List;

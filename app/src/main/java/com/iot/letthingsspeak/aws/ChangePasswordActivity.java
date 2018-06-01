@@ -33,7 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GenericHandler;
-import com.amazonaws.youruserpools.CognitoYourUserPoolsDemo.R;
+import com.iot.letthingsspeak.R;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 

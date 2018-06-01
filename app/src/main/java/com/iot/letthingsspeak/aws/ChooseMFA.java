@@ -25,7 +25,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.amazonaws.youruserpools.CognitoYourUserPoolsDemo.R;
+import com.iot.letthingsspeak.R;
 
 import java.util.List;
 

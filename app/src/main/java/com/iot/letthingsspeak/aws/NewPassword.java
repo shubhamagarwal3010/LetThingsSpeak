@@ -35,7 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.amazonaws.youruserpools.CognitoYourUserPoolsDemo.R;
+import com.iot.letthingsspeak.R;
 
 public class NewPassword extends AppCompatActivity {
     private String TAG = "NewPassword";

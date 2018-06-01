@@ -25,7 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.amazonaws.youruserpools.CognitoYourUserPoolsDemo.R;
+import com.iot.letthingsspeak.R;
 
 public class AboutApp extends AppCompatActivity {
 
