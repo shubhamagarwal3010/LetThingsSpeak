@@ -21,6 +21,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -32,19 +33,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserDetails;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserSession;
 import com.iot.letthingsspeak.R;
+import com.iot.letthingsspeak.aws.db.AmazonClientManager;
+import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
     private final String TAG="UserActivity";
+    public static AmazonClientManager clientManager = null;
 
     private NavigationView nDrawer;
     private DrawerLayout mDrawer;
@@ -71,6 +77,8 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        clientManager = new AmazonClientManager(this);
+
         // Set toolbar for this screen
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbar.setTitle("");
@@ -90,7 +98,109 @@ public class UserActivity extends AppCompatActivity {
         View navigationHeader = nDrawer.getHeaderView(0);
         TextView navHeaderSubTitle = (TextView) navigationHeader.findViewById(R.id.textViewNavUserSub);
         navHeaderSubTitle.setText(username);
+
+        clientManager = new AmazonClientManager(this);
+
+        final Button createTableBttn = (Button) findViewById(R.id.create_table_bttn);
+        createTableBttn.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                Log.i(TAG, "createTableBttn clicked.");
+
+                new DynamoDBManagerTask()
+                        .execute(DynamoDBManagerType.CREATE_TABLE);
+            }
+        });
+
+        final Button insertUsersBttn = (Button) findViewById(R.id.insert_users_bttn);
+        insertUsersBttn.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                Log.i(TAG, "insertUsersBttn clicked.");
+
+                new DynamoDBManagerTask()
+                        .execute(DynamoDBManagerType.INSERT_USER);
+            }
+        });
     }
+
+    private class DynamoDBManagerTask extends
+            AsyncTask<DynamoDBManagerType, Void, DynamoDBManagerTaskResult> {
+
+        protected DynamoDBManagerTaskResult doInBackground(
+                DynamoDBManagerType... types) {
+
+            String tableStatus = DynamoDBManager.getTestTableStatus();
+
+            DynamoDBManagerTaskResult result = new DynamoDBManagerTaskResult();
+            result.setTableStatus(tableStatus);
+            result.setTaskType(types[0]);
+
+            if (types[0] == DynamoDBManagerType.CREATE_TABLE) {
+                if (tableStatus.length() == 0) {
+                    DynamoDBManager.createTable();
+                }
+            } else if (types[0] == DynamoDBManagerType.INSERT_USER) {
+                if (tableStatus.equalsIgnoreCase("ACTIVE")) {
+                    DynamoDBManager.insertUsers();
+                }
+            }
+
+            return result;
+        }
+
+        protected void onPostExecute(DynamoDBManagerTaskResult result) {
+
+            if (result.getTaskType() == DynamoDBManagerType.CREATE_TABLE) {
+
+                if (result.getTableStatus().length() != 0) {
+                    Toast.makeText(
+                            UserActivity.this,
+                            "The test table already exists.\nTable Status: "
+                                    + result.getTableStatus(),
+                            Toast.LENGTH_LONG).show();
+                }
+
+            } else if (!result.getTableStatus().equalsIgnoreCase("ACTIVE")) {
+
+                Toast.makeText(
+                        UserActivity.this,
+                        "The test table is not ready yet.\nTable Status: "
+                                + result.getTableStatus(), Toast.LENGTH_LONG)
+                        .show();
+            } else if (result.getTableStatus().equalsIgnoreCase("ACTIVE")
+                    && result.getTaskType() == DynamoDBManagerType.INSERT_USER) {
+                Toast.makeText(UserActivity.this,
+                        "Users inserted successfully!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private enum DynamoDBManagerType {
+        GET_TABLE_STATUS, CREATE_TABLE, INSERT_USER
+    }
+
+    private class DynamoDBManagerTaskResult {
+        private DynamoDBManagerType taskType;
+        private String tableStatus;
+
+        public DynamoDBManagerType getTaskType() {
+            return taskType;
+        }
+
+        public void setTaskType(DynamoDBManagerType taskType) {
+            this.taskType = taskType;
+        }
+
+        public String getTableStatus() {
+            return tableStatus;
+        }
+
+        public void setTableStatus(String tableStatus) {
+            this.tableStatus = tableStatus;
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
