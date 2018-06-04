@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v14/values-v14.xml",
+            "outputFile": "/Users/manisht/Desktop/aws-android-login-page/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v14/values-v14.xml",
             "map": [
                 {
-                    "source": "/Users/shubhama/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/80ed25c885a5cead948aebc9f3a51e3c/res/values-v14/values-v14.xml",
+                    "source": "/Users/manisht/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/6b15ebd229846c1252f65df32ceba0a1/res/values-v14/values-v14.xml",
                     "from": {
                         "startLines": "2,7,8,9,15,21,22,23,26,27",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4",

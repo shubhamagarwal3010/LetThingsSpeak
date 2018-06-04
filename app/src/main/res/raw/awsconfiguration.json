@@ -1,0 +1,51 @@
+{
+  "UserAgent": "MobileHub/1.0",
+  "Version": "1.0",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:*"
+      ],
+      "Resource": [
+        "arn:aws:dynamodb:ap-south-1:177208607412:table/letthingsspeak-mobilehub-849318221-LetThingsSpeak",
+        "arn:aws:dynamodb:ap-south-1:177208607412:table/letthingsspeak-mobilehub-849318221-LetThingsSpeak/index/*"
+      ]
+    }
+  ],
+  "CredentialsProvider": {
+    "CognitoIdentity": {
+      "Default": {
+        "PoolId": "ap-south-1:ebce27dc-22fe-42c5-8da2-f9df1546c57c",
+        "Region": "ap-south-1"
+      }
+    }
+  },
+  "IdentityManager": {
+    "Default": {}
+  },
+  "CognitoUserPool": {
+    "Default": {
+      "PoolId": "ap-south-1_tp2pIKFfc",
+      "AppClientId": "ubqrj73rjchgmq0fkvkftgvu0",
+      "AppClientSecret": "1d5ah2jgd4qvk09bvqgkju9h2of04ldpkrtuborsnefkvb94ukk3",
+      "Region": "ap-south-1"
+    }
+  },
+  "DynamoDBObjectMapper": {
+    "Default": {
+      "Region": "ap-south-1"
+    }
+  },
+  "PinpointAnalytics": {
+    "Default": {
+      "AppId": "5536db44021a4cf4a5b0435ec8e1bea1",
+      "Region": "us-east-1"
+    }
+  },
+  "PinpointTargeting": {
+    "Default": {
+      "Region": "us-east-1"
+    }
+  }
+}

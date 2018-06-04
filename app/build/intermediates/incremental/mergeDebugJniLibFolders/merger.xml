@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/main/jniLibs"/></dataSet><dataSet config="debug"><source path="/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/src/debug/jniLibs"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/manisht/Desktop/aws-android-login-page/app/src/main/jniLibs"/></dataSet><dataSet config="debug"><source path="/Users/manisht/Desktop/aws-android-login-page/app/src/debug/jniLibs"/></dataSet></merger>

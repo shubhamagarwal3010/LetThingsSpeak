@@ -35,13 +35,17 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserDetails;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserSession;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.iot.letthingsspeak.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 
 public class UserActivity extends AppCompatActivity {
     private final String TAG="UserActivity";
@@ -64,6 +68,9 @@ public class UserActivity extends AppCompatActivity {
 
     // To track changes to user details
     private final List<String> attributesToDelete = new ArrayList<>();
+
+    // Declare a DynamoDBMapper object
+    DynamoDBMapper dynamoDBMapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +97,16 @@ public class UserActivity extends AppCompatActivity {
         View navigationHeader = nDrawer.getHeaderView(0);
         TextView navHeaderSubTitle = (TextView) navigationHeader.findViewById(R.id.textViewNavUserSub);
         navHeaderSubTitle.setText(username);
+
+        AWSMobileClient.getInstance().initialize(this).execute();
+
+        // Instantiate a AmazonDynamoDBMapperClient
+        AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
+
+        this.dynamoDBMapper = DynamoDBMapper.builder()
+                .dynamoDBClient(dynamoDBClient)
+                .awsConfiguration(AWSMobileClient.getInstance().getConfiguration())
+                .build();
     }
 
     @Override
@@ -150,11 +167,29 @@ public class UserActivity extends AppCompatActivity {
                 signOut();
                 break;
             case R.id.nav_user_about:
+                createLTSDo();
                 // For the inquisitive
                 Intent aboutAppActivity = new Intent(this, AboutApp.class);
                 startActivity(aboutAppActivity);
                 break;
         }
+    }
+
+    public void createLTSDo() {
+        final LetThingsSpeakDO ltsDo = new LetThingsSpeakDO();
+        ltsDo.setDeviceId(1.1);
+        ltsDo.setDeviceName("Washing machine");
+        ltsDo.setPin(2.1);
+        ltsDo.setRoomName("Bedroom");
+        ltsDo.setUserId("Manish");
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                dynamoDBMapper.save(ltsDo);
+                // Item saved
+            }
+        }).start();
     }
 
 

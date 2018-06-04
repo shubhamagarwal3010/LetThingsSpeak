@@ -1,17 +1,17 @@
 #Internal package file, do not edit.
-#Fri Jun 01 15:10:38 IST 2018
-2.base=/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/build/intermediates/transforms/dexMerger/debug/13
+#Fri Jun 01 18:33:00 IST 2018
+2.base=/Users/manisht/Desktop/aws-android-login-page/app/build/intermediates/transforms/dexMerger/debug/16
 5.set=DEX
 0.path=classes.dex
 2.baseType=DIRECTORY
-3.base=/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/build/intermediates/transforms/dexMerger/debug/14
+3.base=/Users/manisht/Desktop/aws-android-login-page/app/build/intermediates/transforms/dexMerger/debug/13
 2.set=DEX
 1.path=classes.dex
-4.base=/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/build/intermediates/transforms/dexMerger/debug/11
+4.base=/Users/manisht/Desktop/aws-android-login-page/app/build/intermediates/transforms/dexMerger/debug/14
 count=6
 5.baseType=DIRECTORY
 2.path=classes.dex
-5.base=/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/build/intermediates/transforms/dexMerger/debug/12
+5.base=/Users/manisht/Desktop/aws-android-login-page/app/build/intermediates/transforms/dexMerger/debug/12
 4.set=DEX
 3.path=classes.dex
 3.baseType=DIRECTORY
@@ -19,9 +19,9 @@ count=6
 4.path=classes.dex
 1.baseType=DIRECTORY
 5.path=classes.dex
-0.base=/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/build/intermediates/transforms/dexMerger/debug/15
+0.base=/Users/manisht/Desktop/aws-android-login-page/app/build/intermediates/transforms/dexMerger/debug/17
 0.baseType=DIRECTORY
 3.set=DEX
-1.base=/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/build/intermediates/transforms/dexMerger/debug/16
+1.base=/Users/manisht/Desktop/aws-android-login-page/app/build/intermediates/transforms/dexMerger/debug/15
 4.baseType=DIRECTORY
 0.set=DEX

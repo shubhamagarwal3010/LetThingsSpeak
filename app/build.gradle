@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.iot.letthingsspeak"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -29,4 +29,11 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:23.4.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.6.8'
+    implementation 'com.amazonaws:aws-android-sdk-ddb-mapper:2.6.+'
+    implementation ('com.amazonaws:aws-android-sdk-mobile-client:2.6.+@aar') { transitive = true }
+    // Cognito UserPools for SignIn
+     implementation ('com.amazonaws:aws-android-sdk-auth-userpools:2.6.+@aar') { transitive = true; }
+
+     // Sign in UI Library
+    implementation ('com.amazonaws:aws-android-sdk-auth-ui:2.6.+@aar') { transitive = true; }
 }

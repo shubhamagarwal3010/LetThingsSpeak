@@ -5,11 +5,12 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="21"
+        android:minSdkVersion="23"
         android:targetSdkVersion="23" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -67,6 +68,35 @@
             android:name="com.iot.letthingsspeak.aws.UserProfile"
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.amazonaws.mobile.auth.userpools.ForgotPasswordActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_forgot_password"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.amazonaws.mobile.auth.userpools.SignUpActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_sign_up"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.amazonaws.mobile.auth.userpools.MFAActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_mfa"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.amazonaws.mobile.auth.userpools.SignUpConfirmActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_sign_up_confirm"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.amazonaws.mobile.auth.ui.SignInActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_sign_in"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="com.android.tools.ir.server.InstantRunContentProvider"
