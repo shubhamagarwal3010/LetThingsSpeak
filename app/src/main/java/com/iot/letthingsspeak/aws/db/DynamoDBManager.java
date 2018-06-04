@@ -7,13 +7,10 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribut
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBScanExpression;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedScanList;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
-import com.amazonaws.services.dynamodbv2.model.DeleteTableRequest;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableResult;
 import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
@@ -21,9 +18,8 @@ import com.amazonaws.services.dynamodbv2.model.KeyType;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException;
 import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
-import com.iot.letthingsspeak.aws.UserActivity;
-
-import java.util.ArrayList;
+import com.iot.letthingsspeak.aws.AppHelper;
+import com.iot.letthingsspeak.UserActivity;
 
 public class DynamoDBManager {
 
@@ -96,11 +92,12 @@ public class DynamoDBManager {
                 .ddb();
         DynamoDBMapper mapper = new DynamoDBMapper(ddb);
 
+
         try {
             //for (int i = 1; i <= 10; i++)
             {
                 UserPreference userPreference = new UserPreference();
-                userPreference.setUserId("11");
+                userPreference.setUserId(AppHelper.getCurrUser());
                 userPreference.setRoomName("Bed-Room");
                 userPreference.setDeviceName("Fan");
                 userPreference.setDeviceId(124.0);
@@ -111,6 +108,30 @@ public class DynamoDBManager {
             }
         } catch (AmazonServiceException ex) {
             Log.e(TAG, "Error inserting users");
+            UserActivity.clientManager
+                    .wipeCredentialsOnAuthError(ex);
+        }
+    }    /*
+     * Inserts ten users with userNo from 1 to 10 and random names.
+     */
+    public static void insertRoom(String roomName) {
+        AmazonDynamoDBClient ddb = UserActivity.clientManager
+                .ddb();
+        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
+
+
+        try {
+            //for (int i = 1; i <= 10; i++)
+            {
+                UserPreference userPreference = new UserPreference();
+                userPreference.setRoomName(roomName);
+
+                Log.d(TAG, "Inserting room");
+                mapper.save(userPreference);
+                Log.d(TAG, "Room inserted");
+            }
+        } catch (AmazonServiceException ex) {
+            Log.e(TAG, "Error inserting room");
             UserActivity.clientManager
                     .wipeCredentialsOnAuthError(ex);
         }

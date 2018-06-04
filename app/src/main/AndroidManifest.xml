@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.iot.letthingsspeak.aws.UserActivity"
+            android:name="com.iot.letthingsspeak.UserActivity"
             android:label="@string/title_activity_user"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -59,6 +59,13 @@
             android:name="com.iot.letthingsspeak.aws.UserProfile"
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.iot.letthingsspeak.device.DeviceActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.iot.letthingsspeak.room.AddRoom"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.iot.letthingsspeak.device.AddDevice"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.iot.letthingsspeak.aws;
+package com.iot.letthingsspeak;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -23,11 +23,14 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -41,14 +44,25 @@ import android.widget.Toast;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserDetails;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserSession;
-import com.iot.letthingsspeak.R;
+import com.iot.letthingsspeak.aws.AboutApp;
+import com.iot.letthingsspeak.aws.AppHelper;
+import com.iot.letthingsspeak.aws.ChangePasswordActivity;
+import com.iot.letthingsspeak.aws.UserProfile;
 import com.iot.letthingsspeak.aws.db.AmazonClientManager;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
+import com.iot.letthingsspeak.room.AddRoom;
+import com.iot.letthingsspeak.room.HomeAdapter;
+import com.iot.letthingsspeak.room.RoomDetails;
+import com.iot.letthingsspeak.room.RoomStore;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
+    private RecyclerView roomTypeRecyclerView;
+    public static final int ACTIVITY_REQUEST_CODE = 201;
+    List<RoomDetails> room = new ArrayList<>();
+
     private final String TAG="UserActivity";
     public static AmazonClientManager clientManager = null;
 
@@ -122,6 +136,28 @@ public class UserActivity extends AppCompatActivity {
                         .execute(DynamoDBManagerType.INSERT_USER);
             }
         });
+
+
+        roomTypeRecyclerView = (RecyclerView) findViewById(R.id.activity_main_recyclerview);
+        roomTypeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        room.add(new RoomDetails("Bed Room ", "1"));
+
+        room.add(new RoomDetails("Living Room ","0"));
+
+        RoomStore.setRoomDetails(room);
+        HomeAdapter homeAdapter;
+        homeAdapter = new HomeAdapter(RoomStore.getRoomDetails());
+        roomTypeRecyclerView.setAdapter(homeAdapter);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserActivity.this, AddRoom.class);
+                startActivityForResult(intent, ACTIVITY_REQUEST_CODE);
+            }
+        });
+
     }
 
     private class DynamoDBManagerTask extends
@@ -217,6 +253,18 @@ public class UserActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if(resultCode == RESULT_OK) {
+            if(requestCode == ACTIVITY_REQUEST_CODE){
+                String message = data.getStringExtra(AddRoom.ADDED_ROOM);
+
+                room.add(new RoomDetails(message, "1"));
+
+                RoomStore.setRoomDetails(room);
+
+                HomeAdapter homeAdapter = new HomeAdapter(RoomStore.getRoomDetails());
+                roomTypeRecyclerView.setAdapter(homeAdapter);
+            }
+        }
         switch (requestCode) {
             case 21:
                 // Verify attributes

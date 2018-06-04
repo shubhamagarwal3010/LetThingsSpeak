@@ -49,6 +49,7 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.Choo
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.AuthenticationHandler;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.ForgotPasswordHandler;
 import com.iot.letthingsspeak.R;
+import com.iot.letthingsspeak.UserActivity;
 
 import java.util.List;
 import java.util.Locale;
