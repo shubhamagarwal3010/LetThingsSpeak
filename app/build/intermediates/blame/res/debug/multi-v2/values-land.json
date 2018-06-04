@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-land/values-land.xml",
+            "outputFile": "/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-android-login-page/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-land/values-land.xml",
             "map": [
                 {
                     "source": "/Users/shubhama/.gradle/caches/transforms-1/files-1.1/design-23.4.0.aar/67b1f804ecaff13ed470df13b27145a5/res/values-land/values-land.xml",

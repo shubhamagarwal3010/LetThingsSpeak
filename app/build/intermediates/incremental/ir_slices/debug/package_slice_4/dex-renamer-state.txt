@@ -1,4 +1,4 @@
-#Fri Jun 01 21:45:56 IST 2018
-base.0=/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/build/intermediates/transforms/dexMerger/debug/4
+#Mon Jun 04 10:50:42 IST 2018
+base.0=/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-android-login-page/app/build/intermediates/transforms/dexMerger/debug/5
 path.0=classes.dex
 renamed.0=classes.dex

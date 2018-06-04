@@ -1,7 +1,0 @@
-#Internal package file, do not edit.
-#Wed May 30 22:11:03 IST 2018
-0.baseType=DIRECTORY
-0.base=/Users/shubhama/Desktop/Courses/practice/5-android/apps/aws-sdk-android-samples/AmazonCognitoYourUserPoolsDemo/app/build/intermediates/transforms/dexMerger/release/0
-0.path=classes.dex
-0.set=DEX
-count=1
