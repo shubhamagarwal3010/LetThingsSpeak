@@ -92,14 +92,12 @@
                 android:text="@string/step2" />
 
             <Button
-                android:id="@+id/list_users_bttn"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/step3" />
 
             <Button
-                android:id="@+id/delete_table_bttn"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

@@ -124,7 +124,6 @@
             android:layout_below="@id/textViewMFACodeMessage" />
 
         <Button
-            android:id="@+id/mfa_button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/activity_button_height"
             android:layout_below="@id/space_MFA3"

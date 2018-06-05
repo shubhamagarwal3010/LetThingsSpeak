@@ -43,6 +43,36 @@ public class UserProfile extends AppCompatActivity {
     private CognitoUserDetails details;
     // User details
     private String username;
+    GenericHandler trustedDeviceHandler = new GenericHandler() {
+        @Override
+        public void onSuccess() {
+            // Close wait dialog
+            closeWaitDialog();
+        }
+
+        @Override
+        public void onFailure(Exception exception) {
+            closeWaitDialog();
+            showDialogMessage("Failed to update device status", AppHelper.formatException(exception), true);
+        }
+    };
+    GetDetailsHandler detailsHandler = new GetDetailsHandler() {
+        @Override
+        public void onSuccess(CognitoUserDetails cognitoUserDetails) {
+            closeWaitDialog();
+            // Store details in the AppHandler
+            AppHelper.setUserDetails(cognitoUserDetails);
+            showAttributes();
+            // Trusted devices?
+            handleTrustedDevice();
+        }
+
+        @Override
+        public void onFailure(Exception exception) {
+            closeWaitDialog();
+            showDialogMessage("Could not fetch user details!", AppHelper.formatException(exception), true);
+        }
+    };
     UpdateAttributesHandler updateHandler = new UpdateAttributesHandler() {
         @Override
         public void onSuccess(List<CognitoUserCodeDeliveryDetails> attributesVerificationList) {
@@ -77,36 +107,6 @@ public class UserProfile extends AppCompatActivity {
 
             // Fetch user details from the service
             getDetails();
-        }
-    };
-    GenericHandler trustedDeviceHandler = new GenericHandler() {
-        @Override
-        public void onSuccess() {
-            // Close wait dialog
-            closeWaitDialog();
-        }
-
-        @Override
-        public void onFailure(Exception exception) {
-            closeWaitDialog();
-            showDialogMessage("Failed to update device status", AppHelper.formatException(exception), true);
-        }
-    };
-    GetDetailsHandler detailsHandler = new GetDetailsHandler() {
-        @Override
-        public void onSuccess(CognitoUserDetails cognitoUserDetails) {
-            closeWaitDialog();
-            // Store details in the AppHandler
-            AppHelper.setUserDetails(cognitoUserDetails);
-            showAttributes();
-            // Trusted devices?
-            handleTrustedDevice();
-        }
-
-        @Override
-        public void onFailure(Exception exception) {
-            closeWaitDialog();
-            showDialogMessage("Could not fetch user details!", AppHelper.formatException(exception), true);
         }
     };
 
