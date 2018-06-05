@@ -173,7 +173,7 @@
         android:text="Resend code"
         android:textAllCaps="false"
         android:textColor="@color/button_default"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:id="@+id/resend_confirm_req"
         android:layout_below="@+id/space_confirm_3"
         android:layout_alignParentEnd="true" />

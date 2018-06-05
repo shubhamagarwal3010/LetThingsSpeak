@@ -65,7 +65,7 @@
         <activity android:name="com.iot.letthingsspeak.room.AddRoom"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.iot.letthingsspeak.device.AddDevice"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

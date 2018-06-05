@@ -17,8 +17,6 @@ package com.iot.letthingsspeak.aws.db;
 
 import com.amazonaws.regions.Regions;
 
-import java.util.Random;
-
 
 public class Constants {
 
