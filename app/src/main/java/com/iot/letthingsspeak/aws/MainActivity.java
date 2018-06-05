@@ -41,10 +41,6 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private final String TAG="MainActivity";
 
-    private NavigationView nDrawer;
-    private DrawerLayout mDrawer;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private Toolbar toolbar;
     private AlertDialog userDialog;
     private ProgressDialog waitDialog;
 
@@ -70,34 +66,13 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // Set toolbar for this screen
-        toolbar = findViewById(R.id.main_toolbar);
-        toolbar.setTitle("");
         TextView main_title = findViewById(R.id.main_toolbar_title);
         main_title.setText("Sign in");
-        setSupportActionBar(toolbar);
-
-        // Set navigation drawer for this screen
-        mDrawer = findViewById(R.id.main_drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this,mDrawer, toolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
-        mDrawer.addDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();
-        nDrawer = findViewById(R.id.nav_view);
-        setNavDrawer();
 
         // Initialize application
         AppHelper.init(getApplicationContext());
         initApp();
         findCurrent();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Open/Close the navigation drawer when menu icon is selected
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -233,46 +208,6 @@ public class MainActivity extends AppCompatActivity {
         forgotpasswordUser();
     }
 
-
-    // Private methods
-    // Handle when the a navigation item is selected
-    private void setNavDrawer() {
-        nDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                performAction(item);
-                return true;
-            }
-        });
-    }
-
-    // Perform the action for the selected navigation item
-    private void performAction(MenuItem item) {
-        // Close the navigation drawer
-        mDrawer.closeDrawers();
-
-        // Find which item was selected
-        switch(item.getItemId()) {
-            case R.id.nav_sign_up:
-                // Start sign-up
-                signUpNewUser();
-                break;
-            case R.id.nav_sign_up_confirm:
-                // Confirm new user
-                confirmUser();
-                break;
-            case R.id.nav_sign_in_forgot_password:
-                // User has forgotten the password, start the process to set a new password
-                forgotpasswordUser();
-                break;
-            case R.id.nav_about:
-                // For the inquisitive
-                Intent aboutAppActivity = new Intent(this, AboutApp.class);
-                startActivity(aboutAppActivity);
-                break;
-
-        }
-    }
 
     private void signUpNewUser() {
         Intent registerActivity = new Intent(this, RegisterUser.class);
