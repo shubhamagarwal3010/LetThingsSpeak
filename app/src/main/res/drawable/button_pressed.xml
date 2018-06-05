@@ -5,7 +5,6 @@
     <stroke
         android:width="@dimen/activity_button_border"
         android:color="@color/button_pressed" />
-    <corners
-        android:radius="@dimen/activity_button_radius"/>
+    <corners android:radius="@dimen/activity_button_radius" />
 
 </shape>

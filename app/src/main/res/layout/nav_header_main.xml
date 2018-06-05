@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2013-2016 Amazon.com,
   ~ Inc. or its affiliates. All Rights Reserved.
   ~
@@ -25,46 +24,46 @@
     android:theme="@style/AppTheme">
 
     <Space
-        android:layout_width="match_parent"
         android:id="@+id/nav_header_space_1"
+        android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 
     <ImageView
+        android:id="@+id/imageViewAppMainCognitoIcon"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/imageViewAppMainCognitoIcon"
-        android:src="@drawable/ic_account_circle_white"
-        android:scaleType="fitXY"
         android:layout_below="@+id/nav_header_space_1"
-        android:layout_toEndOf="@+id/space11"/>
+        android:layout_toEndOf="@+id/space11"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_account_circle_white" />
 
     <Space
+        android:id="@+id/nav_header_space_2"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:id="@+id/nav_header_space_2"
         android:layout_below="@+id/nav_header_space_1"
         android:layout_toEndOf="@+id/imageViewAppMainCognitoIcon" />
 
     <TextView
+        android:id="@+id/textViewNavMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/app_main_screen_title"
-        android:textColor="@color/toolbar_items"
-        android:id="@+id/textViewNavMain"
-        android:layout_centerVertical="true"
         android:layout_below="@+id/nav_header_space_2"
+        android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/imageViewAppMainCognitoIcon"
-        android:paddingLeft="@dimen/activity_text_padding"/>
+        android:paddingLeft="@dimen/activity_text_padding"
+        android:text="@string/app_main_screen_title"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/toolbar_items" />
 
     <Space
+        android:id="@+id/space11"
         android:layout_width="10dp"
         android:layout_height="100dp"
-        android:id="@+id/space11"
-        android:layout_below="@+id/nav_header_space_1"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/nav_header_space_1" />
 
 
 </RelativeLayout>

@@ -42,6 +42,23 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private Button changeButton;
     private AlertDialog userDialog;
     private ProgressDialog waitDialog;
+    GenericHandler callback = new GenericHandler() {
+        @Override
+        public void onSuccess() {
+            closeWaitDialog();
+            //showDialogMessage("Success!","Password has been changed",true);
+            Toast.makeText(getApplicationContext(), "Your password was changed", Toast.LENGTH_LONG).show();
+            clearInput();
+        }
+
+        @Override
+        public void onFailure(Exception exception) {
+            closeWaitDialog();
+            newPassword.setBackground(getDrawable(R.drawable.text_border_error));
+            currPassword.setBackground(getDrawable(R.drawable.text_border_error));
+            showDialogMessage("Password change failed", AppHelper.formatException(exception), false);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +92,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         currPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if(s.length() == 0) {
+                if (s.length() == 0) {
                     TextView label = findViewById(R.id.textViewChangePassCurrPassLabel);
                     label.setText(currPassword.getHint());
                     currPassword.setBackground(getDrawable(R.drawable.text_border_selector));
@@ -90,7 +107,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.length() == 0) {
+                if (s.length() == 0) {
                     TextView label = findViewById(R.id.textViewChangePassCurrPassLabel);
                     label.setText("");
                 }
@@ -102,7 +119,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         newPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if(s.length() == 0) {
+                if (s.length() == 0) {
                     TextView label = findViewById(R.id.textViewChangePassNewPassLabel);
                     label.setText(newPassword.getHint());
                     newPassword.setBackground(getDrawable(R.drawable.text_border_selector));
@@ -117,7 +134,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.length() == 0) {
+                if (s.length() == 0) {
                     TextView label = findViewById(R.id.textViewChangePassNewPassLabel);
                     label.setText("");
                 }
@@ -136,18 +153,18 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private void changePassword() {
         String cPass = currPassword.getText().toString();
 
-        if(cPass == null || cPass.length() < 1) {
+        if (cPass == null || cPass.length() < 1) {
             TextView label = findViewById(R.id.textViewChangePassCurrPassMessage);
-            label.setText(currPassword.getHint()+" cannot be empty");
+            label.setText(currPassword.getHint() + " cannot be empty");
             currPassword.setBackground(getDrawable(R.drawable.text_border_error));
             return;
         }
 
         String nPass = newPassword.getText().toString();
 
-        if(nPass == null || nPass.length() < 1) {
+        if (nPass == null || nPass.length() < 1) {
             TextView label = findViewById(R.id.textViewChangePassNewPassMessage);
-            label.setText(newPassword.getHint()+" cannot be empty");
+            label.setText(newPassword.getHint() + " cannot be empty");
             newPassword.setBackground(getDrawable(R.drawable.text_border_error));
             return;
         }
@@ -155,25 +172,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         AppHelper.getPool().getUser(AppHelper.getCurrUser()).changePasswordInBackground(cPass, nPass, callback);
     }
 
-    GenericHandler callback = new GenericHandler() {
-        @Override
-        public void onSuccess() {
-            closeWaitDialog();
-            //showDialogMessage("Success!","Password has been changed",true);
-            Toast.makeText(getApplicationContext(),"Your password was changed",Toast.LENGTH_LONG).show();
-            clearInput();
-        }
-
-        @Override
-        public void onFailure(Exception exception) {
-            closeWaitDialog();
-            newPassword.setBackground(getDrawable(R.drawable.text_border_error));
-            currPassword.setBackground(getDrawable(R.drawable.text_border_error));
-            showDialogMessage("Password change failed", AppHelper.formatException(exception), false);
-        }
-    };
-
-    private  void clearInput() {
+    private void clearInput() {
         currPassword.setText("");
         newPassword.setText("");
     }
@@ -207,8 +206,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private void closeWaitDialog() {
         try {
             waitDialog.dismiss();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             // Wait dialog is already closed or does not exist
         }
     }

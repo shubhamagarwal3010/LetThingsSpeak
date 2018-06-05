@@ -18,8 +18,8 @@
 package com.iot.letthingsspeak.aws;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -78,7 +78,7 @@ public class ChooseMFA extends AppCompatActivity {
     // Return the selected MFA option.
     private void exit(String mfaOption) {
         Intent intent = new Intent();
-        if(mfaOption == null)
+        if (mfaOption == null)
             mfaOption = "";
         intent.putExtra("mfaOption", mfaOption);
         setResult(RESULT_OK, intent);

@@ -4,8 +4,7 @@
     <solid android:color="@android:color/transparent" />
     <stroke
         android:width="@dimen/activity_text_border"
-        android:color="@color/alert"/>
-    <corners
-        android:radius="@dimen/activity_text_radius"/>
+        android:color="@color/alert" />
+    <corners android:radius="@dimen/activity_text_radius" />
 
 </shape>

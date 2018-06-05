@@ -74,13 +74,13 @@ public class MFAActivity extends AppCompatActivity {
         getCode();
     }
 
-    private void init(){
+    private void init() {
         Bundle extras = getIntent().getExtras();
-        if(extras !=null) {
-            if(extras.containsKey("mode")) {
+        if (extras != null) {
+            if (extras.containsKey("mode")) {
                 String mode = extras.getString("mode");
                 mfaScreenText = findViewById(R.id.textViewMFASubTitle);
-                mfaScreenText.setText("Verify with "+mode);
+                mfaScreenText.setText("Verify with " + mode);
             }
         }
 
@@ -125,7 +125,7 @@ public class MFAActivity extends AppCompatActivity {
 
     private void exit(String MFACode) {
         Intent intent = new Intent();
-        if(MFACode == null)
+        if (MFACode == null)
             MFACode = "";
         intent.putExtra("mfacode", MFACode);
         setResult(RESULT_OK, intent);

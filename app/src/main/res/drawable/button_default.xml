@@ -4,8 +4,7 @@
     <solid android:color="@color/button_default" />
     <stroke
         android:width="@dimen/activity_button_border"
-        android:color="@color/button_default"/>
-    <corners
-        android:radius="@dimen/activity_button_radius"/>
+        android:color="@color/button_default" />
+    <corners android:radius="@dimen/activity_button_radius" />
 
 </shape>

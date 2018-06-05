@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2013-2016 Amazon.com,
   ~ Inc. or its affiliates. All Rights Reserved.
   ~
@@ -16,7 +15,5 @@
   ~ limitations under the License.
   -->
 
-<menu
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.iot.letthingsspeak.aws.MainActivity">
-</menu>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.iot.letthingsspeak.aws.MainActivity"></menu>

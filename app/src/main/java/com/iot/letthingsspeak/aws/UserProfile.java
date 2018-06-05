@@ -4,9 +4,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -31,22 +31,84 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserProfile extends AppCompatActivity {
-    private final String TAG="UserActivity";
-
+    private final String TAG = "UserActivity";
+    // To track changes to user details
+    private final List<String> attributesToDelete = new ArrayList<>();
     private AlertDialog userDialog;
     private ProgressDialog waitDialog;
     private ListView attributesList;
-
     // Cognito user objects
     private CognitoUser user;
     private CognitoUserSession session;
     private CognitoUserDetails details;
-
     // User details
     private String username;
+    UpdateAttributesHandler updateHandler = new UpdateAttributesHandler() {
+        @Override
+        public void onSuccess(List<CognitoUserCodeDeliveryDetails> attributesVerificationList) {
+            // Update successful
+            if (attributesVerificationList.size() > 0) {
+                showDialogMessage("Updated", "The updated attributes has to be verified", false);
+            }
+            getDetails();
+        }
 
-    // To track changes to user details
-    private final List<String> attributesToDelete = new ArrayList<>();
+        @Override
+        public void onFailure(Exception exception) {
+            // Update failed
+            closeWaitDialog();
+            showDialogMessage("Update failed", AppHelper.formatException(exception), false);
+        }
+    };
+    GenericHandler deleteHandler = new GenericHandler() {
+        @Override
+        public void onSuccess() {
+            closeWaitDialog();
+
+            // Fetch user details from the the service
+            getDetails();
+        }
+
+        @Override
+        public void onFailure(Exception e) {
+            closeWaitDialog();
+            // Attribute delete failed
+            showDialogMessage("Delete failed", AppHelper.formatException(e), false);
+
+            // Fetch user details from the service
+            getDetails();
+        }
+    };
+    GenericHandler trustedDeviceHandler = new GenericHandler() {
+        @Override
+        public void onSuccess() {
+            // Close wait dialog
+            closeWaitDialog();
+        }
+
+        @Override
+        public void onFailure(Exception exception) {
+            closeWaitDialog();
+            showDialogMessage("Failed to update device status", AppHelper.formatException(exception), true);
+        }
+    };
+    GetDetailsHandler detailsHandler = new GetDetailsHandler() {
+        @Override
+        public void onSuccess(CognitoUserDetails cognitoUserDetails) {
+            closeWaitDialog();
+            // Store details in the AppHandler
+            AppHelper.setUserDetails(cognitoUserDetails);
+            showAttributes();
+            // Trusted devices?
+            handleTrustedDevice();
+        }
+
+        @Override
+        public void onFailure(Exception exception) {
+            closeWaitDialog();
+            showDialogMessage("Could not fetch user details!", AppHelper.formatException(exception), true);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +135,6 @@ public class UserProfile extends AppCompatActivity {
 
         init();
     }
-
 
     // Get user details from CIP service
     private void getDetails() {
@@ -108,12 +169,10 @@ public class UserProfile extends AppCompatActivity {
         getDetails();
     }
 
-
-
     // Update attributes
     private void updateAttribute(String attributeType, String attributeValue) {
 
-        if(attributeType == null || attributeType.length() < 1) {
+        if (attributeType == null || attributeType.length() < 1) {
             return;
         }
         CognitoUserAttributes updatedUserAttributes = new CognitoUserAttributes();
@@ -121,7 +180,6 @@ public class UserProfile extends AppCompatActivity {
         showWaitDialog("Updating...");
         AppHelper.getPool().getUser(AppHelper.getCurrUser()).updateAttributesInBackground(updatedUserAttributes, updateHandler);
     }
-
 
     // Delete attribute
     private void deleteAttribute(String attributeName) {
@@ -131,24 +189,7 @@ public class UserProfile extends AppCompatActivity {
         AppHelper.getPool().getUser(AppHelper.getCurrUser()).deleteAttributesInBackground(attributesToDelete, deleteHandler);
     }
 
-
-    GetDetailsHandler detailsHandler = new GetDetailsHandler() {
-        @Override
-        public void onSuccess(CognitoUserDetails cognitoUserDetails) {
-            closeWaitDialog();
-            // Store details in the AppHandler
-            AppHelper.setUserDetails(cognitoUserDetails);
-            showAttributes();
-            // Trusted devices?
-            handleTrustedDevice();
-        }
-
-        @Override
-        public void onFailure(Exception exception) {
-            closeWaitDialog();
-            showDialogMessage("Could not fetch user details!", AppHelper.formatException(exception), true);
-        }
-    };
+    // Callback handlers
 
     private void handleTrustedDevice() {
         CognitoDevice newDevice = AppHelper.getNewDevice();
@@ -201,60 +242,6 @@ public class UserProfile extends AppCompatActivity {
         userDialog.show();
     }
 
-    // Callback handlers
-
-    UpdateAttributesHandler updateHandler = new UpdateAttributesHandler() {
-        @Override
-        public void onSuccess(List<CognitoUserCodeDeliveryDetails> attributesVerificationList) {
-            // Update successful
-            if(attributesVerificationList.size() > 0) {
-                showDialogMessage("Updated", "The updated attributes has to be verified",  false);
-            }
-            getDetails();
-        }
-
-        @Override
-        public void onFailure(Exception exception) {
-            // Update failed
-            closeWaitDialog();
-            showDialogMessage("Update failed", AppHelper.formatException(exception), false);
-        }
-    };
-
-    GenericHandler deleteHandler = new GenericHandler() {
-        @Override
-        public void onSuccess() {
-            closeWaitDialog();
-
-            // Fetch user details from the the service
-            getDetails();
-        }
-
-        @Override
-        public void onFailure(Exception e) {
-            closeWaitDialog();
-            // Attribute delete failed
-            showDialogMessage("Delete failed", AppHelper.formatException(e), false);
-
-            // Fetch user details from the service
-            getDetails();
-        }
-    };
-
-    GenericHandler trustedDeviceHandler = new GenericHandler() {
-        @Override
-        public void onSuccess() {
-            // Close wait dialog
-            closeWaitDialog();
-        }
-
-        @Override
-        public void onFailure(Exception exception) {
-            closeWaitDialog();
-            showDialogMessage("Failed to update device status", AppHelper.formatException(exception), true);
-        }
-    };
-
     private void showUserDetail(final String attributeType, final String attributeValue) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(attributeType);
@@ -274,7 +261,7 @@ public class UserProfile extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     String newValue = input.getText().toString();
-                    if(!newValue.equals(attributeValue)) {
+                    if (!newValue.equals(attributeValue)) {
                         showWaitDialog("Updating...");
                         updateAttribute(AppHelper.getSignUpFieldsC2O().get(attributeType), newValue);
                     }
@@ -312,13 +299,13 @@ public class UserProfile extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     userDialog.dismiss();
-                    if(exit) {
+                    if (exit) {
                         exit();
                     }
                 } catch (Exception e) {
                     // Log failure
-                    Log.e(TAG," -- Dialog dismiss failed");
-                    if(exit) {
+                    Log.e(TAG, " -- Dialog dismiss failed");
+                    if (exit) {
                         exit();
                     }
                 }
@@ -331,17 +318,16 @@ public class UserProfile extends AppCompatActivity {
     private void closeWaitDialog() {
         try {
             waitDialog.dismiss();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             //
         }
     }
 
-    private void exit () {
+    private void exit() {
         Intent intent = new Intent();
-        if(username == null)
+        if (username == null)
             username = "";
-        intent.putExtra("name",username);
+        intent.putExtra("name", username);
         setResult(RESULT_OK, intent);
         finish();
     }

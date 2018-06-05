@@ -17,21 +17,69 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
             <TextView
+                android:id="@+id/choose_mfa_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
-                android:textAlignment="center"
-                android:id="@+id/choose_mfa_toolbar_title"
+                android:layout_gravity="center"
                 android:text="@string/pick_MFA"
+                android:textAlignment="center"
                 android:textColor="@color/toolbar_items"
                 android:textSize="@dimen/action_bar_text" />
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_choose_mfa" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:id="@+id/textViewChooseMFATitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pick an MFA to continue to login"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Space
+            android:id="@+id/space_Choose_MFA1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_intra_group_separation"
+            android:layout_below="@id/textViewChooseMFATitle" />
+
+        <Button
+            android:id="@+id/buttonChooseMfaCancel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_button_height"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_selector"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/activity_button_text_size" />
+
+        <Space
+            android:id="@+id/space_Choose_MFA2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_intra_group_separation"
+            android:layout_above="@id/buttonChooseMfaCancel" />
+
+        <ListView
+            android:id="@+id/listViewMfaOptions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/space_Choose_MFA2"
+            android:layout_below="@+id/space_Choose_MFA1"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>

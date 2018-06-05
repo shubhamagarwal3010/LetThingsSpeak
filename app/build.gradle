@@ -30,5 +30,5 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.6.8'
     implementation 'com.amazonaws:aws-android-sdk-ddb-mapper:2.6.+'
-    implementation ('com.amazonaws:aws-android-sdk-mobile-client:2.6.+@aar') { transitive = true }
+    implementation('com.amazonaws:aws-android-sdk-mobile-client:2.6.+@aar') { transitive = true }
 }

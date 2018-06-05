@@ -32,16 +32,16 @@ import com.iot.letthingsspeak.R;
  */
 
 public class DisplayMfaOptionsAdapter extends BaseAdapter {
+    private static LayoutInflater layoutInflater;
     private Context context;
     private int count;
-    private static LayoutInflater layoutInflater;
 
     public DisplayMfaOptionsAdapter(Context context) {
         this.context = context;
 
         count = AppHelper.getMfaOptionsCount();
 
-        layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -82,11 +82,10 @@ public class DisplayMfaOptionsAdapter extends BaseAdapter {
         holder.data.setText(item.getDataText());
         holder.data.setTextColor(item.getDataColor());
         int resID = 0;
-        if(item.getDataDrawable() != null) {
-            if(item.getDataDrawable().equals("checked")) {
+        if (item.getDataDrawable() != null) {
+            if (item.getDataDrawable().equals("checked")) {
                 resID = R.drawable.checked;
-            }
-            else if(item.getDataDrawable().equals("not_checked")) {
+            } else if (item.getDataDrawable().equals("not_checked")) {
                 resID = R.drawable.not_checked;
             }
         }

@@ -39,63 +39,51 @@ import java.util.Set;
 public class AppHelper {
     private static final String TAG = "AppHelper";
     // App settings
-
-    private static List<String> attributeDisplaySeq;
-    private static Map<String, String> signUpFieldsC2O;
-    private static Map<String, String> signUpFieldsO2C;
-
-    private static AppHelper appHelper;
-    private static CognitoUserPool userPool;
-    private static String user;
-    private static CognitoDevice newDevice;
-
-    private static CognitoUserAttributes attributesChanged;
-    private static List<AttributeType> attributesToDelete;
-
-    private static List<ItemToDisplay> currDisplayedItems;
-    private static  int itemCount;
-
-    private static List<ItemToDisplay> trustedDevices;
-    private static int trustedDevicesCount;
-    private static List<CognitoDevice> deviceDetails;
-    private static CognitoDevice thisDevice;
-    private static boolean thisDeviceTrustState;
-
-    private static List<ItemToDisplay> firstTimeLogInDetails;
-    private static Map<String, String> firstTimeLogInUserAttributes;
-    private static List<String> firstTimeLogInRequiredAttributes;
-    private static int firstTimeLogInItemsCount;
-    private static Map<String, String> firstTimeLogInUpDatedAttributes;
-    private static String firstTimeLoginNewPassword;
-
-    private static List<ItemToDisplay> mfaOptions;
-    private static List<String> mfaAllOptionsCode;
-
-    // Change the next three lines of code to run this demo on your user pool
-
     /**
      * Add your pool id here
      */
     private static final String userPoolId = "ap-south-1_tp2pIKFfc";
-
     /**
      * Add you app id
      */
     private static final String clientId = "ubqrj73rjchgmq0fkvkftgvu0";
-
     /**
      * App secret associated with your app id - if the App id does not have an associated App secret,
      * set the App secret to null.
      * e.g. clientSecret = null;
      */
     private static final String clientSecret = "1d5ah2jgd4qvk09bvqgkju9h2of04ldpkrtuborsnefkvb94ukk3";
-
     /**
      * Set Your User Pools region.
      * e.g. if your user pools are in US East (N Virginia) then set cognitoRegion = Regions.US_EAST_1.
      */
     private static final Regions cognitoRegion = Regions.AP_SOUTH_1;
+    private static List<String> attributeDisplaySeq;
+    private static Map<String, String> signUpFieldsC2O;
+    private static Map<String, String> signUpFieldsO2C;
+    private static AppHelper appHelper;
+    private static CognitoUserPool userPool;
+    private static String user;
+    private static CognitoDevice newDevice;
+    private static CognitoUserAttributes attributesChanged;
+    private static List<AttributeType> attributesToDelete;
+    private static List<ItemToDisplay> currDisplayedItems;
+    private static int itemCount;
+    private static List<ItemToDisplay> trustedDevices;
+    private static int trustedDevicesCount;
+    private static List<CognitoDevice> deviceDetails;
+    private static CognitoDevice thisDevice;
+    private static boolean thisDeviceTrustState;
+    private static List<ItemToDisplay> firstTimeLogInDetails;
+    private static Map<String, String> firstTimeLogInUserAttributes;
+    private static List<String> firstTimeLogInRequiredAttributes;
+    private static int firstTimeLogInItemsCount;
 
+    // Change the next three lines of code to run this demo on your user pool
+    private static Map<String, String> firstTimeLogInUpDatedAttributes;
+    private static String firstTimeLoginNewPassword;
+    private static List<ItemToDisplay> mfaOptions;
+    private static List<String> mfaAllOptionsCode;
     // User details from the service
     private static CognitoUserSession currSession;
     private static CognitoUserDetails userDetails;
@@ -145,7 +133,7 @@ public class AppHelper {
         currDisplayedItems = new ArrayList<ItemToDisplay>();
         trustedDevices = new ArrayList<ItemToDisplay>();
         firstTimeLogInDetails = new ArrayList<ItemToDisplay>();
-        firstTimeLogInUpDatedAttributes= new HashMap<String, String>();
+        firstTimeLogInUpDatedAttributes = new HashMap<String, String>();
 
         newDevice = null;
         thisDevice = null;
@@ -162,7 +150,7 @@ public class AppHelper {
         return signUpFieldsC2O;
     }
 
-    public static  Map<String, String> getSignUpFieldsO2C() {
+    public static Map<String, String> getSignUpFieldsO2C() {
         return signUpFieldsO2C;
     }
 
@@ -170,21 +158,21 @@ public class AppHelper {
         return attributeDisplaySeq;
     }
 
+    public static CognitoUserSession getCurrSession() {
+        return currSession;
+    }
+
     public static void setCurrSession(CognitoUserSession session) {
         currSession = session;
     }
 
-    public static  CognitoUserSession getCurrSession() {
-        return currSession;
+    public static CognitoUserDetails getUserDetails() {
+        return userDetails;
     }
 
     public static void setUserDetails(CognitoUserDetails details) {
         userDetails = details;
         refreshWithSync();
-    }
-
-    public static  CognitoUserDetails getUserDetails() {
-        return userDetails;
     }
 
     public static String getCurrUser() {
@@ -197,7 +185,7 @@ public class AppHelper {
 
     ///public static boolean isPhoneVerified() {
     ///    return phoneVerified;
-   /// }
+    /// }
 
     public static boolean isEmailVerified() {
         return emailVerified;
@@ -207,16 +195,16 @@ public class AppHelper {
 //        return phoneAvailable;
 //    }
 
-    public static boolean isEmailAvailable() {
-        return emailAvailable;
+    public static void setEmailVerified(boolean emailVerif) {
+        emailVerified = emailVerif;
     }
 
 //    public static void setPhoneVerified(boolean phoneVerif) {
 //        phoneVerified = phoneVerif;
 //    }
 
-    public static void setEmailVerified(boolean emailVerif) {
-        emailVerified = emailVerif;
+    public static boolean isEmailAvailable() {
+        return emailAvailable;
     }
 
 //    public static void setPhoneAvailable(boolean phoneAvail) {
@@ -237,32 +225,32 @@ public class AppHelper {
 
     public static List<String> getNewAvailableOptions() {
         List<String> newOption = new ArrayList<String>();
-        for(String attribute : attributeDisplaySeq) {
-            if(!(currUserAttributes.contains(attribute))) {
+        for (String attribute : attributeDisplaySeq) {
+            if (!(currUserAttributes.contains(attribute))) {
                 newOption.add(attribute);
             }
         }
-        return  newOption;
+        return newOption;
     }
 
     public static String formatException(Exception exception) {
         String formattedString = "Internal Error";
-        Log.e(TAG, " -- Error: "+exception.toString());
+        Log.e(TAG, " -- Error: " + exception.toString());
         Log.getStackTraceString(exception);
 
         String temp = exception.getMessage();
 
-        if(temp != null && temp.length() > 0) {
+        if (temp != null && temp.length() > 0) {
             formattedString = temp.split("\\(")[0];
-            if(temp != null && temp.length() > 0) {
+            if (temp != null && temp.length() > 0) {
                 return formattedString;
             }
         }
 
-        return  formattedString;
+        return formattedString;
     }
 
-    public  static  int getItemCount() {
+    public static int getItemCount() {
         return itemCount;
     }
 
@@ -271,11 +259,11 @@ public class AppHelper {
     }
 
     public static int getFirstTimeLogInItemsCount() {
-        return  firstTimeLogInItemsCount;
+        return firstTimeLogInItemsCount;
     }
 
-    public  static ItemToDisplay getItemForDisplay(int position) {
-        return  currDisplayedItems.get(position);
+    public static ItemToDisplay getItemForDisplay(int position) {
+        return currDisplayedItems.get(position);
     }
 
     public static ItemToDisplay getDeviceForDisplay(int position) {
@@ -297,7 +285,7 @@ public class AppHelper {
     }
 
     public static void setUserAttributeForFirstTimeLogin(String attributeName, String attributeValue) {
-        if (firstTimeLogInUserAttributes ==  null) {
+        if (firstTimeLogInUserAttributes == null) {
             firstTimeLogInUserAttributes = new HashMap<String, String>();
         }
         firstTimeLogInUserAttributes.put(attributeName, attributeValue);
@@ -309,19 +297,19 @@ public class AppHelper {
         return firstTimeLogInUpDatedAttributes;
     }
 
-    public static void setPasswordForFirstTimeLogin(String password) {
-        firstTimeLoginNewPassword = password;
-    }
-
     public static String getPasswordForFirstTimeLogin() {
         return firstTimeLoginNewPassword;
+    }
+
+    public static void setPasswordForFirstTimeLogin(String password) {
+        firstTimeLoginNewPassword = password;
     }
 
     private static void refreshDisplayItemsForFirstTimeLogin() {
         firstTimeLogInItemsCount = 0;
         firstTimeLogInDetails = new ArrayList<ItemToDisplay>();
 
-        for(Map.Entry<String, String> attr: firstTimeLogInUserAttributes.entrySet()) {
+        for (Map.Entry<String, String> attr : firstTimeLogInUserAttributes.entrySet()) {
             if ("email_verified".equals(attr.getKey())) {
                 continue;
             }
@@ -335,7 +323,7 @@ public class AppHelper {
             firstTimeLogInItemsCount++;
         }
 
-        for (String attr: firstTimeLogInRequiredAttributes) {
+        for (String attr : firstTimeLogInRequiredAttributes) {
             if (!firstTimeLogInUserAttributes.containsKey(attr)) {
                 ItemToDisplay item = new ItemToDisplay(attr, "", "Required", Color.BLACK, Color.DKGRAY, Color.parseColor("#329AD6"), 0, null);
                 firstTimeLogInDetails.add(item);
@@ -353,7 +341,7 @@ public class AppHelper {
         thisDeviceTrustState = false;
         deviceDetails = devicesList;
         trustedDevices = new ArrayList<ItemToDisplay>();
-        for(CognitoDevice device: devicesList) {
+        for (CognitoDevice device : devicesList) {
             if (thisDevice != null && thisDevice.getDeviceKey().equals(device.getDeviceKey())) {
                 thisDeviceTrustState = true;
             } else {
@@ -377,11 +365,11 @@ public class AppHelper {
         mfaAllOptionsCode = options;
         mfaOptions = new ArrayList<ItemToDisplay>();
         String textToDisplay = "";
-        for (String option: options) {
+        for (String option : options) {
             if ("SMS_MFA".equals(option)) {
                 textToDisplay = "Send SMS";
                 if (parameters.containsKey("CODE_DELIVERY_DESTINATION")) {
-                    textToDisplay = textToDisplay + " to "+ parameters.get("CODE_DELIVERY_DESTINATION");
+                    textToDisplay = textToDisplay + " to " + parameters.get("CODE_DELIVERY_DESTINATION");
                 }
             } else if ("SOFTWARE_TOKEN_MFA".equals(option)) {
                 textToDisplay = "Use TOTP";
@@ -449,8 +437,8 @@ public class AppHelper {
         signUpFieldsC2O.put("Phone number", "phone_number");
         signUpFieldsC2O.put("Phone number verified", "phone_number_verified");
         signUpFieldsC2O.put("Email verified", "email_verified");
-        signUpFieldsC2O.put("Email","email");
-        signUpFieldsC2O.put("Middle name","middle_name");
+        signUpFieldsC2O.put("Email", "email");
+        signUpFieldsC2O.put("Middle name", "middle_name");
 
         signUpFieldsO2C = new HashMap<String, String>();
         signUpFieldsO2C.put("given_name", "Given name");
@@ -479,19 +467,19 @@ public class AppHelper {
         currUserAttributes.clear();
         itemCount = 0;
 
-        for(Map.Entry<String, String> attr: userDetails.getAttributes().getAttributes().entrySet()) {
+        for (Map.Entry<String, String> attr : userDetails.getAttributes().getAttributes().entrySet()) {
 
             tempKeys.add(attr.getKey());
             tempValues.add(attr.getValue());
 
-            if(attr.getKey().contains("email_verified")) {
+            if (attr.getKey().contains("email_verified")) {
                 emailVerified = attr.getValue().contains("true");
             }
 //            else if(attr.getKey().contains("phone_number_verified")) {
 //                phoneVerified = attr.getValue().contains("true");
 //            }
 
-            if(attr.getKey().equals("email")) {
+            if (attr.getKey().equals("email")) {
                 emailAvailable = true;
             }
 //            else if(attr.getKey().equals("phone_number")) {
@@ -501,20 +489,19 @@ public class AppHelper {
 
         // Arrange the input attributes per the display sequence
         Set<String> keySet = new HashSet<>(tempKeys);
-        for(String det: attributeDisplaySeq) {
-            if(keySet.contains(det)) {
+        for (String det : attributeDisplaySeq) {
+            if (keySet.contains(det)) {
                 // Adding items to display list in the required sequence
 
                 ItemToDisplay item = new ItemToDisplay(signUpFieldsO2C.get(det), tempValues.get(tempKeys.indexOf(det)), "",
                         Color.BLACK, Color.DKGRAY, Color.parseColor("#37A51C"),
                         0, null);
 
-                if(det.contains("email")) {
-                    if(emailVerified) {
+                if (det.contains("email")) {
+                    if (emailVerified) {
                         item.setDataDrawable("checked");
                         item.setMessageText("Email verified");
-                    }
-                    else {
+                    } else {
                         item.setDataDrawable("not_checked");
                         item.setMessageText("Email not verified");
                         item.setMessageColor(Color.parseColor("#E94700"));
@@ -532,7 +519,7 @@ public class AppHelper {
 //                        item.setMessageColor(Color.parseColor("#E94700"));
 //                    }
 //                }
-                
+
                 currDisplayedItems.add(item);
                 currUserAttributes.add(det);
                 itemCount++;

@@ -17,8 +17,8 @@ import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
 import com.amazonaws.services.dynamodbv2.model.KeyType;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
-import com.iot.letthingsspeak.aws.AppHelper;
 import com.iot.letthingsspeak.UserActivity;
+import com.iot.letthingsspeak.aws.AppHelper;
 
 public class DynamoDBManager {
 
@@ -112,6 +112,7 @@ public class DynamoDBManager {
     }    /*
      * Inserts ten users with userNo from 1 to 10 and random names.
      */
+
     public static void insertRoom(String roomName) {
         AmazonDynamoDBClient ddb = UserActivity.clientManager
                 .ddb();
@@ -194,6 +195,7 @@ public class DynamoDBManager {
         public void setUserId(final String _userId) {
             this._userId = _userId;
         }
+
         @DynamoDBRangeKey(attributeName = "deviceId")
         @DynamoDBAttribute(attributeName = "deviceId")
         public Double getDeviceId() {
@@ -203,6 +205,7 @@ public class DynamoDBManager {
         public void setDeviceId(final Double _deviceId) {
             this._deviceId = _deviceId;
         }
+
         @DynamoDBAttribute(attributeName = "deviceName")
         public String getDeviceName() {
             return _deviceName;
@@ -211,6 +214,7 @@ public class DynamoDBManager {
         public void setDeviceName(final String _deviceName) {
             this._deviceName = _deviceName;
         }
+
         @DynamoDBAttribute(attributeName = "pin")
         public Double getPin() {
             return _pin;
@@ -219,6 +223,7 @@ public class DynamoDBManager {
         public void setPin(final Double _pin) {
             this._pin = _pin;
         }
+
         @DynamoDBAttribute(attributeName = "roomName")
         public String getRoomName() {
             return _roomName;
@@ -227,6 +232,7 @@ public class DynamoDBManager {
         public void setRoomName(final String _roomName) {
             this._roomName = _roomName;
         }
+
         @DynamoDBAttribute(attributeName = "status")
         public byte[] getStatus() {
             return _status;

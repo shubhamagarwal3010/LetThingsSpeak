@@ -5,6 +5,6 @@
     <stroke
         android:width="@dimen/activity_text_border"
         android:color="@color/text_border_selected" />
-    <corners android:radius="@dimen/activity_text_radius"/>
+    <corners android:radius="@dimen/activity_text_radius" />
 
 </shape>

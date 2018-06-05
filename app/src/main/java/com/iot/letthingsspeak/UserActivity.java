@@ -59,13 +59,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
-    private RecyclerView roomTypeRecyclerView;
     public static final int ACTIVITY_REQUEST_CODE = 201;
-    List<RoomDetails> room = new ArrayList<>();
-
-    private final String TAG="UserActivity";
     public static AmazonClientManager clientManager = null;
-
+    private final String TAG = "UserActivity";
+    // To track changes to user details
+    private final List<String> attributesToDelete = new ArrayList<>();
+    List<RoomDetails> room = new ArrayList<>();
+    private RecyclerView roomTypeRecyclerView;
     private NavigationView nDrawer;
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -73,17 +73,12 @@ public class UserActivity extends AppCompatActivity {
     private AlertDialog userDialog;
     private ProgressDialog waitDialog;
     private ListView attributesList;
-
     // Cognito user objects
     private CognitoUser user;
     private CognitoUserSession session;
     private CognitoUserDetails details;
-
     // User details
     private String username;
-
-    // To track changes to user details
-    private final List<String> attributesToDelete = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +97,7 @@ public class UserActivity extends AppCompatActivity {
 
         // Set navigation drawer for this screen
         mDrawer = findViewById(R.id.user_drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this,mDrawer, toolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
         mDrawer.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
@@ -142,7 +137,7 @@ public class UserActivity extends AppCompatActivity {
         roomTypeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         room.add(new RoomDetails("Bed Room ", "1"));
 
-        room.add(new RoomDetails("Living Room ","0"));
+        room.add(new RoomDetails("Living Room ", "0"));
 
         RoomStore.setRoomDetails(room);
         HomeAdapter homeAdapter;
@@ -158,6 +153,160 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity_user_menu, menu);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        exit();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == ACTIVITY_REQUEST_CODE) {
+                String message = data.getStringExtra(AddRoom.ADDED_ROOM);
+
+                room.add(new RoomDetails(message, "1"));
+
+                RoomStore.setRoomDetails(room);
+
+                HomeAdapter homeAdapter = new HomeAdapter(RoomStore.getRoomDetails());
+                roomTypeRecyclerView.setAdapter(homeAdapter);
+            }
+        }
+        switch (requestCode) {
+            case 21:
+                // Verify attributes
+                if (resultCode == RESULT_OK) {
+                    boolean refresh = data.getBooleanExtra("refresh", true);
+                    if (refresh) {
+                    }
+                }
+                break;
+        }
+    }
+
+    // Handle when the a navigation item is selected
+    private void setNavDrawer() {
+        nDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                performAction(item);
+                return true;
+            }
+        });
+    }
+
+    // Perform the action for the selected navigation item
+    private void performAction(MenuItem item) {
+        // Close the navigation drawer
+        mDrawer.closeDrawers();
+
+        // Find which item was selected
+        switch (item.getItemId()) {
+            case R.id.nav_user_profile:
+                // Change password
+                userProfile();
+                break;
+            case R.id.nav_user_change_password:
+                // Change password
+                changePassword();
+                break;
+            case R.id.nav_user_sign_out:
+                // Sign out from this account
+                signOut();
+                break;
+            case R.id.nav_user_about:
+                // For the inquisitive
+                Intent aboutAppActivity = new Intent(this, AboutApp.class);
+                startActivity(aboutAppActivity);
+                break;
+        }
+    }
+
+    // Change user password
+    private void changePassword() {
+        Intent changePssActivity = new Intent(this, ChangePasswordActivity.class);
+        startActivity(changePssActivity);
+    }
+
+    // Show User Profile
+    private void userProfile() {
+        Intent userProfileActivity = new Intent(this, UserProfile.class);
+        startActivity(userProfileActivity);
+    }
+
+    // Sign out user
+    private void signOut() {
+        user.signOut();
+        exit();
+    }
+
+    // Initialize this activity
+    private void init() {
+        // Get the user name
+        Bundle extras = getIntent().getExtras();
+        username = AppHelper.getCurrUser();
+        user = AppHelper.getPool().getUser(username);
+    }
+
+    private void showWaitDialog(String message) {
+        closeWaitDialog();
+        waitDialog = new ProgressDialog(this);
+        waitDialog.setTitle(message);
+        waitDialog.show();
+    }
+
+    private void showDialogMessage(String title, String body, final boolean exit) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title).setMessage(body).setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                try {
+                    userDialog.dismiss();
+                    if (exit) {
+                        exit();
+                    }
+                } catch (Exception e) {
+                    // Log failure
+                    Log.e(TAG, " -- Dialog dismiss failed");
+                    if (exit) {
+                        exit();
+                    }
+                }
+            }
+        });
+        userDialog = builder.create();
+        userDialog.show();
+    }
+
+    private void closeWaitDialog() {
+        try {
+            waitDialog.dismiss();
+        } catch (Exception e) {
+            //
+        }
+    }
+
+    private void exit() {
+        Intent intent = new Intent();
+        if (username == null)
+            username = "";
+        intent.putExtra("name", username);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    private enum DynamoDBManagerType {
+        GET_TABLE_STATUS, CREATE_TABLE, INSERT_USER
     }
 
     private class DynamoDBManagerTask extends
@@ -212,10 +361,6 @@ public class UserActivity extends AppCompatActivity {
         }
     }
 
-    private enum DynamoDBManagerType {
-        GET_TABLE_STATUS, CREATE_TABLE, INSERT_USER
-    }
-
     private class DynamoDBManagerTaskResult {
         private DynamoDBManagerType taskType;
         private String tableStatus;
@@ -235,159 +380,5 @@ public class UserActivity extends AppCompatActivity {
         public void setTableStatus(String tableStatus) {
             this.tableStatus = tableStatus;
         }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_user_menu, menu);
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        exit();
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode == RESULT_OK) {
-            if(requestCode == ACTIVITY_REQUEST_CODE){
-                String message = data.getStringExtra(AddRoom.ADDED_ROOM);
-
-                room.add(new RoomDetails(message, "1"));
-
-                RoomStore.setRoomDetails(room);
-
-                HomeAdapter homeAdapter = new HomeAdapter(RoomStore.getRoomDetails());
-                roomTypeRecyclerView.setAdapter(homeAdapter);
-            }
-        }
-        switch (requestCode) {
-            case 21:
-                // Verify attributes
-                if(resultCode == RESULT_OK) {
-                    boolean refresh = data.getBooleanExtra("refresh", true);
-                    if (refresh) {
-                    }
-                }
-                break;
-        }
-    }
-
-    // Handle when the a navigation item is selected
-    private void setNavDrawer() {
-        nDrawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                performAction(item);
-                return true;
-            }
-        });
-    }
-
-    // Perform the action for the selected navigation item
-    private void performAction(MenuItem item) {
-        // Close the navigation drawer
-        mDrawer.closeDrawers();
-
-        // Find which item was selected
-        switch(item.getItemId()) {
-            case R.id.nav_user_profile:
-                // Change password
-                userProfile();
-                break;
-            case R.id.nav_user_change_password:
-                // Change password
-                changePassword();
-                break;
-            case R.id.nav_user_sign_out:
-                // Sign out from this account
-                signOut();
-                break;
-            case R.id.nav_user_about:
-                // For the inquisitive
-                Intent aboutAppActivity = new Intent(this, AboutApp.class);
-                startActivity(aboutAppActivity);
-                break;
-        }
-    }
-
-
-    // Change user password
-    private void changePassword() {
-        Intent changePssActivity = new Intent(this, ChangePasswordActivity.class);
-        startActivity(changePssActivity);
-    }
-
-    // Show User Profile
-    private void userProfile() {
-        Intent userProfileActivity = new Intent(this, UserProfile.class);
-        startActivity(userProfileActivity);
-    }
-
-    // Sign out user
-    private void signOut() {
-        user.signOut();
-        exit();
-    }
-
-    // Initialize this activity
-    private void init() {
-        // Get the user name
-        Bundle extras = getIntent().getExtras();
-        username = AppHelper.getCurrUser();
-        user = AppHelper.getPool().getUser(username);
-    }
-
-
-    private void showWaitDialog(String message) {
-        closeWaitDialog();
-        waitDialog = new ProgressDialog(this);
-        waitDialog.setTitle(message);
-        waitDialog.show();
-    }
-
-    private void showDialogMessage(String title, String body, final boolean exit) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title).setMessage(body).setNeutralButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                try {
-                    userDialog.dismiss();
-                    if(exit) {
-                        exit();
-                    }
-                } catch (Exception e) {
-                    // Log failure
-                    Log.e(TAG," -- Dialog dismiss failed");
-                    if(exit) {
-                        exit();
-                    }
-                }
-            }
-        });
-        userDialog = builder.create();
-        userDialog.show();
-    }
-
-    private void closeWaitDialog() {
-        try {
-            waitDialog.dismiss();
-        }
-        catch (Exception e) {
-            //
-        }
-    }
-
-    private void exit () {
-        Intent intent = new Intent();
-        if(username == null)
-            username = "";
-        intent.putExtra("name",username);
-        setResult(RESULT_OK, intent);
-        finish();
     }
 }

@@ -19,8 +19,8 @@ import java.util.List;
 
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeNewsViewHolder> {
-    private List<RoomDetails> roomDetails;
     public int ROOM_DETAILS_REQUEST_CODE = 9283;
+    private List<RoomDetails> roomDetails;
 
     public HomeAdapter(List<RoomDetails> newsArticles) {
         this.roomDetails = newsArticles;
@@ -29,7 +29,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeNewsViewHo
     @NonNull
     @Override
     public HomeNewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_news, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_view_home, parent, false);
         HomeNewsViewHolder homeNewsViewHolder = new HomeNewsViewHolder(view);
         return homeNewsViewHolder;
     }
@@ -63,7 +63,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeNewsViewHo
             Intent intent = new Intent(context.getApplicationContext(), DeviceActivity.class);
             RoomDetails roomDetail = roomDetails.get(getAdapterPosition());
             intent.putExtra(Constants.TITLE_KEY, roomDetail.getRoomType());
-            ((Activity)context).startActivityForResult(intent, ROOM_DETAILS_REQUEST_CODE);
+            ((Activity) context).startActivityForResult(intent, ROOM_DETAILS_REQUEST_CODE);
 
         }
     }

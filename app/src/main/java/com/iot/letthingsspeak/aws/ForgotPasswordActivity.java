@@ -68,15 +68,15 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         getCode();
     }
 
-    private void init(){
+    private void init() {
 
         Bundle extras = getIntent().getExtras();
-        if (extras !=null) {
+        if (extras != null) {
             if (extras.containsKey("destination")) {
                 String dest = extras.getString("destination");
                 String delMed = extras.getString("deliveryMed");
                 TextView message = findViewById(R.id.textViewForgotPasswordMessage);
-                String textToDisplay = "Code to set a new password was sent to " + dest + " via "+delMed;
+                String textToDisplay = "Code to set a new password was sent to " + dest + " via " + delMed;
                 message.setText(textToDisplay);
             }
         }
@@ -157,7 +157,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     private void exit(String newPass, String code) {
         Intent intent = new Intent();
-        if(newPass == null || code == null) {
+        if (newPass == null || code == null) {
             newPass = "";
             code = "";
         }

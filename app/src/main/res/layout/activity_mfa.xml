@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2013-2016 Amazon.com,
   ~ Inc. or its affiliates. All Rights Reserved.
   ~
@@ -34,21 +33,109 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
             <TextView
+                android:id="@+id/mfa_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
-                android:textAlignment="center"
-                android:id="@+id/mfa_toolbar_title"
+                android:layout_gravity="center"
                 android:text="@string/Menu"
+                android:textAlignment="center"
                 android:textColor="@color/toolbar_items"
                 android:textSize="@dimen/action_bar_text" />
-            </android.support.v7.widget.Toolbar>
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_mfa" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:id="@+id/textViewMFATitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MFA verification required to authenticate"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Space
+            android:id="@+id/space_MFA1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_intra_group_separation"
+            android:layout_below="@id/textViewMFATitle" />
+
+        <TextView
+            android:id="@+id/textViewMFASubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/space_MFA1"
+            android:text="Code sent"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Space
+            android:id="@+id/space_MFA2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_inter_group_separation"
+            android:layout_below="@id/textViewMFASubTitle" />
+
+        <TextView
+            android:id="@+id/textViewMFACodeLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/space_MFA2"
+            android:layout_centerHorizontal="true"
+            android:text=" "
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="@dimen/activity_text_size_small" />
+
+        <EditText
+            android:id="@+id/editTextMFACode"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_text_height"
+            android:layout_below="@id/textViewMFACodeLabel"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/text_border_selector"
+            android:hint="Verification code"
+            android:inputType="number"
+            android:paddingLeft="@dimen/activity_text_padding"
+            android:paddingRight="@dimen/activity_text_padding" />
+
+        <TextView
+            android:id="@+id/textViewMFACodeMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextMFACode"
+            android:layout_centerHorizontal="true"
+            android:color="@color/alert"
+            android:text=" "
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="@dimen/activity_text_size_small" />
+
+        <Space
+            android:id="@+id/space_MFA3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_intra_group_separation"
+            android:layout_below="@id/textViewMFACodeMessage" />
+
+        <Button
+            android:id="@+id/mfa_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/activity_button_height"
+            android:layout_below="@id/space_MFA3"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_selector"
+            android:onClick="sendMFA"
+            android:text="Verify"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/activity_button_text_size" />
+    </RelativeLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>

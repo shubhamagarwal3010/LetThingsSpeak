@@ -28,18 +28,19 @@ import android.widget.TextView;
 import com.iot.letthingsspeak.R;
 
 public class UserAttributesAdapter extends BaseAdapter {
+    private static LayoutInflater layoutInflater;
     private String TAG = "UserAttributesAdapter";
     private Context context;
     private int count;
-    private static LayoutInflater layoutInflater;
 
     public UserAttributesAdapter(Context context) {
         this.context = context;
 
         count = AppHelper.getItemCount();
 
-        layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+
     @Override
     public int getCount() {
         return count;
@@ -59,7 +60,7 @@ public class UserAttributesAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Holder holder;
 
-        if(convertView == null) {
+        if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.fields_generic, null);
             holder = new Holder();
             holder.label = convertView.findViewById(R.id.textViewUserDetailLabel);
@@ -67,8 +68,7 @@ public class UserAttributesAdapter extends BaseAdapter {
             holder.message = convertView.findViewById(R.id.textViewUserDetailMessage);
 
             convertView.setTag(holder);
-        }
-        else {
+        } else {
             holder = (Holder) convertView.getTag();
         }
 
@@ -79,11 +79,10 @@ public class UserAttributesAdapter extends BaseAdapter {
         holder.data.setText(item.getDataText());
         holder.data.setTextColor(item.getDataColor());
         int resID = 0;
-        if(item.getDataDrawable() != null) {
-            if(item.getDataDrawable().equals("checked")) {
+        if (item.getDataDrawable() != null) {
+            if (item.getDataDrawable().equals("checked")) {
                 resID = R.drawable.checked;
-            }
-            else if(item.getDataDrawable().equals("not_checked")) {
+            } else if (item.getDataDrawable().equals("not_checked")) {
                 resID = R.drawable.not_checked;
             }
         }

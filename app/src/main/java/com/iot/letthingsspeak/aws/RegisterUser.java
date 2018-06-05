@@ -21,9 +21,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -52,8 +52,32 @@ public class RegisterUser extends AppCompatActivity {
     private AlertDialog userDialog;
     private ProgressDialog waitDialog;
     private String usernameInput;
-    private String userPasswd;
+    SignUpHandler signUpHandler = new SignUpHandler() {
+        @Override
+        public void onSuccess(CognitoUser user, boolean signUpConfirmationState,
+                              CognitoUserCodeDeliveryDetails cognitoUserCodeDeliveryDetails) {
+            // Check signUpConfirmationState to see if the user is already confirmed
+            closeWaitDialog();
+            Boolean regState = signUpConfirmationState;
+            if (signUpConfirmationState) {
+                // User is already confirmed
+                showDialogMessage("Sign up successful!", usernameInput + " has been Confirmed", true);
+            } else {
+                // User is not confirmed
+                confirmSignUp(cognitoUserCodeDeliveryDetails);
+            }
+        }
 
+        @Override
+        public void onFailure(Exception exception) {
+            closeWaitDialog();
+            TextView label = findViewById(R.id.textViewRegUserIdMessage);
+            label.setText("Sign up failed");
+            username.setBackground(getDrawable(R.drawable.text_border_error));
+            showDialogMessage("Sign up failed", AppHelper.formatException(exception), false);
+        }
+    };
+    private String userPasswd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +111,6 @@ public class RegisterUser extends AppCompatActivity {
         init();
     }
 
-
     // This will create the list/form for registration
     private void init() {
         username = findViewById(R.id.editTextRegUserId);
@@ -120,7 +143,7 @@ public class RegisterUser extends AppCompatActivity {
         password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if(s.length() == 0) {
+                if (s.length() == 0) {
                     TextView label = findViewById(R.id.textViewRegUserPasswordLabel);
                     label.setText(password.getHint());
                     password.setBackground(getDrawable(R.drawable.text_border_selector));
@@ -136,7 +159,7 @@ public class RegisterUser extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.length() == 0) {
+                if (s.length() == 0) {
                     TextView label = findViewById(R.id.textViewRegUserPasswordLabel);
                     label.setText("");
                 }
@@ -275,36 +298,9 @@ public class RegisterUser extends AppCompatActivity {
         });
     }
 
-    SignUpHandler signUpHandler = new SignUpHandler() {
-        @Override
-        public void onSuccess(CognitoUser user, boolean signUpConfirmationState,
-                              CognitoUserCodeDeliveryDetails cognitoUserCodeDeliveryDetails) {
-            // Check signUpConfirmationState to see if the user is already confirmed
-            closeWaitDialog();
-            Boolean regState = signUpConfirmationState;
-            if (signUpConfirmationState) {
-                // User is already confirmed
-                showDialogMessage("Sign up successful!",usernameInput+" has been Confirmed", true);
-            }
-            else {
-                // User is not confirmed
-               confirmSignUp(cognitoUserCodeDeliveryDetails);
-            }
-        }
-
-        @Override
-        public void onFailure(Exception exception) {
-            closeWaitDialog();
-            TextView label = findViewById(R.id.textViewRegUserIdMessage);
-            label.setText("Sign up failed");
-            username.setBackground(getDrawable(R.drawable.text_border_error));
-            showDialogMessage("Sign up failed",AppHelper.formatException(exception),false);
-        }
-    };
-
     private void confirmSignUp(CognitoUserCodeDeliveryDetails cognitoUserCodeDeliveryDetails) {
         Intent intent = new Intent(this, SignUpConfirm.class);
-        intent.putExtra("source","signup");
+        intent.putExtra("source", "signup");
         intent.putExtra("name", usernameInput);
         intent.putExtra("destination", cognitoUserCodeDeliveryDetails.getDestination());
         intent.putExtra("deliveryMed", cognitoUserCodeDeliveryDetails.getDeliveryMedium());
@@ -315,9 +311,9 @@ public class RegisterUser extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 10) {
-            if(resultCode == RESULT_OK){
+            if (resultCode == RESULT_OK) {
                 String name = null;
-                if(data.hasExtra("name")) {
+                if (data.hasExtra("name")) {
                     name = data.getStringExtra("name");
                 }
                 exit(name, userPasswd);
@@ -332,11 +328,11 @@ public class RegisterUser extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     userDialog.dismiss();
-                    if(exit) {
+                    if (exit) {
                         exit(usernameInput);
                     }
                 } catch (Exception e) {
-                    if(exit) {
+                    if (exit) {
                         exit(usernameInput);
                     }
                 }
@@ -356,8 +352,7 @@ public class RegisterUser extends AppCompatActivity {
     private void closeWaitDialog() {
         try {
             waitDialog.dismiss();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             //
         }
     }

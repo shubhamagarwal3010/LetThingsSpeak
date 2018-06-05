@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.iot.letthingsspeak.R;
 
@@ -22,11 +21,16 @@ import java.util.List;
 import static com.iot.letthingsspeak.constants.Constants.TITLE_KEY;
 
 public class DeviceActivity extends AppCompatActivity {
-    private static final String KEY_INDEX = "device_index";
-
-    private RecyclerView deviceRecyclerView;
     public static final int DEVICE_ACTIVITY_REQUEST_CODE = 202;
+    private static final String KEY_INDEX = "device_index";
     List<DeviceDetails> device = new ArrayList<>();
+    private RecyclerView deviceRecyclerView;
+
+    public static void launch(Context context, int index) {
+        Intent intent = new Intent(context, DeviceActivity.class);
+        intent.putExtra(KEY_INDEX, index);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +47,12 @@ public class DeviceActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        TextView main_title = findViewById(R.id.device_title);
-        main_title.setText("Device");
-
-
-
 
         deviceRecyclerView = findViewById(R.id.device_recyclerview);
         deviceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         device.add(new DeviceDetails("Bulb", "1"));
 
-        device.add(new DeviceDetails("Fan","0"));
+        device.add(new DeviceDetails("Fan", "0"));
 
         DeviceStore.setDeviceDetails(device);
         DeviceAdapter deviceAdapter = new DeviceAdapter(DeviceStore.getDeviceDetails());
@@ -80,8 +79,8 @@ public class DeviceActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK) {
-            if(requestCode == DEVICE_ACTIVITY_REQUEST_CODE){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == DEVICE_ACTIVITY_REQUEST_CODE) {
                 String message = data.getStringExtra(AddDevice.ADDED_DEVICE);
 
                 device.add(new DeviceDetails(message, "1"));
@@ -92,11 +91,6 @@ public class DeviceActivity extends AppCompatActivity {
                 deviceRecyclerView.setAdapter(deviceAdapter);
             }
         }
-    }
-    public static void launch(Context context, int index) {
-        Intent intent = new Intent(context, DeviceActivity.class);
-        intent.putExtra(KEY_INDEX, index);
-        context.startActivity(intent);
     }
 
     @Override

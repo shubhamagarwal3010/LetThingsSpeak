@@ -2,6 +2,9 @@ package com.iot.letthingsspeak.device;
 
 public class DeviceDetails {
 
+    private String deviceName;
+    private String status;
+
     public DeviceDetails(String deviceName, String status) {
         this.deviceName = deviceName;
         this.status = status;
@@ -22,7 +25,4 @@ public class DeviceDetails {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    private String deviceName;
-    private String status;
 }

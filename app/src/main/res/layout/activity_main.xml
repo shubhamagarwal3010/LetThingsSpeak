@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     tools:context="com.iot.letthingsspeak.aws.MainActivity">
 
@@ -18,27 +18,29 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:textAlignment="center"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
             <TextView
+                android:id="@+id/main_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
-                android:textAlignment="center"
-                android:id="@+id/main_toolbar_title"
+                android:layout_gravity="center"
                 android:text="@string/Menu"
+                android:textAlignment="center"
                 android:textColor="@color/toolbar_items"
                 android:textSize="@dimen/action_bar_text" />
         </android.support.v7.widget.Toolbar>
 
 
     </android.support.design.widget.AppBarLayout>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ScrollView01"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:scrollbars="none" >
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ScrollView01"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <!-- Set the Main content -->
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -51,183 +53,183 @@
             tools:context="com.iot.letthingsspeak.aws.MainActivity">
 
             <ImageView
+                android:id="@+id/imageViewAppMainCognitoIcon"
                 android:layout_width="110dp"
                 android:layout_height="110dp"
-                android:id="@+id/imageViewAppMainCognitoIcon"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:src="@mipmap/cognito"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY"
+                android:src="@mipmap/cognito" />
 
             <Space
+                android:id="@+id/space_1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/activity_inter_group_separation"
                 android:layout_below="@+id/imageViewAppMainCognitoIcon"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/space_1" />
+                android:layout_centerHorizontal="true" />
 
             <TextView
+                android:id="@+id/textViewAppMainTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/app_main_screen_title"
-                android:textSize="30sp"
-                android:id="@+id/textViewAppMainTitle"
                 android:layout_below="@+id/space_1"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:text="@string/app_main_screen_title"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="30sp" />
 
             <Space
+                android:id="@+id/space"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/activity_inter_group_separation"
-                android:id="@+id/space"
-                android:layout_below="@+id/textViewAppMainTitle"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textViewAppMainTitle" />
 
             <TextView
+                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/app_main_desc"
-                android:id="@+id/textView"
                 android:layout_below="@+id/space"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:text="@string/app_main_desc"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <Space
+                android:id="@+id/space2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/activity_inter_group_separation"
                 android:layout_below="@+id/textView"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/space2" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="@dimen/activity_text_size_small"
-                android:text=" "
-                android:id="@+id/textViewUserIdLabel"
-                android:layout_below="@+id/space2"
                 android:layout_centerHorizontal="true" />
 
+            <TextView
+                android:id="@+id/textViewUserIdLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/space2"
+                android:layout_centerHorizontal="true"
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="@dimen/activity_text_size_small" />
+
             <EditText
+                android:id="@+id/editTextUserId"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/activity_text_height"
-                android:paddingLeft="@dimen/activity_text_padding"
-                android:paddingRight="@dimen/activity_text_padding"
-                android:id="@+id/editTextUserId"
                 android:layout_below="@+id/textViewUserIdLabel"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/text_border_selector"
                 android:hint="Username"
-                android:inputType="textPersonName"/>
+                android:inputType="textPersonName"
+                android:paddingLeft="@dimen/activity_text_padding"
+                android:paddingRight="@dimen/activity_text_padding" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="@dimen/activity_text_padding"
-                android:text=" "
-                android:textColor="@color/alert"
                 android:id="@+id/textViewUserIdMessage"
-                android:layout_below="@+id/editTextUserId"
-                android:layout_centerHorizontal="true" />
-
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="@dimen/activity_text_size_small"
-                android:id="@+id/textViewUserPasswordLabel"
+                android:layout_below="@+id/editTextUserId"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/textViewUserIdMessage" />
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/alert"
+                android:textSize="@dimen/activity_text_padding" />
+
+            <TextView
+                android:id="@+id/textViewUserPasswordLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewUserIdMessage"
+                android:layout_centerHorizontal="true"
+                android:text=" "
+                android:textSize="@dimen/activity_text_size_small" />
 
             <EditText
+                android:id="@+id/editTextUserPassword"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/activity_text_height"
-                android:paddingLeft="@dimen/activity_text_padding"
-                android:paddingRight="@dimen/activity_text_padding"
-                android:id="@+id/editTextUserPassword"
                 android:layout_below="@+id/textViewUserPasswordLabel"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/text_border_selector"
                 android:hint="Password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:paddingLeft="@dimen/activity_text_padding"
+                android:paddingRight="@dimen/activity_text_padding" />
 
             <TextView
+                android:id="@+id/textViewUserPasswordMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="@dimen/activity_text_padding"
-                android:text=" "
-                android:textColor="@color/alert"
-                android:id="@+id/textViewUserPasswordMessage"
                 android:layout_below="@+id/editTextUserPassword"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/alert"
+                android:textSize="@dimen/activity_text_padding" />
 
             <Space
+                android:id="@+id/space4"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/activity_intra_group_separation"
                 android:layout_below="@+id/textViewUserPasswordMessage"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/space4" />
+                android:layout_centerHorizontal="true" />
 
             <Button
+                android:id="@+id/buttonLogIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/space4"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/button_selector"
+                android:onClick="logIn"
                 android:text="Sign in"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="@dimen/activity_button_text_size"
-                android:id="@+id/buttonLogIn"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/space4"
-                android:background="@drawable/button_selector"
-                android:onClick="logIn"/>
+                android:textSize="@dimen/activity_button_text_size" />
 
             <Space
+                android:id="@+id/space5"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/activity_intra_group_separation"
                 android:layout_below="@+id/buttonLogIn"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/space5" />
+                android:layout_centerHorizontal="true" />
 
             <Space
+                android:id="@+id/space6"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/activity_intra_group_separation"
                 android:layout_below="@+id/space5"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/space6" />
+                android:layout_centerHorizontal="true" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Forgot password"
-                android:textColor="@color/button_default"
-                android:textSize="15sp"
                 android:id="@+id/textViewUserForgotPassword"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_below="@+id/space6"
-                android:layout_alignParentEnd="true"
-                android:onClick="forgotPassword"/>
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Sign up"
-                android:textColor="@color/button_default"
-                android:textSize="15sp"
-                android:id="@+id/textViewUserSignUp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/space6"
                 android:clickable="true"
                 android:focusable="true"
-                android:layout_below="@+id/space6"
+                android:onClick="forgotPassword"
+                android:text="Forgot password"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/button_default"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textViewUserSignUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:onClick="signUp"/>
+                android:layout_below="@+id/space6"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="signUp"
+                android:text="Sign up"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/button_default"
+                android:textSize="15sp" />
 
         </RelativeLayout>
 
-</ScrollView>
+    </ScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

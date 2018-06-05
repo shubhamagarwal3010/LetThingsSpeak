@@ -2,6 +2,9 @@ package com.iot.letthingsspeak.room;
 
 public class RoomDetails {
 
+    private String roomType;
+    private String status;
+
     public RoomDetails(String roomType, String status) {
         this.roomType = roomType;
         this.status = status;
@@ -22,7 +25,4 @@ public class RoomDetails {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    private String roomType;
-    private String status;
 }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2013-2016 Amazon.com,
   ~ Inc. or its affiliates. All Rights Reserved.
   ~
@@ -34,18 +33,19 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
             <TextView
+                android:id="@+id/signUp_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
-                android:textAlignment="center"
-                android:id="@+id/signUp_toolbar_title"
+                android:layout_gravity="center"
                 android:text="@string/Menu"
+                android:textAlignment="center"
                 android:textColor="@color/toolbar_items"
                 android:textSize="@dimen/action_bar_text" />
-            </android.support.v7.widget.Toolbar>
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -54,9 +54,215 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:scrollbars="none" >
+        android:scrollbars="none">
 
-        <include layout="@layout/content_register" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="30dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+            <TextView
+                android:id="@+id/textViewRegMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="32dp"
+                android:text="Enter the following information to sign up."
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/textViewRegUserIdLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewRegMessage"
+                android:layout_centerHorizontal="true"
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="@dimen/activity_text_size_small" />
+
+            <EditText
+                android:id="@+id/editTextRegUserId"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_text_height"
+                android:layout_below="@+id/textViewRegUserIdLabel"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/text_border_selector"
+                android:hint="Username"
+                android:inputType="textPersonName"
+                android:paddingLeft="@dimen/activity_text_padding"
+                android:paddingRight="@dimen/activity_text_padding" />
+
+            <TextView
+                android:id="@+id/textViewRegUserIdMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextRegUserId"
+                android:layout_centerHorizontal="true"
+                android:color="@color/alert"
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/alert"
+                android:textSize="@dimen/activity_text_padding" />
+
+            <TextView
+                android:id="@+id/textViewRegUserPasswordLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewRegUserIdMessage"
+                android:layout_centerHorizontal="true"
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="@dimen/activity_text_size_small" />
+
+            <EditText
+                android:id="@+id/editTextRegUserPassword"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_text_height"
+                android:layout_below="@+id/textViewRegUserPasswordLabel"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/text_border_selector"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingLeft="@dimen/activity_text_padding"
+                android:paddingRight="@dimen/activity_text_padding" />
+
+            <TextView
+                android:id="@+id/textViewUserRegPasswordMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextRegUserPassword"
+                android:layout_centerHorizontal="true"
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/alert"
+                android:textSize="@dimen/activity_text_padding" />
+
+            <TextView
+                android:id="@+id/textViewRegGivenNameLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewUserRegPasswordMessage"
+                android:layout_centerHorizontal="true"
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="@dimen/activity_text_size_small" />
+
+            <EditText
+                android:id="@+id/editTextRegGivenName"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_text_height"
+                android:layout_below="@+id/textViewRegGivenNameLabel"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/text_border_selector"
+                android:hint="Given name"
+                android:inputType="textPersonName"
+                android:paddingLeft="@dimen/activity_text_padding"
+                android:paddingRight="@dimen/activity_text_padding" />
+
+            <TextView
+                android:id="@+id/textViewRegGivenNameMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextRegGivenName"
+                android:layout_centerHorizontal="true"
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/alert"
+                android:textSize="@dimen/activity_text_padding" />
+
+            <TextView
+                android:id="@+id/textViewRegEmailLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewRegGivenNameMessage"
+                android:layout_centerHorizontal="true"
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="@dimen/activity_text_size_small" />
+
+            <EditText
+                android:id="@+id/editTextRegEmail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_text_height"
+                android:layout_below="@id/textViewRegEmailLabel"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/text_border_selector"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="@dimen/activity_text_padding"
+                android:paddingRight="@dimen/activity_text_padding" />
+
+            <TextView
+                android:id="@+id/textViewRegEmailMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextRegEmail"
+                android:layout_centerHorizontal="true"
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/alert"
+                android:textSize="@dimen/activity_text_padding" />
+
+            <TextView
+                android:id="@+id/textViewRegPhoneLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewRegEmailMessage"
+                android:layout_centerHorizontal="true"
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="@dimen/activity_text_size_small" />
+
+            <EditText
+                android:id="@+id/editTextRegPhone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_text_height"
+                android:layout_below="@id/textViewRegPhoneLabel"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/text_border_selector"
+                android:hint="Phone number"
+                android:inputType="phone"
+                android:paddingLeft="@dimen/activity_text_padding"
+                android:paddingRight="@dimen/activity_text_padding" />
+
+            <TextView
+                android:id="@+id/textViewRegPhoneMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextRegPhone"
+                android:layout_centerHorizontal="true"
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/alert"
+                android:textSize="@dimen/activity_text_padding" />
+
+            <Space
+                android:id="@+id/space_about_2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_intra_group_separation"
+                android:layout_below="@id/textViewRegPhoneMessage" />
+
+            <Button
+                android:id="@+id/signUp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_button_height"
+                android:layout_below="@id/space_about_2"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/button_selector"
+                android:text="Sign up"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/activity_button_text_size" />
+
+
+        </RelativeLayout>
+
 
     </ScrollView>
 

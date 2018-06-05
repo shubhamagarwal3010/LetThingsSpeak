@@ -12,11 +12,13 @@ import com.iot.letthingsspeak.R;
 public class AddDevice extends AppCompatActivity {
 
     public static final String ADDED_DEVICE = "NEW_DEVICE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_device);
     }
+
     public void addDeviceToList(View view) {
         TextView addTaskView = findViewById(R.id.device);
         Intent intent = new Intent();

@@ -28,18 +28,19 @@ import com.iot.letthingsspeak.R;
 
 
 public class FirstTimeLoginAttributesDisplayAdapter extends BaseAdapter {
+    private static LayoutInflater layoutInflater;
     private String TAG = "FirstTimeLoginDetails";
     private Context context;
     private int count;
-    private static LayoutInflater layoutInflater;
 
     public FirstTimeLoginAttributesDisplayAdapter(Context context) {
         this.context = context;
 
         count = AppHelper.getFirstTimeLogInItemsCount();
 
-        layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+
     @Override
     public int getCount() {
         return count;
@@ -59,7 +60,7 @@ public class FirstTimeLoginAttributesDisplayAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Holder holder;
 
-        if(convertView == null) {
+        if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.fields_generic, null);
             holder = new Holder();
             holder.label = convertView.findViewById(R.id.textViewUserDetailLabel);
@@ -67,8 +68,7 @@ public class FirstTimeLoginAttributesDisplayAdapter extends BaseAdapter {
             holder.message = convertView.findViewById(R.id.textViewUserDetailMessage);
 
             convertView.setTag(holder);
-        }
-        else {
+        } else {
             holder = (Holder) convertView.getTag();
         }
 

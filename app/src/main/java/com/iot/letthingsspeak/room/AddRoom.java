@@ -12,6 +12,7 @@ import com.iot.letthingsspeak.R;
 public class AddRoom extends AppCompatActivity {
 
     public static final String ADDED_ROOM = "NEW_ROOM";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
