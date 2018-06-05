@@ -1,54 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright 2013-2016 Amazon.com,
-  ~ Inc. or its affiliates. All Rights Reserved.
-  ~
-  ~ Licensed under the Amazon Software License (the "License").
-  ~ You may not use this file except in compliance with the
-  ~ License. A copy of the License is located at
-  ~
-  ~     http://aws.amazon.com/asl/
-  ~
-  ~ or in the "license" file accompanying this file. This file is
-  ~ distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-  ~ CONDITIONS OF ANY KIND, express or implied. See the License
-  ~ for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<com.iot.letthingsspeak.device.widget.RefreshScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@mipmap/bedroom_actionbar"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="com.iot.letthingsspeak.device.DeviceActivity">
 
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+    <com.iot.letthingsspeak.device.widget.WaveRefreshLayout
+        android:id="@+id/contentLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/detail_backdrop_height"
-        android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:wr_topImageHeight="@dimen/defaultTopImageHeight"
+        app:wr_waveAmplitude="10dp"
+        app:wr_angle="10"
+        app:wr_bgColor="@color/colorWhite"
+        app:wr_speed="6"
+        app:wr_gravity="right"
+        android:fitsSystemWindows="true">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <ImageView
-                android:id="@+id/backdrop"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/bedroom_actionbar"
-                app:layout_collapseMode="parallax" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/device_toolbar"
@@ -57,9 +36,29 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        </android.support.design.widget.CollapsingToolbarLayout>
+            <TextView
+                android:id="@+id/device_list_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:layout_marginLeft="16dp"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:text="Hello"
+                />
 
-    </android.support.design.widget.AppBarLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="16dp"
+                app:fabSize="normal"
+                app:rippleColor="@color/colorWhite"
+                app:srcCompat="@android:drawable/ic_input_add"/>
+
+        </FrameLayout>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -73,13 +72,5 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_input_add" />
-
-</android.support.design.widget.CoordinatorLayout>
+</com.iot.letthingsspeak.device.widget.WaveRefreshLayout>
+</com.iot.letthingsspeak.device.widget.RefreshScrollView>

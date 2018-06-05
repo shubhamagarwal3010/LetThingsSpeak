@@ -3,6 +3,8 @@ package com.iot.letthingsspeak.device;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -12,8 +14,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.iot.letthingsspeak.R;
+import com.iot.letthingsspeak.device.widget.RefreshScrollView;
+import com.iot.letthingsspeak.device.widget.WaveRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +44,7 @@ public class DeviceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_device_list);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+
         Toolbar toolbar = findViewById(R.id.device_toolbar);
         if (toolbar != null) {
             toolbar.setTitle("");
@@ -47,6 +54,21 @@ public class DeviceActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        final RefreshScrollView scrollView = (RefreshScrollView) findViewById(R.id.scrollView);
+        scrollView.setOnStartRefreshingListener(new RefreshScrollView.OnStartRefreshingListener() {
+            @Override
+            public void startRefreshing() {
+                scrollView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        scrollView.stopLoading();
+                    }
+                },3000);
+            }
+        });
+
+        WaveRefreshLayout layout = (WaveRefreshLayout)findViewById(R.id.contentLayout);
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab2);
 
         deviceRecyclerView = findViewById(R.id.device_recyclerview);
         deviceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -62,11 +84,12 @@ public class DeviceActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         String title = extras.getString(TITLE_KEY);
 
+        TextView actionBarTitle = (TextView) findViewById(R.id.device_list_id);
+        actionBarTitle.setText(title);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(title);
         actionBar.show();
 
-        FloatingActionButton fab = findViewById(R.id.fab2);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,6 +97,19 @@ public class DeviceActivity extends AppCompatActivity {
                 startActivityForResult(intent, DEVICE_ACTIVITY_REQUEST_CODE);
             }
         });
+
+        /**
+         * calculate & set the top margin of float action button
+         */
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)fab.getLayoutParams();
+        int fabSize = (int)(49*getResources().getDisplayMetrics().density);
+        int top = (int)layout.getGradientTop(params.rightMargin + fabSize/2)-fabSize/2;
+        layout.setPaddingTop(top);
+
+        /**
+         * scale the fab with gesture,hide the fab when loading
+         */
+        scrollView.setAnimatableView(fab);
     }
 
     @Override
