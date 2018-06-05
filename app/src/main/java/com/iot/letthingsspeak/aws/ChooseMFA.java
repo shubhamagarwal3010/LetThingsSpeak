@@ -53,7 +53,7 @@ public class ChooseMFA extends AppCompatActivity {
 
     private void init() {
         // Set cancel button and button click listener.
-        cancelButton = (Button) findViewById(R.id.buttonChooseMfaCancel);
+        cancelButton = findViewById(R.id.buttonChooseMfaCancel);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +63,7 @@ public class ChooseMFA extends AppCompatActivity {
         List<String> optionsList = AppHelper.getAllMfaOptions();
 
         // Set MFA options list.
-        final ListView mfaOptionsListView = (ListView) findViewById(R.id.listViewMfaOptions);
+        final ListView mfaOptionsListView = findViewById(R.id.listViewMfaOptions);
         final DisplayMfaOptionsAdapter listAdapter = new DisplayMfaOptionsAdapter(getApplicationContext());
         mfaOptionsListView.setAdapter(listAdapter);
         mfaOptionsList = mfaOptionsListView;

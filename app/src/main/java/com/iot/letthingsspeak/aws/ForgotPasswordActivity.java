@@ -44,7 +44,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
@@ -58,7 +58,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
         });
 
-        TextView main_title = (TextView) findViewById(R.id.forgot_password_toolbar_title);
+        TextView main_title = findViewById(R.id.forgot_password_toolbar_title);
         main_title.setText("Forgot password");
 
         init();
@@ -75,18 +75,18 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             if (extras.containsKey("destination")) {
                 String dest = extras.getString("destination");
                 String delMed = extras.getString("deliveryMed");
-                TextView message = (TextView) findViewById(R.id.textViewForgotPasswordMessage);
+                TextView message = findViewById(R.id.textViewForgotPasswordMessage);
                 String textToDisplay = "Code to set a new password was sent to " + dest + " via "+delMed;
                 message.setText(textToDisplay);
             }
         }
 
-        passwordInput = (EditText) findViewById(R.id.editTextForgotPasswordPass);
+        passwordInput = findViewById(R.id.editTextForgotPasswordPass);
         passwordInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if (s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewForgotPasswordUserIdLabel);
+                    TextView label = findViewById(R.id.textViewForgotPasswordUserIdLabel);
                     label.setText(passwordInput.getHint());
                     passwordInput.setBackground(getDrawable(R.drawable.text_border_selector));
                 }
@@ -94,25 +94,25 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TextView label = (TextView) findViewById(R.id.textViewForgotPasswordUserIdMessage);
+                TextView label = findViewById(R.id.textViewForgotPasswordUserIdMessage);
                 label.setText(" ");
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewForgotPasswordUserIdLabel);
+                    TextView label = findViewById(R.id.textViewForgotPasswordUserIdLabel);
                     label.setText("");
                 }
             }
         });
 
-        codeInput = (EditText) findViewById(R.id.editTextForgotPasswordCode);
+        codeInput = findViewById(R.id.editTextForgotPasswordCode);
         codeInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if (s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewForgotPasswordCodeLabel);
+                    TextView label = findViewById(R.id.textViewForgotPasswordCodeLabel);
                     label.setText(codeInput.getHint());
                     codeInput.setBackground(getDrawable(R.drawable.text_border_selector));
                 }
@@ -120,14 +120,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TextView label = (TextView) findViewById(R.id.textViewForgotPasswordCodeMessage);
+                TextView label = findViewById(R.id.textViewForgotPasswordCodeMessage);
                 label.setText(" ");
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewForgotPasswordCodeLabel);
+                    TextView label = findViewById(R.id.textViewForgotPasswordCodeLabel);
                     label.setText("");
                 }
             }
@@ -138,7 +138,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         String newPassword = passwordInput.getText().toString();
 
         if (newPassword == null || newPassword.length() < 1) {
-            TextView label = (TextView) findViewById(R.id.textViewForgotPasswordUserIdMessage);
+            TextView label = findViewById(R.id.textViewForgotPasswordUserIdMessage);
             label.setText(passwordInput.getHint() + " cannot be empty");
             passwordInput.setBackground(getDrawable(R.drawable.text_border_error));
             return;
@@ -147,7 +147,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         String verCode = codeInput.getText().toString();
 
         if (verCode == null || verCode.length() < 1) {
-            TextView label = (TextView) findViewById(R.id.textViewForgotPasswordCodeMessage);
+            TextView label = findViewById(R.id.textViewForgotPasswordCodeMessage);
             label.setText(codeInput.getHint() + " cannot be empty");
             codeInput.setBackground(getDrawable(R.drawable.text_border_error));
             return;

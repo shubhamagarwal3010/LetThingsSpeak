@@ -44,8 +44,8 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
 
         public DeviceViewHolder(View itemView) {
             super(itemView);
-            cardImageView = (ImageView) itemView.findViewById(R.id.device_image);
-            cardTitleTextView = (TextView) itemView.findViewById(R.id.device_category);
+            cardImageView = itemView.findViewById(R.id.device_image);
+            cardTitleTextView = itemView.findViewById(R.id.device_category);
         }
     }
 }

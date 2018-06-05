@@ -75,7 +75,6 @@ public class DynamoDBManager {
             String status = result.getTable().getTableStatus();
             return status == null ? "" : status;
 
-        } catch (ResourceNotFoundException e) {
         } catch (AmazonServiceException ex) {
             UserActivity.clientManager
                     .wipeCredentialsOnAuthError(ex);

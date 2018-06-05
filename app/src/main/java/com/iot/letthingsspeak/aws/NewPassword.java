@@ -51,7 +51,7 @@ public class NewPassword extends AppCompatActivity {
         setContentView(R.layout.activity_new_password);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_NewPassword);
+        Toolbar toolbar = findViewById(R.id.toolbar_NewPassword);
         if (toolbar != null) {
             toolbar.setTitle("");
             setSupportActionBar(toolbar);
@@ -60,7 +60,7 @@ public class NewPassword extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        TextView main_title = (TextView) findViewById(R.id.newpassword_toolbar_title);
+        TextView main_title = findViewById(R.id.newpassword_toolbar_title);
         main_title.setText("Welcome");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -79,12 +79,12 @@ public class NewPassword extends AppCompatActivity {
     }
 
     private void init() {
-        newPassword = (EditText) findViewById(R.id.editTextNewPassPass);
+        newPassword = findViewById(R.id.editTextNewPassPass);
         newPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if (s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewNewPassPassLabel);
+                    TextView label = findViewById(R.id.textViewNewPassPassLabel);
                     label.setText(newPassword.getHint());
                     newPassword.setBackground(getDrawable(R.drawable.text_border_selector));
                 }
@@ -92,20 +92,20 @@ public class NewPassword extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TextView label = (TextView) findViewById(R.id.textViewNewPassPassMessage);
+                TextView label = findViewById(R.id.textViewNewPassPassMessage);
                 label.setText("");
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewNewPassPassLabel);
+                    TextView label = findViewById(R.id.textViewNewPassPassLabel);
                     label.setText("");
                 }
             }
         });
 
-        continueSignIn = (Button) findViewById(R.id.buttonNewPass);
+        continueSignIn = findViewById(R.id.buttonNewPass);
         continueSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,12 +126,12 @@ public class NewPassword extends AppCompatActivity {
         final FirstTimeLoginAttributesDisplayAdapter attributesAdapter =
                 new FirstTimeLoginAttributesDisplayAdapter(getApplicationContext());
         final ListView displayListView;
-        displayListView = (ListView) findViewById(R.id.listViewCurrentUserDetails);
+        displayListView = findViewById(R.id.listViewCurrentUserDetails);
         displayListView.setAdapter(attributesAdapter);
         displayListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView data = (TextView) view.findViewById(R.id.editTextUserDetailInput);
+                TextView data = view.findViewById(R.id.editTextUserDetailInput);
                 String attributeType = data.getHint().toString();
                 String attributeValue = data.getText().toString();
                 showAttributeDetail(attributeType, attributeValue);

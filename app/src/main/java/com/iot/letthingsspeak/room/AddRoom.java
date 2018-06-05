@@ -19,9 +19,9 @@ public class AddRoom extends AppCompatActivity {
     }
 
     public void addRoomToList(View view) {
-        TextView addTaskView = (TextView) findViewById(R.id.room_type);
+        TextView addTaskView = findViewById(R.id.room_type);
         Intent intent = new Intent();
-        intent.putExtra(this.ADDED_ROOM, addTaskView.getText().toString());
+        intent.putExtra(ADDED_ROOM, addTaskView.getText().toString());
         setResult(RESULT_OK, intent);
         finish();
     }

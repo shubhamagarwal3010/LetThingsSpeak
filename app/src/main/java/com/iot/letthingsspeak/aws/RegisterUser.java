@@ -70,12 +70,12 @@ public class RegisterUser extends AppCompatActivity {
             }
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_Register);
+        Toolbar toolbar = findViewById(R.id.toolbar_Register);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        TextView main_title = (TextView) findViewById(R.id.signUp_toolbar_title);
+        TextView main_title = findViewById(R.id.signUp_toolbar_title);
         main_title.setText("Sign up");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -90,12 +90,12 @@ public class RegisterUser extends AppCompatActivity {
 
     // This will create the list/form for registration
     private void init() {
-        username = (EditText) findViewById(R.id.editTextRegUserId);
+        username = findViewById(R.id.editTextRegUserId);
         username.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if (s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewRegUserIdLabel);
+                    TextView label = findViewById(R.id.textViewRegUserIdLabel);
                     label.setText(username.getHint());
                     username.setBackground(getDrawable(R.drawable.text_border_selector));
                 }
@@ -103,25 +103,25 @@ public class RegisterUser extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TextView label = (TextView) findViewById(R.id.textViewRegUserIdMessage);
+                TextView label = findViewById(R.id.textViewRegUserIdMessage);
                 label.setText("");
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewRegUserIdLabel);
+                    TextView label = findViewById(R.id.textViewRegUserIdLabel);
                     label.setText("");
                 }
             }
         });
         //
-        password = (EditText) findViewById(R.id.editTextRegUserPassword);
+        password = findViewById(R.id.editTextRegUserPassword);
         password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if(s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewRegUserPasswordLabel);
+                    TextView label = findViewById(R.id.textViewRegUserPasswordLabel);
                     label.setText(password.getHint());
                     password.setBackground(getDrawable(R.drawable.text_border_selector));
                 }
@@ -129,7 +129,7 @@ public class RegisterUser extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TextView label = (TextView) findViewById(R.id.textViewUserRegPasswordMessage);
+                TextView label = findViewById(R.id.textViewUserRegPasswordMessage);
                 label.setText("");
 
             }
@@ -137,18 +137,18 @@ public class RegisterUser extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewRegUserPasswordLabel);
+                    TextView label = findViewById(R.id.textViewRegUserPasswordLabel);
                     label.setText("");
                 }
             }
         });
         //
-        givenName = (EditText) findViewById(R.id.editTextRegGivenName);
+        givenName = findViewById(R.id.editTextRegGivenName);
         givenName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if (s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewRegGivenNameLabel);
+                    TextView label = findViewById(R.id.textViewRegGivenNameLabel);
                     label.setText(givenName.getHint());
                     givenName.setBackground(getDrawable(R.drawable.text_border_selector));
                 }
@@ -156,25 +156,25 @@ public class RegisterUser extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TextView label = (TextView) findViewById(R.id.textViewRegGivenNameMessage);
+                TextView label = findViewById(R.id.textViewRegGivenNameMessage);
                 label.setText("");
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewRegGivenNameLabel);
+                    TextView label = findViewById(R.id.textViewRegGivenNameLabel);
                     label.setText("");
                 }
             }
         });
         //
-        email = (EditText) findViewById(R.id.editTextRegEmail);
+        email = findViewById(R.id.editTextRegEmail);
         email.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if (s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewRegEmailLabel);
+                    TextView label = findViewById(R.id.textViewRegEmailLabel);
                     label.setText(email.getHint());
                     email.setBackground(getDrawable(R.drawable.text_border_selector));
                 }
@@ -182,7 +182,7 @@ public class RegisterUser extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TextView label = (TextView) findViewById(R.id.textViewRegEmailMessage);
+                TextView label = findViewById(R.id.textViewRegEmailMessage);
                 label.setText("");
 
             }
@@ -190,18 +190,18 @@ public class RegisterUser extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewRegEmailLabel);
+                    TextView label = findViewById(R.id.textViewRegEmailLabel);
                     label.setText("");
                 }
             }
         });
         //
-        phone = (EditText) findViewById(R.id.editTextRegPhone);
+        phone = findViewById(R.id.editTextRegPhone);
         phone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if (s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewRegPhoneLabel);
+                    TextView label = findViewById(R.id.textViewRegPhoneLabel);
                     label.setText(phone.getHint() + " with country code and no seperators");
                     phone.setBackground(getDrawable(R.drawable.text_border_selector));
                 }
@@ -209,20 +209,20 @@ public class RegisterUser extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TextView label = (TextView) findViewById(R.id.textViewRegPhoneMessage);
+                TextView label = findViewById(R.id.textViewRegPhoneMessage);
                 label.setText("");
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewRegPhoneLabel);
+                    TextView label = findViewById(R.id.textViewRegPhoneLabel);
                     label.setText("");
                 }
             }
         });
 
-        signUp = (Button) findViewById(R.id.signUp);
+        signUp = findViewById(R.id.signUp);
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -231,7 +231,7 @@ public class RegisterUser extends AppCompatActivity {
 
                 usernameInput = username.getText().toString();
                 if (usernameInput == null || usernameInput.isEmpty()) {
-                    TextView view = (TextView) findViewById(R.id.textViewRegUserIdMessage);
+                    TextView view = findViewById(R.id.textViewRegUserIdMessage);
                     view.setText(username.getHint() + " cannot be empty");
                     username.setBackground(getDrawable(R.drawable.text_border_error));
                     return;
@@ -240,7 +240,7 @@ public class RegisterUser extends AppCompatActivity {
                 String userpasswordInput = password.getText().toString();
                 userPasswd = userpasswordInput;
                 if (userpasswordInput == null || userpasswordInput.isEmpty()) {
-                    TextView view = (TextView) findViewById(R.id.textViewUserRegPasswordMessage);
+                    TextView view = findViewById(R.id.textViewUserRegPasswordMessage);
                     view.setText(password.getHint() + " cannot be empty");
                     password.setBackground(getDrawable(R.drawable.text_border_error));
                     return;
@@ -295,7 +295,7 @@ public class RegisterUser extends AppCompatActivity {
         @Override
         public void onFailure(Exception exception) {
             closeWaitDialog();
-            TextView label = (TextView) findViewById(R.id.textViewRegUserIdMessage);
+            TextView label = findViewById(R.id.textViewRegUserIdMessage);
             label.setText("Sign up failed");
             username.setBackground(getDrawable(R.drawable.text_border_error));
             showDialogMessage("Sign up failed",AppHelper.formatException(exception),false);

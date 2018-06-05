@@ -52,8 +52,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeNewsViewHo
 
         public HomeNewsViewHolder(View itemView) {
             super(itemView);
-            roomImage = (ImageView) itemView.findViewById(R.id.card_news_image);
-            roomTitle = (TextView) itemView.findViewById(R.id.room_category);
+            roomImage = itemView.findViewById(R.id.card_news_image);
+            roomTitle = itemView.findViewById(R.id.room_category);
             itemView.setOnClickListener(this);
         }
 

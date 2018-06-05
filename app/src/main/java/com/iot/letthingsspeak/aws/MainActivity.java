@@ -1,20 +1,3 @@
-/*
- * Copyright 2013-2017 Amazon.com,
- * Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Amazon Software License (the "License").
- * You may not use this file except in compliance with the
- * License. A copy of the License is located at
- *
- *      http://aws.amazon.com/asl/
- *
- * or in the "license" file accompanying this file. This file is
- * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
- * CONDITIONS OF ANY KIND, express or implied. See the License
- * for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.iot.letthingsspeak.aws;
 
 import android.app.ProgressDialog;
@@ -87,18 +70,18 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // Set toolbar for this screen
-        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        toolbar = findViewById(R.id.main_toolbar);
         toolbar.setTitle("");
-        TextView main_title = (TextView) findViewById(R.id.main_toolbar_title);
+        TextView main_title = findViewById(R.id.main_toolbar_title);
         main_title.setText("Sign in");
         setSupportActionBar(toolbar);
 
         // Set navigation drawer for this screen
-        mDrawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+        mDrawer = findViewById(R.id.main_drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this,mDrawer, toolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
         mDrawer.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
-        nDrawer = (NavigationView) findViewById(R.id.nav_view);
+        nDrawer = findViewById(R.id.nav_view);
         setNavDrawer();
 
         // Initialize application
@@ -226,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             inPassword.setText("");
                             inPassword.requestFocus();
-                            TextView label = (TextView) findViewById(R.id.textViewUserPasswordMessage);
+                            TextView label = findViewById(R.id.textViewUserPasswordMessage);
                             label.setText("Login cancelled");
                         }
                     }
@@ -299,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
     private void signInUser() {
         username = inUsername.getText().toString();
         if(username == null || username.length() < 1) {
-            TextView label = (TextView) findViewById(R.id.textViewUserIdMessage);
+            TextView label = findViewById(R.id.textViewUserIdMessage);
             label.setText(inUsername.getHint()+" cannot be empty");
             inUsername.setBackground(getDrawable(R.drawable.text_border_error));
             return;
@@ -309,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
 
         password = inPassword.getText().toString();
         if(password == null || password.length() < 1) {
-            TextView label = (TextView) findViewById(R.id.textViewUserPasswordMessage);
+            TextView label = findViewById(R.id.textViewUserPasswordMessage);
             label.setText(inPassword.getHint()+" cannot be empty");
             inPassword.setBackground(getDrawable(R.drawable.text_border_error));
             return;
@@ -322,14 +305,14 @@ public class MainActivity extends AppCompatActivity {
     private void forgotpasswordUser() {
         username = inUsername.getText().toString();
         if(username == null) {
-            TextView label = (TextView) findViewById(R.id.textViewUserIdMessage);
+            TextView label = findViewById(R.id.textViewUserIdMessage);
             label.setText(inUsername.getHint()+" cannot be empty");
             inUsername.setBackground(getDrawable(R.drawable.text_border_error));
             return;
         }
 
         if(username.length() < 1) {
-            TextView label = (TextView) findViewById(R.id.textViewUserIdMessage);
+            TextView label = findViewById(R.id.textViewUserIdMessage);
             label.setText(inUsername.getHint()+" cannot be empty");
             inUsername.setBackground(getDrawable(R.drawable.text_border_error));
             return;
@@ -384,11 +367,11 @@ public class MainActivity extends AppCompatActivity {
             newPasswordContinuation.continueTask();
         } catch (Exception e) {
             closeWaitDialog();
-            TextView label = (TextView) findViewById(R.id.textViewUserIdMessage);
+            TextView label = findViewById(R.id.textViewUserIdMessage);
             label.setText("Sign-in failed");
             inPassword.setBackground(getDrawable(R.drawable.text_border_error));
 
-            label = (TextView) findViewById(R.id.textViewUserIdMessage);
+            label = findViewById(R.id.textViewUserIdMessage);
             label.setText("Sign-in failed");
             inUsername.setBackground(getDrawable(R.drawable.text_border_error));
 
@@ -428,14 +411,14 @@ public class MainActivity extends AppCompatActivity {
             inUsername.setText(username);
             password = inPassword.getText().toString();
             if(password == null) {
-                TextView label = (TextView) findViewById(R.id.textViewUserPasswordMessage);
+                TextView label = findViewById(R.id.textViewUserPasswordMessage);
                 label.setText(inPassword.getHint()+" enter password");
                 inPassword.setBackground(getDrawable(R.drawable.text_border_error));
                 return;
             }
 
             if(password.length() < 1) {
-                TextView label = (TextView) findViewById(R.id.textViewUserPasswordMessage);
+                TextView label = findViewById(R.id.textViewUserPasswordMessage);
                 label.setText(inPassword.getHint()+" enter password");
                 inPassword.setBackground(getDrawable(R.drawable.text_border_error));
                 return;
@@ -448,12 +431,12 @@ public class MainActivity extends AppCompatActivity {
 
     // initialize app
     private void initApp() {
-        inUsername = (EditText) findViewById(R.id.editTextUserId);
+        inUsername = findViewById(R.id.editTextUserId);
         inUsername.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if(s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewUserIdLabel);
+                    TextView label = findViewById(R.id.textViewUserIdLabel);
                     label.setText(R.string.Username);
                     inUsername.setBackground(getDrawable(R.drawable.text_border_selector));
                 }
@@ -461,25 +444,25 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TextView label = (TextView) findViewById(R.id.textViewUserIdMessage);
+                TextView label = findViewById(R.id.textViewUserIdMessage);
                 label.setText("");
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewUserIdLabel);
+                    TextView label = findViewById(R.id.textViewUserIdLabel);
                     label.setText("");
                 }
             }
         });
 
-        inPassword = (EditText) findViewById(R.id.editTextUserPassword);
+        inPassword = findViewById(R.id.editTextUserPassword);
         inPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if(s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewUserPasswordLabel);
+                    TextView label = findViewById(R.id.textViewUserPasswordLabel);
                     label.setText(R.string.Password);
                     inPassword.setBackground(getDrawable(R.drawable.text_border_selector));
                 }
@@ -487,14 +470,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TextView label = (TextView) findViewById(R.id.textViewUserPasswordMessage);
+                TextView label = findViewById(R.id.textViewUserPasswordMessage);
                 label.setText("");
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewUserPasswordLabel);
+                    TextView label = findViewById(R.id.textViewUserPasswordLabel);
                     label.setText("");
                 }
             }
@@ -552,11 +535,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onFailure(Exception e) {
             closeWaitDialog();
-            TextView label = (TextView) findViewById(R.id.textViewUserIdMessage);
+            TextView label = findViewById(R.id.textViewUserIdMessage);
             label.setText("Sign-in failed");
             inPassword.setBackground(getDrawable(R.drawable.text_border_error));
 
-            label = (TextView) findViewById(R.id.textViewUserIdMessage);
+            label = findViewById(R.id.textViewUserIdMessage);
             label.setText("Sign-in failed");
             inUsername.setBackground(getDrawable(R.drawable.text_border_error));
 
@@ -587,11 +570,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void clearInput() {
         if(inUsername == null) {
-            inUsername = (EditText) findViewById(R.id.editTextUserId);
+            inUsername = findViewById(R.id.editTextUserId);
         }
 
         if(inPassword == null) {
-            inPassword = (EditText) findViewById(R.id.editTextUserPassword);
+            inPassword = findViewById(R.id.editTextUserPassword);
         }
 
         inUsername.setText("");

@@ -45,14 +45,14 @@ public class MFAActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mfa);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_mfa);
+        Toolbar toolbar = findViewById(R.id.toolbar_mfa);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        TextView main_title = (TextView) findViewById(R.id.mfa_toolbar_title);
+        TextView main_title = findViewById(R.id.mfa_toolbar_title);
         main_title.setText("Verification");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -79,17 +79,17 @@ public class MFAActivity extends AppCompatActivity {
         if(extras !=null) {
             if(extras.containsKey("mode")) {
                 String mode = extras.getString("mode");
-                mfaScreenText = (TextView) findViewById(R.id.textViewMFASubTitle);
+                mfaScreenText = findViewById(R.id.textViewMFASubTitle);
                 mfaScreenText.setText("Verify with "+mode);
             }
         }
 
-        mfaInput = (EditText) findViewById(R.id.editTextMFACode);
+        mfaInput = findViewById(R.id.editTextMFACode);
         mfaInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if (s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewMFACodeLabel);
+                    TextView label = findViewById(R.id.textViewMFACodeLabel);
                     label.setText(mfaInput.getHint());
                     mfaInput.setBackground(getDrawable(R.drawable.text_border_selector));
                 }
@@ -97,14 +97,14 @@ public class MFAActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TextView label = (TextView) findViewById(R.id.textViewMFACodeMessage);
+                TextView label = findViewById(R.id.textViewMFACodeMessage);
                 label.setText(" ");
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewMFACodeLabel);
+                    TextView label = findViewById(R.id.textViewMFACodeLabel);
                     label.setText("");
                 }
             }
@@ -115,7 +115,7 @@ public class MFAActivity extends AppCompatActivity {
         String MFACode = mfaInput.getText().toString();
 
         if (MFACode == null || MFACode.length() < 1) {
-            TextView label = (TextView) findViewById(R.id.textViewMFACodeMessage);
+            TextView label = findViewById(R.id.textViewMFACodeMessage);
             label.setText(mfaInput.getHint() + " cannot be empty");
             mfaInput.setBackground(getDrawable(R.drawable.text_border_error));
             return;

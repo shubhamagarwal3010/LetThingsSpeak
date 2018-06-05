@@ -67,10 +67,7 @@ public class AmazonClientManager {
 
     public boolean wipeCredentialsOnAuthError(AmazonServiceException ex) {
         Log.e(LOG_TAG, "Error, wipeCredentialsOnAuthError called" + ex);
-        if (
-        // STS
-        // http://docs.amazonwebservices.com/STS/latest/APIReference/CommonErrors.html
-        ex.getErrorCode().equals("IncompleteSignature")
+        return ex.getErrorCode().equals("IncompleteSignature")
                 || ex.getErrorCode().equals("InternalFailure")
                 || ex.getErrorCode().equals("InvalidClientTokenId")
                 || ex.getErrorCode().equals("OptInRequired")
@@ -82,14 +79,10 @@ public class AmazonClientManager {
                 || ex.getErrorCode().equals("AccessDeniedException")
                 || ex.getErrorCode().equals("IncompleteSignatureException")
                 || ex.getErrorCode().equals(
-                        "MissingAuthenticationTokenException")
+                "MissingAuthenticationTokenException")
                 || ex.getErrorCode().equals("ValidationException")
                 || ex.getErrorCode().equals("InternalFailure")
-                || ex.getErrorCode().equals("InternalServerError")) {
+                || ex.getErrorCode().equals("InternalServerError");
 
-            return true;
-        }
-
-        return false;
     }
 }

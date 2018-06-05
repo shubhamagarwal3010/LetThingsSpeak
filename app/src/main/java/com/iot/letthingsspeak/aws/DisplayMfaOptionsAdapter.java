@@ -66,9 +66,9 @@ public class DisplayMfaOptionsAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.fields_generic, null);
             holder = new DisplayMfaOptionsAdapter.Holder();
-            holder.label = (TextView) convertView.findViewById(R.id.textViewUserDetailLabel);
-            holder.data = (TextView) convertView.findViewById(R.id.editTextUserDetailInput);
-            holder.message = (TextView) convertView.findViewById(R.id.textViewUserDetailMessage);
+            holder.label = convertView.findViewById(R.id.textViewUserDetailLabel);
+            holder.data = convertView.findViewById(R.id.editTextUserDetailInput);
+            holder.message = convertView.findViewById(R.id.textViewUserDetailMessage);
 
             convertView.setTag(holder);
         } else {

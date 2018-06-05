@@ -34,7 +34,7 @@ public class DeviceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_device_list);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.device_toolbar);
+        Toolbar toolbar = findViewById(R.id.device_toolbar);
         if (toolbar != null) {
             toolbar.setTitle("");
             setSupportActionBar(toolbar);
@@ -43,13 +43,13 @@ public class DeviceActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        TextView main_title = (TextView) findViewById(R.id.device_title);
+        TextView main_title = findViewById(R.id.device_title);
         main_title.setText("Device");
 
 
 
 
-        deviceRecyclerView = (RecyclerView) findViewById(R.id.device_recyclerview);
+        deviceRecyclerView = findViewById(R.id.device_recyclerview);
         deviceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         device.add(new DeviceDetails("Bulb", "1"));
 
@@ -67,7 +67,7 @@ public class DeviceActivity extends AppCompatActivity {
         actionBar.setTitle(title);
         actionBar.show();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
+        FloatingActionButton fab = findViewById(R.id.fab2);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

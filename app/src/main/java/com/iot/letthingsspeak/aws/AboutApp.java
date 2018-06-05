@@ -35,9 +35,9 @@ public class AboutApp extends AppCompatActivity {
         setContentView(R.layout.activity_about_app);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_AboutApp);
+        Toolbar toolbar = findViewById(R.id.toolbar_AboutApp);
         toolbar.setTitle("");
-        TextView title = (TextView) findViewById(R.id.about_toolbar_title);
+        TextView title = findViewById(R.id.about_toolbar_title);
         title.setText("About");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -51,7 +51,7 @@ public class AboutApp extends AppCompatActivity {
         });
 
 
-        Button backButton = (Button) findViewById(R.id.aboutBack);
+        Button backButton = findViewById(R.id.aboutBack);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

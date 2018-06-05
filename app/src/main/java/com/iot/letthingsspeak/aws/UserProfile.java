@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoDevice;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
@@ -55,7 +54,7 @@ public class UserProfile extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarProfile);
+        Toolbar toolbar = findViewById(R.id.toolbarProfile);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
@@ -69,7 +68,7 @@ public class UserProfile extends AppCompatActivity {
             }
         });
 
-        TextView main_title = (TextView) findViewById(R.id.user_profile_toolbar_title);
+        TextView main_title = findViewById(R.id.user_profile_toolbar_title);
         main_title.setText("Profile");
 
         init();
@@ -85,14 +84,14 @@ public class UserProfile extends AppCompatActivity {
     private void showAttributes() {
         final UserAttributesAdapter attributesAdapter = new UserAttributesAdapter(getApplicationContext());
         final ListView attributesListView;
-        attributesListView = (ListView) findViewById(R.id.listViewUserAttributes);
+        attributesListView = findViewById(R.id.listViewUserAttributes);
         attributesListView.setAdapter(attributesAdapter);
         attributesList = attributesListView;
 
         attributesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView data = (TextView) view.findViewById(R.id.editTextUserDetailInput);
+                TextView data = view.findViewById(R.id.editTextUserDetailInput);
                 String attributeType = data.getHint().toString();
                 String attributeValue = data.getText().toString();
                 showUserDetail(attributeType, attributeValue);
@@ -119,7 +118,6 @@ public class UserProfile extends AppCompatActivity {
         }
         CognitoUserAttributes updatedUserAttributes = new CognitoUserAttributes();
         updatedUserAttributes.addAttribute(attributeType, attributeValue);
-        Toast.makeText(getApplicationContext(), attributeType + ": " + attributeValue, Toast.LENGTH_LONG);
         showWaitDialog("Updating...");
         AppHelper.getPool().getUser(AppHelper.getCurrUser()).updateAttributesInBackground(updatedUserAttributes, updateHandler);
     }
@@ -227,8 +225,6 @@ public class UserProfile extends AppCompatActivity {
         @Override
         public void onSuccess() {
             closeWaitDialog();
-            // Attribute was deleted
-            Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT);
 
             // Fetch user details from the the service
             getDetails();

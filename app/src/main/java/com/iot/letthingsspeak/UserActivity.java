@@ -94,28 +94,28 @@ public class UserActivity extends AppCompatActivity {
         clientManager = new AmazonClientManager(this);
 
         // Set toolbar for this screen
-        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        toolbar = findViewById(R.id.main_toolbar);
         toolbar.setTitle("");
-        TextView main_title = (TextView) findViewById(R.id.main_toolbar_title);
+        TextView main_title = findViewById(R.id.main_toolbar_title);
         main_title.setText("Account");
         setSupportActionBar(toolbar);
 
         // Set navigation drawer for this screen
-        mDrawer = (DrawerLayout) findViewById(R.id.user_drawer_layout);
+        mDrawer = findViewById(R.id.user_drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this,mDrawer, toolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
         mDrawer.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
-        nDrawer = (NavigationView) findViewById(R.id.nav_view);
+        nDrawer = findViewById(R.id.nav_view);
         setNavDrawer();
         init();
         View navigationHeader = nDrawer.getHeaderView(0);
-        TextView navHeaderSubTitle = (TextView) navigationHeader.findViewById(R.id.textViewNavUserSub);
+        TextView navHeaderSubTitle = navigationHeader.findViewById(R.id.textViewNavUserSub);
         navHeaderSubTitle.setText(username);
 
         clientManager = new AmazonClientManager(this);
 
-        final Button createTableBttn = (Button) findViewById(R.id.create_table_bttn);
+        final Button createTableBttn = findViewById(R.id.create_table_bttn);
         createTableBttn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -126,7 +126,7 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
-        final Button insertUsersBttn = (Button) findViewById(R.id.insert_users_bttn);
+        final Button insertUsersBttn = findViewById(R.id.insert_users_bttn);
         insertUsersBttn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -138,7 +138,7 @@ public class UserActivity extends AppCompatActivity {
         });
 
 
-        roomTypeRecyclerView = (RecyclerView) findViewById(R.id.activity_main_recyclerview);
+        roomTypeRecyclerView = findViewById(R.id.activity_main_recyclerview);
         roomTypeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         room.add(new RoomDetails("Bed Room ", "1"));
 
@@ -149,7 +149,7 @@ public class UserActivity extends AppCompatActivity {
         homeAdapter = new HomeAdapter(RoomStore.getRoomDetails());
         roomTypeRecyclerView.setAdapter(homeAdapter);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

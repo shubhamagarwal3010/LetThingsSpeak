@@ -49,7 +49,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_password);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarChangePass);
+        Toolbar toolbar = findViewById(R.id.toolbarChangePass);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
@@ -63,7 +63,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             }
         });
 
-        TextView main_title = (TextView) findViewById(R.id.change_password_toolbar_title);
+        TextView main_title = findViewById(R.id.change_password_toolbar_title);
         main_title.setText("Change password");
 
         init();
@@ -71,12 +71,12 @@ public class ChangePasswordActivity extends AppCompatActivity {
     }
 
     private void init() {
-        currPassword = (EditText) findViewById(R.id.editTextChangePassCurrPass);
+        currPassword = findViewById(R.id.editTextChangePassCurrPass);
         currPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if(s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewChangePassCurrPassLabel);
+                    TextView label = findViewById(R.id.textViewChangePassCurrPassLabel);
                     label.setText(currPassword.getHint());
                     currPassword.setBackground(getDrawable(R.drawable.text_border_selector));
                 }
@@ -84,26 +84,26 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TextView label = (TextView) findViewById(R.id.textViewChangePassCurrPassMessage);
+                TextView label = findViewById(R.id.textViewChangePassCurrPassMessage);
                 label.setText("");
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewChangePassCurrPassLabel);
+                    TextView label = findViewById(R.id.textViewChangePassCurrPassLabel);
                     label.setText("");
                 }
             }
         });
 
 
-        newPassword = (EditText) findViewById(R.id.editTextChangePassNewPass);
+        newPassword = findViewById(R.id.editTextChangePassNewPass);
         newPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if(s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewChangePassNewPassLabel);
+                    TextView label = findViewById(R.id.textViewChangePassNewPassLabel);
                     label.setText(newPassword.getHint());
                     newPassword.setBackground(getDrawable(R.drawable.text_border_selector));
                 }
@@ -111,20 +111,20 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TextView label = (TextView) findViewById(R.id.textViewChangePassNewPassMessage);
+                TextView label = findViewById(R.id.textViewChangePassNewPassMessage);
                 label.setText("");
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length() == 0) {
-                    TextView label = (TextView) findViewById(R.id.textViewChangePassNewPassLabel);
+                    TextView label = findViewById(R.id.textViewChangePassNewPassLabel);
                     label.setText("");
                 }
             }
         });
 
-        changeButton = (Button) findViewById(R.id.change_pass_button);
+        changeButton = findViewById(R.id.change_pass_button);
         changeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,7 +137,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         String cPass = currPassword.getText().toString();
 
         if(cPass == null || cPass.length() < 1) {
-            TextView label = (TextView) findViewById(R.id.textViewChangePassCurrPassMessage);
+            TextView label = findViewById(R.id.textViewChangePassCurrPassMessage);
             label.setText(currPassword.getHint()+" cannot be empty");
             currPassword.setBackground(getDrawable(R.drawable.text_border_error));
             return;
@@ -146,7 +146,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         String nPass = newPassword.getText().toString();
 
         if(nPass == null || nPass.length() < 1) {
-            TextView label = (TextView) findViewById(R.id.textViewChangePassNewPassMessage);
+            TextView label = findViewById(R.id.textViewChangePassNewPassMessage);
             label.setText(newPassword.getHint()+" cannot be empty");
             newPassword.setBackground(getDrawable(R.drawable.text_border_error));
             return;

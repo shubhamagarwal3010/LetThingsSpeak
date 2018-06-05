@@ -18,9 +18,9 @@ public class AddDevice extends AppCompatActivity {
         setContentView(R.layout.activity_add_device);
     }
     public void addDeviceToList(View view) {
-        TextView addTaskView = (TextView) findViewById(R.id.device);
+        TextView addTaskView = findViewById(R.id.device);
         Intent intent = new Intent();
-        intent.putExtra(this.ADDED_DEVICE, addTaskView.getText().toString());
+        intent.putExtra(ADDED_DEVICE, addTaskView.getText().toString());
         setResult(RESULT_OK, intent);
         finish();
     }
