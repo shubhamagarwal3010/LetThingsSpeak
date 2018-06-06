@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.iot.letthingsspeak.R;
 import com.iot.letthingsspeak.constants.Constants;
@@ -19,10 +23,12 @@ import java.util.List;
 
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeNewsViewHolder> {
+    private Context mContext;
     public int ROOM_DETAILS_REQUEST_CODE = 9283;
     private List<RoomDetails> roomDetails;
 
-    public HomeAdapter(List<RoomDetails> newsArticles) {
+    public HomeAdapter(Context mContext, List<RoomDetails> newsArticles) {
+        this.mContext = mContext;
         this.roomDetails = newsArticles;
     }
 
@@ -35,9 +41,17 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeNewsViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HomeNewsViewHolder holder, final int position) {
+    public void onBindViewHolder(final HomeNewsViewHolder holder, final int position) {
         RoomDetails newsArticle = roomDetails.get(position);
         holder.roomTitle.setText(newsArticle.getRoomType());
+
+
+        holder.overflow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopupMenu(holder.overflow);
+            }
+        });
     }
 
 
@@ -47,13 +61,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeNewsViewHo
     }
 
     public class HomeNewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView roomImage;
+        ImageView roomImage, overflow;
         TextView roomTitle;
 
         public HomeNewsViewHolder(View itemView) {
             super(itemView);
             roomImage = itemView.findViewById(R.id.card_news_image);
             roomTitle = itemView.findViewById(R.id.room_category);
+            overflow = itemView.findViewById(R.id.overflow);
             itemView.setOnClickListener(this);
         }
 
@@ -65,6 +80,37 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeNewsViewHo
             intent.putExtra(Constants.TITLE_KEY, roomDetail.getRoomType());
             ((Activity) context).startActivityForResult(intent, ROOM_DETAILS_REQUEST_CODE);
 
+        }
+    }
+    /**
+     * Showing popup menu when tapping on 3 dots
+     */
+    private void showPopupMenu(View view) {
+        // inflate menu
+        PopupMenu popup = new PopupMenu(mContext, view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.menu_album, popup.getMenu());
+        popup.setOnMenuItemClickListener(new MyMenuItemClickListener());
+        popup.show();
+    }
+
+    /**
+     * Click listener for popup menu items
+     */
+    class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
+
+        public MyMenuItemClickListener() {
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            switch (menuItem.getItemId()) {
+                case R.id.room_settings:
+                    Toast.makeText(mContext, "Settings", Toast.LENGTH_SHORT).show();
+                    return true;
+                default:
+            }
+            return false;
         }
     }
 }

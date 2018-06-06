@@ -9,4 +9,10 @@
     <color name="text_border_selected">#4EA9DC</color>
     <color name="white">#FFFFFF</color>
     <color name="grey_100">#F5F7F7</color>
+
+    <color name="colorPrimary">#F50057</color>
+    <color name="colorPrimaryDark">#F50057</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="viewBg">#f1f5f8</color>
+    <color name="album_title">#4c4c4c</color>
 </resources>

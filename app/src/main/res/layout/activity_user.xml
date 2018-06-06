@@ -60,7 +60,8 @@
                         android:layout_height="match_parent"
                         android:fitsSystemWindows="true"
                         android:scaleType="centerCrop"
-                        app:layout_collapseMode="parallax" />
+                        app:layout_collapseMode="parallax"
+                        android:foreground="@drawable/image_overlay" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -94,23 +95,13 @@
                     app:layout_collapseMode="pin"
                     android:textAlignment="center"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-                    <TextView
-                        android:id="@+id/main_toolbar_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center"
-                        android:text="@string/Menu"
-                        android:textAlignment="center"
-                        android:textColor="@color/toolbar_items"
-                        android:textSize="@dimen/action_bar_text" />
                 </android.support.v7.widget.Toolbar>
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.constraint.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -118,9 +109,11 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/activity_main_recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:scrollbars="vertical"  />
 
-        </android.support.constraint.ConstraintLayout>
+        </RelativeLayout>
         <!-- Set the Main content -->
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
