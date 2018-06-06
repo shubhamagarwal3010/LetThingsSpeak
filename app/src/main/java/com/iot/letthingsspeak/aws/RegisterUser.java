@@ -117,11 +117,6 @@ public class RegisterUser extends AppCompatActivity {
         username.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (s.length() == 0) {
-                    TextView label = findViewById(R.id.textViewRegUserIdLabel);
-                    label.setText(username.getHint());
-                    username.setBackground(getDrawable(R.drawable.text_border_selector));
-                }
             }
 
             @Override
@@ -132,10 +127,6 @@ public class RegisterUser extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() == 0) {
-                    TextView label = findViewById(R.id.textViewRegUserIdLabel);
-                    label.setText("");
-                }
             }
         });
         //
@@ -143,11 +134,6 @@ public class RegisterUser extends AppCompatActivity {
         password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (s.length() == 0) {
-                    TextView label = findViewById(R.id.textViewRegUserPasswordLabel);
-                    label.setText(password.getHint());
-                    password.setBackground(getDrawable(R.drawable.text_border_selector));
-                }
             }
 
             @Override
@@ -159,10 +145,6 @@ public class RegisterUser extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() == 0) {
-                    TextView label = findViewById(R.id.textViewRegUserPasswordLabel);
-                    label.setText("");
-                }
             }
         });
         //
@@ -170,11 +152,6 @@ public class RegisterUser extends AppCompatActivity {
         givenName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (s.length() == 0) {
-                    TextView label = findViewById(R.id.textViewRegGivenNameLabel);
-                    label.setText(givenName.getHint());
-                    givenName.setBackground(getDrawable(R.drawable.text_border_selector));
-                }
             }
 
             @Override
@@ -185,10 +162,6 @@ public class RegisterUser extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() == 0) {
-                    TextView label = findViewById(R.id.textViewRegGivenNameLabel);
-                    label.setText("");
-                }
             }
         });
         //
@@ -196,11 +169,6 @@ public class RegisterUser extends AppCompatActivity {
         email.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (s.length() == 0) {
-                    TextView label = findViewById(R.id.textViewRegEmailLabel);
-                    label.setText(email.getHint());
-                    email.setBackground(getDrawable(R.drawable.text_border_selector));
-                }
             }
 
             @Override
@@ -212,10 +180,6 @@ public class RegisterUser extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() == 0) {
-                    TextView label = findViewById(R.id.textViewRegEmailLabel);
-                    label.setText("");
-                }
             }
         });
         //
@@ -223,11 +187,6 @@ public class RegisterUser extends AppCompatActivity {
         phone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (s.length() == 0) {
-                    TextView label = findViewById(R.id.textViewRegPhoneLabel);
-                    label.setText(phone.getHint() + " with country code and no seperators");
-                    phone.setBackground(getDrawable(R.drawable.text_border_selector));
-                }
             }
 
             @Override
@@ -238,10 +197,6 @@ public class RegisterUser extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() == 0) {
-                    TextView label = findViewById(R.id.textViewRegPhoneLabel);
-                    label.setText("");
-                }
             }
         });
 
