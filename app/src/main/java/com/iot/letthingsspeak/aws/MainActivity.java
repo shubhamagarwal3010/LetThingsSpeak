@@ -10,8 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoDevice;
@@ -33,7 +36,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = "MainActivity";
 
     private AlertDialog userDialog;
@@ -138,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        RelativeLayout background_activity_main = (RelativeLayout) findViewById(R.id.background_activity_main);
+        background_activity_main.setOnClickListener(this);
         // Initialize application
         AppHelper.init(getApplicationContext());
         initApp();
@@ -503,6 +508,14 @@ public class MainActivity extends AppCompatActivity {
             waitDialog.dismiss();
         } catch (Exception e) {
             //
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.background_activity_main) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
 }
