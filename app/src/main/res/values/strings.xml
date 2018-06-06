@@ -1,11 +1,8 @@
 <resources>
     <string name="app_name">Let Things Speak</string>
-    <string name="app_main_screen_title">Cognito Identity</string>
-    <string name="app_main_desc">A sample app to showcase Cognito Identity and the SDK for Android.</string>
     <string name="nav_drawer_open">Open navigation drawer</string>
     <string name="nav_drawer_close">Close navigation drawer</string>
     <string name="title_activity_user">UserActivity</string>
-    <string name="Username">Username</string>
     <string name="Password">Password</string>
     <string name="Menu">Menu</string>
     <string name="pick_MFA">MFA Options</string>
@@ -26,4 +23,9 @@
     <string name="step2">2. Insert Users</string>
     <string name="step3">3. List Users</string>
     <string name="step4">4. Delete Table</string>
+
+
+    <string name="password">Password</string>
+    <string name="login">Login</string>
 </resources>
+

@@ -23,8 +23,8 @@ import java.util.List;
 
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeNewsViewHolder> {
-    private Context mContext;
     public int ROOM_DETAILS_REQUEST_CODE = 9283;
+    private Context mContext;
     private List<RoomDetails> roomDetails;
 
     public HomeAdapter(Context mContext, List<RoomDetails> newsArticles) {
@@ -60,6 +60,18 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeNewsViewHo
         return roomDetails.size();
     }
 
+    /**
+     * Showing popup menu when tapping on 3 dots
+     */
+    private void showPopupMenu(View view) {
+        // inflate menu
+        PopupMenu popup = new PopupMenu(mContext, view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.menu_album, popup.getMenu());
+        popup.setOnMenuItemClickListener(new MyMenuItemClickListener());
+        popup.show();
+    }
+
     public class HomeNewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView roomImage, overflow;
         TextView roomTitle;
@@ -81,17 +93,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeNewsViewHo
             ((Activity) context).startActivityForResult(intent, ROOM_DETAILS_REQUEST_CODE);
 
         }
-    }
-    /**
-     * Showing popup menu when tapping on 3 dots
-     */
-    private void showPopupMenu(View view) {
-        // inflate menu
-        PopupMenu popup = new PopupMenu(mContext, view);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.menu_album, popup.getMenu());
-        popup.setOnMenuItemClickListener(new MyMenuItemClickListener());
-        popup.show();
     }
 
     /**

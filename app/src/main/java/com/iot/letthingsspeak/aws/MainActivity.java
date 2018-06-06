@@ -102,11 +102,9 @@ public class MainActivity extends AppCompatActivity {
             closeWaitDialog();
             TextView label = findViewById(R.id.textViewUserIdMessage);
             label.setText("Sign-in failed");
-            inPassword.setBackground(getDrawable(R.drawable.text_border_error));
 
             label = findViewById(R.id.textViewUserIdMessage);
             label.setText("Sign-in failed");
-            inUsername.setBackground(getDrawable(R.drawable.text_border_error));
 
             showDialogMessage("Sign-in failed", AppHelper.formatException(e));
         }
@@ -139,10 +137,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        // Set toolbar for this screen
-        TextView main_title = findViewById(R.id.main_toolbar_title);
-        main_title.setText("Sign in");
 
         // Initialize application
         AppHelper.init(getApplicationContext());
@@ -293,7 +287,6 @@ public class MainActivity extends AppCompatActivity {
         if (username == null || username.length() < 1) {
             TextView label = findViewById(R.id.textViewUserIdMessage);
             label.setText(inUsername.getHint() + " cannot be empty");
-            inUsername.setBackground(getDrawable(R.drawable.text_border_error));
             return;
         }
 
@@ -303,7 +296,6 @@ public class MainActivity extends AppCompatActivity {
         if (password == null || password.length() < 1) {
             TextView label = findViewById(R.id.textViewUserPasswordMessage);
             label.setText(inPassword.getHint() + " cannot be empty");
-            inPassword.setBackground(getDrawable(R.drawable.text_border_error));
             return;
         }
 
@@ -316,14 +308,12 @@ public class MainActivity extends AppCompatActivity {
         if (username == null) {
             TextView label = findViewById(R.id.textViewUserIdMessage);
             label.setText(inUsername.getHint() + " cannot be empty");
-            inUsername.setBackground(getDrawable(R.drawable.text_border_error));
             return;
         }
 
         if (username.length() < 1) {
             TextView label = findViewById(R.id.textViewUserIdMessage);
             label.setText(inUsername.getHint() + " cannot be empty");
-            inUsername.setBackground(getDrawable(R.drawable.text_border_error));
             return;
         }
 
@@ -378,11 +368,9 @@ public class MainActivity extends AppCompatActivity {
             closeWaitDialog();
             TextView label = findViewById(R.id.textViewUserIdMessage);
             label.setText("Sign-in failed");
-            inPassword.setBackground(getDrawable(R.drawable.text_border_error));
 
             label = findViewById(R.id.textViewUserIdMessage);
             label.setText("Sign-in failed");
-            inUsername.setBackground(getDrawable(R.drawable.text_border_error));
 
             showDialogMessage("Sign-in failed", AppHelper.formatException(e));
         }
@@ -422,14 +410,12 @@ public class MainActivity extends AppCompatActivity {
             if (password == null) {
                 TextView label = findViewById(R.id.textViewUserPasswordMessage);
                 label.setText(inPassword.getHint() + " enter password");
-                inPassword.setBackground(getDrawable(R.drawable.text_border_error));
                 return;
             }
 
             if (password.length() < 1) {
                 TextView label = findViewById(R.id.textViewUserPasswordMessage);
                 label.setText(inPassword.getHint() + " enter password");
-                inPassword.setBackground(getDrawable(R.drawable.text_border_error));
                 return;
             }
         }
@@ -444,11 +430,6 @@ public class MainActivity extends AppCompatActivity {
         inUsername.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (s.length() == 0) {
-                    TextView label = findViewById(R.id.textViewUserIdLabel);
-                    label.setText(R.string.Username);
-                    inUsername.setBackground(getDrawable(R.drawable.text_border_selector));
-                }
             }
 
             @Override
@@ -459,10 +440,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() == 0) {
-                    TextView label = findViewById(R.id.textViewUserIdLabel);
-                    label.setText("");
-                }
             }
         });
 
@@ -470,11 +447,6 @@ public class MainActivity extends AppCompatActivity {
         inPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (s.length() == 0) {
-                    TextView label = findViewById(R.id.textViewUserPasswordLabel);
-                    label.setText(R.string.Password);
-                    inPassword.setBackground(getDrawable(R.drawable.text_border_selector));
-                }
             }
 
             @Override
@@ -485,10 +457,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() == 0) {
-                    TextView label = findViewById(R.id.textViewUserPasswordLabel);
-                    label.setText("");
-                }
             }
         });
     }
@@ -504,9 +472,7 @@ public class MainActivity extends AppCompatActivity {
 
         inUsername.setText("");
         inUsername.requestFocus();
-        inUsername.setBackground(getDrawable(R.drawable.text_border_selector));
         inPassword.setText("");
-        inPassword.setBackground(getDrawable(R.drawable.text_border_selector));
     }
 
     private void showWaitDialog(String message) {

@@ -2,72 +2,71 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="wrap_content">
 
-<android.support.v7.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_margin="@dimen/card_margin"
-    android:elevation="3dp"
-    card_view:cardCornerRadius="@dimen/card_album_radius">
-
-
-    <RelativeLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/card_margin"
+        android:elevation="3dp"
+        card_view:cardCornerRadius="@dimen/card_album_radius">
 
-        <ImageView
-            android:id="@+id/card_news_image"
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/album_cover_height"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:scaleType="fitXY"
-            android:src="@mipmap/bedroom_actionbar" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/room_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/card_news_image"
-            android:paddingLeft="@dimen/album_title_padding"
-            android:paddingRight="@dimen/album_title_padding"
-            android:paddingTop="@dimen/album_title_padding"
-            android:textColor="@color/album_title"
-            android:textSize="@dimen/album_title" />
+            <ImageView
+                android:id="@+id/card_news_image"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/album_cover_height"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:scaleType="fitXY"
+                android:src="@mipmap/bedroom_actionbar" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/room_category"
-            android:paddingLeft="@dimen/album_title_padding"
-            android:paddingRight="@dimen/album_title_padding"
-            android:paddingTop="@dimen/album_title_padding"
-            android:paddingBottom="@dimen/songs_count_padding_bottom"
-            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/room_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/card_news_image"
+                android:paddingLeft="@dimen/album_title_padding"
+                android:paddingRight="@dimen/album_title_padding"
+                android:paddingTop="@dimen/album_title_padding"
+                android:textColor="@color/album_title"
+                android:textSize="@dimen/album_title" />
 
-            <Switch
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="16dp"
-                android:gravity="right"
-                android:scaleX="1.2"
-                android:scaleY="1.2" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/room_category"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/songs_count_padding_bottom"
+                android:paddingLeft="@dimen/album_title_padding"
+                android:paddingRight="@dimen/album_title_padding"
+                android:paddingTop="@dimen/album_title_padding">
 
-        </LinearLayout>
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="16dp"
+                    android:gravity="right"
+                    android:scaleX="1.2"
+                    android:scaleY="1.2" />
 
-        <ImageView
-            android:id="@+id/overflow"
-            android:layout_width="@dimen/ic_album_overflow_width"
-            android:layout_height="@dimen/ic_album_overflow_height"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/card_news_image"
-            android:layout_marginTop="@dimen/ic_album_overflow_margin_top"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_dots" />
-    </RelativeLayout>
-</android.support.v7.widget.CardView>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/overflow"
+                android:layout_width="@dimen/ic_album_overflow_width"
+                android:layout_height="@dimen/ic_album_overflow_height"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/card_news_image"
+                android:layout_marginTop="@dimen/ic_album_overflow_margin_top"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_dots" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 </LinearLayout>

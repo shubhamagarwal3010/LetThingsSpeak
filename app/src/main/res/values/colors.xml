@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="toolbar_background">#404142</color>
     <color name="toolbar_items">#CBCBCB</color>
     <color name="alert">#AC1600</color>
     <color name="button_default">#329AD6</color>
@@ -13,6 +12,23 @@
     <color name="colorPrimary">#F50057</color>
     <color name="colorPrimaryDark">#F50057</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="viewBg">#f1f5f8</color>
     <color name="album_title">#4c4c4c</color>
+
+    <!--Design colors-->
+    <color name="red_dark">#F06423</color>
+    <color name="red_dark2">#D85A1B</color>
+    <color name="cyan_light">#c9ebee</color>
+    <color name="cyan">#b5e3e7</color>
+    <color name="cyan_dark">#70BDC6</color>
+    <color name="navy_blue">#214258</color>
+    <color name="navy_blue_dark">#1C3A4E</color>
+
+
+    <color name="light_gray">#dbdbdb</color>
+    <color name="gray">#7e7e7e</color>
+    <color name="bg_color">#f7f7f7</color>
+    <color name="black_effective">#2a2a2a</color>
+    <color name="shadow">#d0d8dc</color>
+    <color name="fb">#3b5998</color>
+    <color name="google">#d34836</color>
 </resources>

@@ -3,13 +3,9 @@ package com.iot.letthingsspeak.aws.db;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexHashKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexRangeKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @DynamoDBTable(tableName = "letthingsspeak-mobilehub-849318221-device_map")
 
@@ -34,6 +30,7 @@ public class DeviceMapDO {
     public void setDeviceId(final Double _deviceId) {
         this._deviceId = _deviceId;
     }
+
     @DynamoDBIndexHashKey(attributeName = "auth_token", globalSecondaryIndexName = "index_device_map_auth_token")
     public String getAuthToken() {
         return _authToken;
@@ -42,6 +39,7 @@ public class DeviceMapDO {
     public void setAuthToken(final String _authToken) {
         this._authToken = _authToken;
     }
+
     @DynamoDBAttribute(attributeName = "current_state")
     public Boolean getCurrentState() {
         return _currentState;
@@ -50,6 +48,7 @@ public class DeviceMapDO {
     public void setCurrentState(final Boolean _currentState) {
         this._currentState = _currentState;
     }
+
     @DynamoDBAttribute(attributeName = "default_state")
     public Boolean getDefaultState() {
         return _defaultState;
@@ -58,6 +57,7 @@ public class DeviceMapDO {
     public void setDefaultState(final Boolean _defaultState) {
         this._defaultState = _defaultState;
     }
+
     @DynamoDBAttribute(attributeName = "delegatedIds")
     public List<String> getDelegatedIds() {
         return _delegatedIds;
@@ -66,6 +66,7 @@ public class DeviceMapDO {
     public void setDelegatedIds(final List<String> _delegatedIds) {
         this._delegatedIds = _delegatedIds;
     }
+
     @DynamoDBIndexHashKey(attributeName = "gatewayId", globalSecondaryIndexName = "index_device_map_gateway_id")
     public Double getGatewayId() {
         return _gatewayId;
@@ -74,6 +75,7 @@ public class DeviceMapDO {
     public void setGatewayId(final Double _gatewayId) {
         this._gatewayId = _gatewayId;
     }
+
     @DynamoDBAttribute(attributeName = "gateway_pin")
     public Double getGatewayPin() {
         return _gatewayPin;
@@ -82,6 +84,7 @@ public class DeviceMapDO {
     public void setGatewayPin(final Double _gatewayPin) {
         this._gatewayPin = _gatewayPin;
     }
+
     @DynamoDBIndexHashKey(attributeName = "ownerId", globalSecondaryIndexName = "index_device_map_ownerId")
     public String getOwnerId() {
         return _ownerId;
@@ -90,6 +93,7 @@ public class DeviceMapDO {
     public void setOwnerId(final String _ownerId) {
         this._ownerId = _ownerId;
     }
+
     @DynamoDBIndexHashKey(attributeName = "roomId", globalSecondaryIndexName = "index_device_map_room_id")
     public Double getRoomId() {
         return _roomId;
@@ -98,6 +102,7 @@ public class DeviceMapDO {
     public void setRoomId(final Double _roomId) {
         this._roomId = _roomId;
     }
+
     @DynamoDBAttribute(attributeName = "tag")
     public String getTag() {
         return _tag;
