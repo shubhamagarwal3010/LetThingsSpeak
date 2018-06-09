@@ -58,6 +58,7 @@ import com.iot.letthingsspeak.aws.ChangePasswordActivity;
 import com.iot.letthingsspeak.aws.UserProfile;
 import com.iot.letthingsspeak.aws.db.AmazonClientManager;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
+import com.iot.letthingsspeak.configdevice.ConfigDevice;
 import com.iot.letthingsspeak.room.AddRoom;
 import com.iot.letthingsspeak.room.HomeAdapter;
 import com.iot.letthingsspeak.room.RoomDetails;
@@ -272,6 +273,10 @@ public class UserActivity extends AppCompatActivity {
                 // Change password
                 userProfile();
                 break;
+            case R.id.nav_config_device:
+                // Change password
+                configDevice();
+                break;
             case R.id.nav_user_change_password:
                 // Change password
                 changePassword();
@@ -298,6 +303,12 @@ public class UserActivity extends AppCompatActivity {
     private void userProfile() {
         Intent userProfileActivity = new Intent(this, UserProfile.class);
         startActivity(userProfileActivity);
+    }
+
+    // Configure Device
+    private void configDevice() {
+        Intent configDeviceActivity = new Intent(this, ConfigDevice.class);
+        startActivity(configDeviceActivity);
     }
 
     // Sign out user

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.iot.letthingsspeak.aws.MainActivity"
+            android:name=".aws.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,53 +21,57 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.iot.letthingsspeak.UserActivity"
+            android:name=".UserActivity"
             android:label="@string/title_activity_user"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.iot.letthingsspeak.aws.RegisterUser"
+            android:name=".aws.RegisterUser"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.iot.letthingsspeak.aws.AboutApp"
+            android:name=".aws.AboutApp"
             android:label="@string/title_activity_about_app"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.iot.letthingsspeak.aws.SignUpConfirm"
+            android:name=".aws.SignUpConfirm"
             android:label="@string/title_activity_sign_up_confirm"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.iot.letthingsspeak.aws.MFAActivity"
+            android:name=".aws.MFAActivity"
             android:label="@string/title_activity_mfa"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.iot.letthingsspeak.aws.ForgotPasswordActivity"
+            android:name=".aws.ForgotPasswordActivity"
             android:label="@string/title_activity_forgot_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.iot.letthingsspeak.aws.ChangePasswordActivity"
+            android:name=".aws.ChangePasswordActivity"
             android:label="@string/title_activity_change_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.iot.letthingsspeak.aws.NewPassword"
+            android:name=".aws.NewPassword"
             android:label="@string/title_activity_new_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.iot.letthingsspeak.aws.ChooseMFA"
+            android:name=".aws.ChooseMFA"
             android:label="@string/title_activity_choose_mfa"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.iot.letthingsspeak.aws.UserProfile"
+            android:name=".aws.UserProfile"
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.iot.letthingsspeak.device.DeviceActivity"
+            android:name=".device.DeviceActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.iot.letthingsspeak.room.AddRoom"
+            android:name=".room.AddRoom"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.iot.letthingsspeak.device.AddDevice"
+            android:name=".device.AddDevice"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".configdevice.ConfigDevice"
+            android:label="@string/title_activity_config_device"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

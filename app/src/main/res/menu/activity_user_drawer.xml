@@ -9,6 +9,12 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_config_device"
+            android:title="Configure Device" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
             android:id="@+id/nav_user_change_password"
             android:title="Change password" />
     </group>
