@@ -21,8 +21,6 @@
 
     <string name="step1">1. Create Table</string>
     <string name="step2">2. Insert Users</string>
-    <string name="step3">3. List Users</string>
-    <string name="step4">4. Delete Table</string>
 
 
     <string name="password">Password</string>
