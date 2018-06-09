@@ -81,7 +81,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rooms"
+                            android:text="Simplify your World"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/backdrop_subtitle" />
 
