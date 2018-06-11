@@ -21,7 +21,7 @@
                 android:id="@+id/card_news_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/album_cover_height"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:scaleType="fitXY"
                 android:src="@mipmap/bedroom_actionbar" />
