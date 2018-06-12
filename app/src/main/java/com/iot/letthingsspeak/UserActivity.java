@@ -57,6 +57,7 @@ import com.iot.letthingsspeak.aws.AppHelper;
 import com.iot.letthingsspeak.aws.ChangePasswordActivity;
 import com.iot.letthingsspeak.aws.UserProfile;
 import com.iot.letthingsspeak.aws.db.AmazonClientManager;
+import com.iot.letthingsspeak.aws.db.Constants;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 import com.iot.letthingsspeak.configdevice.ConfigDevice;
 import com.iot.letthingsspeak.room.AddRoom;
@@ -420,17 +421,13 @@ public class UserActivity extends AppCompatActivity {
         protected DynamoDBManagerTaskResult doInBackground(
                 DynamoDBManagerType... types) {
 
-            String tableStatus = DynamoDBManager.getTestTableStatus();
+            String tableStatus = DynamoDBManager.getTestTableStatus(Constants.TEST_TABLE_NAME);
 
             DynamoDBManagerTaskResult result = new DynamoDBManagerTaskResult();
             result.setTableStatus(tableStatus);
             result.setTaskType(types[0]);
 
-            if (types[0] == DynamoDBManagerType.CREATE_TABLE) {
-                if (tableStatus.length() == 0) {
-                    DynamoDBManager.createTable();
-                }
-            } else if (types[0] == DynamoDBManagerType.INSERT_USER) {
+            if (types[0] == DynamoDBManagerType.INSERT_USER) {
                 if (tableStatus.equalsIgnoreCase("ACTIVE")) {
                     DynamoDBManager.insertUsers();
                 }
@@ -443,22 +440,22 @@ public class UserActivity extends AppCompatActivity {
 
             if (result.getTaskType() == DynamoDBManagerType.CREATE_TABLE) {
 
-                if (result.getTableStatus().length() != 0) {
+                if (result.getTableStatus(Constants.TEST_TABLE_NAME).length() != 0) {
                     Toast.makeText(
                             UserActivity.this,
                             "The test table already exists.\nTable Status: "
-                                    + result.getTableStatus(),
+                                    + result.getTableStatus(Constants.TEST_TABLE_NAME),
                             Toast.LENGTH_LONG).show();
                 }
 
-            } else if (!result.getTableStatus().equalsIgnoreCase("ACTIVE")) {
+            } else if (!result.getTableStatus(Constants.TEST_TABLE_NAME).equalsIgnoreCase("ACTIVE")) {
 
                 Toast.makeText(
                         UserActivity.this,
                         "The test table is not ready yet.\nTable Status: "
-                                + result.getTableStatus(), Toast.LENGTH_LONG)
+                                + result.getTableStatus(Constants.TEST_TABLE_NAME), Toast.LENGTH_LONG)
                         .show();
-            } else if (result.getTableStatus().equalsIgnoreCase("ACTIVE")
+            } else if (result.getTableStatus(Constants.TEST_TABLE_NAME).equalsIgnoreCase("ACTIVE")
                     && result.getTaskType() == DynamoDBManagerType.INSERT_USER) {
                 Toast.makeText(UserActivity.this,
                         "Users inserted successfully!", Toast.LENGTH_SHORT).show();
@@ -478,7 +475,7 @@ public class UserActivity extends AppCompatActivity {
             this.taskType = taskType;
         }
 
-        public String getTableStatus() {
+        public String getTableStatus(String tableName) {
             return tableStatus;
         }
 

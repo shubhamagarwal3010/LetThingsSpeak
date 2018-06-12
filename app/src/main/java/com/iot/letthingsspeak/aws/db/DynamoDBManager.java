@@ -21,50 +21,16 @@ public class DynamoDBManager {
     private static final String TAG = "DynamoDBManager";
 
     /*
-     * Creates a table with the following attributes: Table name: testTableName
-     * Hash key: userNo type N Read Capacity Units: 10 Write Capacity Units: 5
-     */
-    public static void createTable() {
-
-        Log.d(TAG, "Create table called");
-
-        AmazonDynamoDBClient ddb = UserActivity.clientManager
-                .ddb();
-
-        KeySchemaElement kse = new KeySchemaElement().withAttributeName(
-                "_userId").withKeyType(KeyType.HASH);
-        AttributeDefinition ad = new AttributeDefinition().withAttributeName(
-                "_userId").withAttributeType(ScalarAttributeType.N);
-        ProvisionedThroughput pt = new ProvisionedThroughput()
-                .withReadCapacityUnits(10l).withWriteCapacityUnits(5l);
-
-        CreateTableRequest request = new CreateTableRequest()
-                .withTableName(Constants.TEST_TABLE_NAME)
-                .withKeySchema(kse).withAttributeDefinitions(ad)
-                .withProvisionedThroughput(pt);
-
-        try {
-            Log.d(TAG, "Sending Create table request");
-            ddb.createTable(request);
-            Log.d(TAG, "Create request response successfully recieved");
-        } catch (AmazonServiceException ex) {
-            Log.e(TAG, "Error sending create table request", ex);
-            UserActivity.clientManager
-                    .wipeCredentialsOnAuthError(ex);
-        }
-    }
-
-    /*
      * Retrieves the table description and returns the table status as a string.
      */
-    public static String getTestTableStatus() {
+    public static String getTestTableStatus(String tableName) {
 
         try {
             AmazonDynamoDBClient ddb = UserActivity.clientManager
                     .ddb();
 
             DescribeTableRequest request = new DescribeTableRequest()
-                    .withTableName(Constants.TEST_TABLE_NAME);
+                    .withTableName(tableName);
             DescribeTableResult result = ddb.describeTable(request);
 
             String status = result.getTable().getTableStatus();
@@ -77,6 +43,7 @@ public class DynamoDBManager {
 
         return "";
     }
+
 
     /*
      * Inserts ten users with userNo from 1 to 10 and random names.

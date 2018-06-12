@@ -29,7 +29,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.1'
     implementation 'com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.6.8'
-    implementation 'com.amazonaws:aws-android-sdk-ddb-mapper:2.6.+'
+    implementation 'com.amazonaws:aws-android-sdk-ddb-mapper:2.6.22'
     implementation('com.amazonaws:aws-android-sdk-mobile-client:2.6.+@aar') { transitive = true }
     // Glide
     implementation 'com.github.bumptech.glide:glide:3.7.0'
