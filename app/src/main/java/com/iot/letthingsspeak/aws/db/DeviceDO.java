@@ -5,7 +5,7 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
-@DynamoDBTable(tableName = "letthingsspeak-mobilehub-849318221-device")
+@DynamoDBTable(tableName = Constants.DEVICE_TABLE)
 
 public class DeviceDO {
     private Double _id;

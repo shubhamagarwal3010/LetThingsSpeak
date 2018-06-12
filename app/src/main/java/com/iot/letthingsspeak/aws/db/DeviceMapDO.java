@@ -7,7 +7,7 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
 import java.util.List;
 
-@DynamoDBTable(tableName = "letthingsspeak-mobilehub-849318221-device_map")
+@DynamoDBTable(tableName = Constants.DEVICE_MAP_TABLE)
 
 public class DeviceMapDO {
     private Double _deviceId;

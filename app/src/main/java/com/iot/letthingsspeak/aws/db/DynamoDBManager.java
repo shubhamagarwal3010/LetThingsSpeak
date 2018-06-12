@@ -3,11 +3,7 @@ package com.iot.letthingsspeak.aws.db;
 import android.util.Log;
 
 import com.amazonaws.AmazonServiceException;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
@@ -94,14 +90,14 @@ public class DynamoDBManager {
         try {
             //for (int i = 1; i <= 10; i++)
             {
-                UserPreference userPreference = new UserPreference();
-                userPreference.setUserId(AppHelper.getCurrUser());
-                userPreference.setRoomName("Bed-Room");
-                userPreference.setDeviceName("Fan");
-                userPreference.setDeviceId(124.0);
+                LetThingsSpeakDO letThingsSpeakDO = new LetThingsSpeakDO();
+                letThingsSpeakDO.setUserId(AppHelper.getCurrUser());
+                letThingsSpeakDO.setRoomName("Bed-Room");
+                letThingsSpeakDO.setDeviceName("Fan");
+                letThingsSpeakDO.setDeviceId(124.0);
 
                 Log.d(TAG, "Inserting data");
-                mapper.save(userPreference);
+                mapper.save(letThingsSpeakDO);
                 Log.d(TAG, "Data inserted");
             }
         } catch (AmazonServiceException ex) {
@@ -122,11 +118,11 @@ public class DynamoDBManager {
         try {
             //for (int i = 1; i <= 10; i++)
             {
-                UserPreference userPreference = new UserPreference();
-                userPreference.setRoomName(roomName);
+                LetThingsSpeakDO letThingsSpeakDO = new LetThingsSpeakDO();
+                letThingsSpeakDO.setRoomName(roomName);
 
                 Log.d(TAG, "Inserting room");
-                mapper.save(userPreference);
+                mapper.save(letThingsSpeakDO);
                 Log.d(TAG, "Room inserted");
             }
         } catch (AmazonServiceException ex) {
@@ -139,17 +135,17 @@ public class DynamoDBManager {
     /*
      * Retrieves all of the attribute/value pairs for the specified user.
      */
-    public static UserPreference getUserPreference(int userNo) {
+    public static LetThingsSpeakDO getUserPreference(int userNo) {
 
         AmazonDynamoDBClient ddb = UserActivity.clientManager
                 .ddb();
         DynamoDBMapper mapper = new DynamoDBMapper(ddb);
 
         try {
-            UserPreference userPreference = mapper.load(UserPreference.class,
+            LetThingsSpeakDO letThingsSpeakDO = mapper.load(LetThingsSpeakDO.class,
                     userNo);
 
-            return userPreference;
+            return letThingsSpeakDO;
 
         } catch (AmazonServiceException ex) {
             UserActivity.clientManager
@@ -162,84 +158,18 @@ public class DynamoDBManager {
     /*
      * Updates one attribute/value pair for the specified user.
      */
-    public static void updateUserPreference(UserPreference updateUserPreference) {
+    public static void updateUserPreference(LetThingsSpeakDO updateLetThingsSpeakDO) {
 
         AmazonDynamoDBClient ddb = UserActivity.clientManager
                 .ddb();
         DynamoDBMapper mapper = new DynamoDBMapper(ddb);
 
         try {
-            mapper.save(updateUserPreference);
+            mapper.save(updateLetThingsSpeakDO);
 
         } catch (AmazonServiceException ex) {
             UserActivity.clientManager
                     .wipeCredentialsOnAuthError(ex);
-        }
-    }
-
-    @DynamoDBTable(tableName = Constants.TEST_TABLE_NAME)
-    public static class UserPreference {
-        private String _userId;
-        private Double _deviceId;
-        private String _deviceName;
-        private Double _pin;
-        private String _roomName;
-        private byte[] _status;
-
-        @DynamoDBHashKey(attributeName = "userId")
-        @DynamoDBAttribute(attributeName = "userId")
-        public String getUserId() {
-            return _userId;
-        }
-
-        public void setUserId(final String _userId) {
-            this._userId = _userId;
-        }
-
-        @DynamoDBRangeKey(attributeName = "deviceId")
-        @DynamoDBAttribute(attributeName = "deviceId")
-        public Double getDeviceId() {
-            return _deviceId;
-        }
-
-        public void setDeviceId(final Double _deviceId) {
-            this._deviceId = _deviceId;
-        }
-
-        @DynamoDBAttribute(attributeName = "deviceName")
-        public String getDeviceName() {
-            return _deviceName;
-        }
-
-        public void setDeviceName(final String _deviceName) {
-            this._deviceName = _deviceName;
-        }
-
-        @DynamoDBAttribute(attributeName = "pin")
-        public Double getPin() {
-            return _pin;
-        }
-
-        public void setPin(final Double _pin) {
-            this._pin = _pin;
-        }
-
-        @DynamoDBAttribute(attributeName = "roomName")
-        public String getRoomName() {
-            return _roomName;
-        }
-
-        public void setRoomName(final String _roomName) {
-            this._roomName = _roomName;
-        }
-
-        @DynamoDBAttribute(attributeName = "status")
-        public byte[] getStatus() {
-            return _status;
-        }
-
-        public void setStatus(final byte[] _status) {
-            this._status = _status;
         }
     }
 }
