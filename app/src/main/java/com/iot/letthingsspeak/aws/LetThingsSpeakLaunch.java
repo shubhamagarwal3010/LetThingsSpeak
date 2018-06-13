@@ -17,8 +17,4 @@ public class LetThingsSpeakLaunch extends Application {
         sContext = getApplicationContext();
         amazonClientManager = new AmazonClientManager(sContext);
     }
-
-    public AmazonDynamoDBClient getAmazonDynamoDBClient() {
-        return amazonDynamoDBClient;
-    }
 }

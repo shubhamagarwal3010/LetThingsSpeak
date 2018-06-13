@@ -54,10 +54,12 @@ import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.aws.AboutApp;
 import com.iot.letthingsspeak.aws.AppHelper;
 import com.iot.letthingsspeak.aws.ChangePasswordActivity;
+import com.iot.letthingsspeak.aws.DynamoDBManagerTask;
 import com.iot.letthingsspeak.aws.UserProfile;
 import com.iot.letthingsspeak.aws.db.AmazonClientManager;
 import com.iot.letthingsspeak.aws.db.Constants;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
+import com.iot.letthingsspeak.aws.db.Task;
 import com.iot.letthingsspeak.configdevice.ConfigDevice;
 import com.iot.letthingsspeak.room.AddRoom;
 import com.iot.letthingsspeak.room.HomeAdapter;
@@ -69,9 +71,7 @@ import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
     public static final int ACTIVITY_REQUEST_CODE = 201;
-    private final String TAG = "UserActivity";
     // To track changes to user details
-    private final List<String> attributesToDelete = new ArrayList<>();
     List<RoomDetails> room = new ArrayList<>();
     private RecyclerView roomTypeRecyclerView;
     private NavigationView nDrawer;
@@ -80,11 +80,8 @@ public class UserActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private AlertDialog userDialog;
     private ProgressDialog waitDialog;
-    private ListView attributesList;
     // Cognito user objects
     private CognitoUser user;
-    private CognitoUserSession session;
-    private CognitoUserDetails details;
     // User details
     private String username;
 
@@ -300,43 +297,6 @@ public class UserActivity extends AppCompatActivity {
         user = AppHelper.getPool().getUser(username);
     }
 
-    private void showWaitDialog(String message) {
-        closeWaitDialog();
-        waitDialog = new ProgressDialog(this);
-        waitDialog.setTitle(message);
-        waitDialog.show();
-    }
-
-    private void showDialogMessage(String title, String body, final boolean exit) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title).setMessage(body).setNeutralButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                try {
-                    userDialog.dismiss();
-                    if (exit) {
-                        exit();
-                    }
-                } catch (Exception e) {
-                    // Log failure
-                    Log.e(TAG, " -- Dialog dismiss failed");
-                    if (exit) {
-                        exit();
-                    }
-                }
-            }
-        });
-        userDialog = builder.create();
-        userDialog.show();
-    }
-
-    private void closeWaitDialog() {
-        try {
-            waitDialog.dismiss();
-        } catch (Exception e) {
-            //
-        }
-    }
 
     private void exit() {
         Intent intent = new Intent();
@@ -388,84 +348,11 @@ public class UserActivity extends AppCompatActivity {
 
     public void createTable(View v) {
         new DynamoDBManagerTask()
-                .execute(DynamoDBManagerType.CREATE_TABLE);
+                .execute(new Task(this, Constants.DynamoDBManagerType.CREATE_TABLE));
     }
 
     public void insertUsers(View v) {
         new DynamoDBManagerTask()
-                .execute(DynamoDBManagerType.INSERT_USER);
-    }
-
-    private enum DynamoDBManagerType {
-        GET_TABLE_STATUS, CREATE_TABLE, INSERT_USER
-    }
-
-    private class DynamoDBManagerTask extends
-            AsyncTask<DynamoDBManagerType, Void, DynamoDBManagerTaskResult> {
-
-        protected DynamoDBManagerTaskResult doInBackground(
-                DynamoDBManagerType... types) {
-
-            String tableStatus = DynamoDBManager.getTestTableStatus(Constants.TEST_TABLE_NAME);
-
-            DynamoDBManagerTaskResult result = new DynamoDBManagerTaskResult();
-            result.setTableStatus(tableStatus);
-            result.setTaskType(types[0]);
-
-            if (types[0] == DynamoDBManagerType.INSERT_USER) {
-                if (tableStatus.equalsIgnoreCase("ACTIVE")) {
-                    DynamoDBManager.insertUsers();
-                }
-            }
-
-            return result;
-        }
-
-        protected void onPostExecute(DynamoDBManagerTaskResult result) {
-
-            if (result.getTaskType() == DynamoDBManagerType.CREATE_TABLE) {
-
-                if (result.getTableStatus(Constants.TEST_TABLE_NAME).length() != 0) {
-                    Toast.makeText(
-                            UserActivity.this,
-                            "The test table already exists.\nTable Status: "
-                                    + result.getTableStatus(Constants.TEST_TABLE_NAME),
-                            Toast.LENGTH_LONG).show();
-                }
-
-            } else if (!result.getTableStatus(Constants.TEST_TABLE_NAME).equalsIgnoreCase("ACTIVE")) {
-
-                Toast.makeText(
-                        UserActivity.this,
-                        "The test table is not ready yet.\nTable Status: "
-                                + result.getTableStatus(Constants.TEST_TABLE_NAME), Toast.LENGTH_LONG)
-                        .show();
-            } else if (result.getTableStatus(Constants.TEST_TABLE_NAME).equalsIgnoreCase("ACTIVE")
-                    && result.getTaskType() == DynamoDBManagerType.INSERT_USER) {
-                Toast.makeText(UserActivity.this,
-                        "Users inserted successfully!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private class DynamoDBManagerTaskResult {
-        private DynamoDBManagerType taskType;
-        private String tableStatus;
-
-        public DynamoDBManagerType getTaskType() {
-            return taskType;
-        }
-
-        public void setTaskType(DynamoDBManagerType taskType) {
-            this.taskType = taskType;
-        }
-
-        public String getTableStatus(String tableName) {
-            return tableStatus;
-        }
-
-        public void setTableStatus(String tableStatus) {
-            this.tableStatus = tableStatus;
-        }
+                .execute(new Task(this, Constants.DynamoDBManagerType.INSERT_USER));
     }
 }

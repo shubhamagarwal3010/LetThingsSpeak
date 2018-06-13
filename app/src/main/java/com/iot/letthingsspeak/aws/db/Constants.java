@@ -34,4 +34,9 @@ public class Constants {
     public static final String DEVICE_TABLE = "letthingsspeak-mobilehub-849318221-device";
     public static final String USER_ROOM_TABLE = "letthingsspeak-mobilehub-849318221-user_room";
     public static final String DEVICE_MAP_TABLE = "letthingsspeak-mobilehub-849318221-device_map";
+
+
+    public enum DynamoDBManagerType {
+        GET_TABLE_STATUS, CREATE_TABLE, INSERT_USER
+    }
 }

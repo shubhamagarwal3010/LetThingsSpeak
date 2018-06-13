@@ -56,7 +56,7 @@ public class DynamoDBManager {
             {
                 LetThingsSpeakDO letThingsSpeakDO = new LetThingsSpeakDO();
                 letThingsSpeakDO.setUserId(AppHelper.getCurrUser());
-                letThingsSpeakDO.setRoomName("Living-Room");
+                letThingsSpeakDO.setRoomName("Kitchen");
                 letThingsSpeakDO.setDeviceName("Bulb");
                 letThingsSpeakDO.setDeviceId(124.0);
 
