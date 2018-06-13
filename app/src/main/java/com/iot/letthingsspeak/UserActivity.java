@@ -42,7 +42,6 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -70,7 +69,6 @@ import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
     public static final int ACTIVITY_REQUEST_CODE = 201;
-    public static AmazonClientManager clientManager = null;
     private final String TAG = "UserActivity";
     // To track changes to user details
     private final List<String> attributesToDelete = new ArrayList<>();
@@ -96,7 +94,8 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        clientManager = new AmazonClientManager(this);
+        // Install a custom UncaughtExceptionHandler so we can debug crashes
+        CrashHandler.installHandler(this);
 
         // Set toolbar for this screen
         toolbar = findViewById(R.id.main_toolbar);
@@ -117,31 +116,6 @@ public class UserActivity extends AppCompatActivity {
         View navigationHeader = nDrawer.getHeaderView(0);
         TextView navHeaderSubTitle = navigationHeader.findViewById(R.id.textViewNavUserSub);
         navHeaderSubTitle.setText(username);
-
-        clientManager = new AmazonClientManager(this);
-
-        final Button createTableBttn = findViewById(R.id.create_table_bttn);
-        createTableBttn.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                Log.i(TAG, "createTableBttn clicked.");
-
-                new DynamoDBManagerTask()
-                        .execute(DynamoDBManagerType.CREATE_TABLE);
-            }
-        });
-
-        final Button insertUsersBttn = findViewById(R.id.insert_users_bttn);
-        insertUsersBttn.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                Log.i(TAG, "insertUsersBttn clicked.");
-
-                new DynamoDBManagerTask()
-                        .execute(DynamoDBManagerType.INSERT_USER);
-            }
-        });
-
 
         roomTypeRecyclerView = findViewById(R.id.activity_main_recyclerview);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
@@ -373,9 +347,6 @@ public class UserActivity extends AppCompatActivity {
         finish();
     }
 
-    private enum DynamoDBManagerType {
-        GET_TABLE_STATUS, CREATE_TABLE, INSERT_USER
-    }
 
     /**
      * RecyclerView item decoration - give equal margin around grid item
@@ -413,6 +384,20 @@ public class UserActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public void createTable(View v) {
+        new DynamoDBManagerTask()
+                .execute(DynamoDBManagerType.CREATE_TABLE);
+    }
+
+    public void insertUsers(View v) {
+        new DynamoDBManagerTask()
+                .execute(DynamoDBManagerType.INSERT_USER);
+    }
+
+    private enum DynamoDBManagerType {
+        GET_TABLE_STATUS, CREATE_TABLE, INSERT_USER
     }
 
     private class DynamoDBManagerTask extends

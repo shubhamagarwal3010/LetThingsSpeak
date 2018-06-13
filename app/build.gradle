@@ -37,4 +37,5 @@ dependencies {
     implementation "com.android.support:animated-vector-drawable:27.1.1"
     // font
     implementation "uk.co.chrisjenx:calligraphy:2.2.0"
+    implementation 'com.jakewharton:butterknife:8.8.1'
 }
