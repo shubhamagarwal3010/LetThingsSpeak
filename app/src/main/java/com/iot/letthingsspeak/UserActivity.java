@@ -18,12 +18,10 @@
 package com.iot.letthingsspeak;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -37,29 +35,21 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserDetails;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserSession;
 import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.aws.AboutApp;
 import com.iot.letthingsspeak.aws.AppHelper;
 import com.iot.letthingsspeak.aws.ChangePasswordActivity;
-import com.iot.letthingsspeak.aws.DynamoDBManagerTask;
+import com.iot.letthingsspeak.aws.LetThingsSpeakLaunch;
 import com.iot.letthingsspeak.aws.UserProfile;
-import com.iot.letthingsspeak.aws.db.AmazonClientManager;
-import com.iot.letthingsspeak.aws.db.Constants;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
-import com.iot.letthingsspeak.aws.db.Task;
 import com.iot.letthingsspeak.configdevice.ConfigDevice;
 import com.iot.letthingsspeak.room.AddRoom;
 import com.iot.letthingsspeak.room.HomeAdapter;
@@ -73,6 +63,7 @@ public class UserActivity extends AppCompatActivity {
     public static final int ACTIVITY_REQUEST_CODE = 201;
     // To track changes to user details
     List<RoomDetails> room = new ArrayList<>();
+    DynamoDBManager dynamoDBManager = LetThingsSpeakLaunch.dynamoDBManager;
     private RecyclerView roomTypeRecyclerView;
     private NavigationView nDrawer;
     private DrawerLayout mDrawer;
@@ -297,7 +288,6 @@ public class UserActivity extends AppCompatActivity {
         user = AppHelper.getPool().getUser(username);
     }
 
-
     private void exit() {
         Intent intent = new Intent();
         if (username == null)
@@ -307,6 +297,18 @@ public class UserActivity extends AppCompatActivity {
         finish();
     }
 
+    public void createTable(View v) {
+        dynamoDBManager.createTable();
+    }
+
+    public void insertUsers(View v) {
+        dynamoDBManager.insertUsers();
+        insertRoom("BedRoom");
+    }
+
+    public void insertRoom(String name) {
+        dynamoDBManager.insertRoom(name);
+    }
 
     /**
      * RecyclerView item decoration - give equal margin around grid item
@@ -344,15 +346,5 @@ public class UserActivity extends AppCompatActivity {
                 }
             }
         }
-    }
-
-    public void createTable(View v) {
-        new DynamoDBManagerTask()
-                .execute(new Task(this, Constants.DynamoDBManagerType.CREATE_TABLE));
-    }
-
-    public void insertUsers(View v) {
-        new DynamoDBManagerTask()
-                .execute(new Task(this, Constants.DynamoDBManagerType.INSERT_USER));
     }
 }

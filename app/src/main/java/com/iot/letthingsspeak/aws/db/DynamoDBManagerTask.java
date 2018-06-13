@@ -1,18 +1,14 @@
-package com.iot.letthingsspeak.aws;
+package com.iot.letthingsspeak.aws.db;
 
 import android.os.AsyncTask;
-import android.widget.Toast;
-
-import com.iot.letthingsspeak.aws.db.Constants;
-import com.iot.letthingsspeak.aws.db.DynamoDBManager;
-import com.iot.letthingsspeak.aws.db.Task;
+import android.util.Log;
 
 public class DynamoDBManagerTask extends
         AsyncTask<Task, Void, DynamoDBManagerTaskResult> {
 
     protected DynamoDBManagerTaskResult doInBackground(Task... types) {
 
-        String tableStatus = DynamoDBManager.getTestTableStatus(Constants.TEST_TABLE_NAME);
+        String tableStatus = DynamoDBClient.getTestTableStatus(types[0].getTableName());
 
         DynamoDBManagerTaskResult result = new DynamoDBManagerTaskResult();
         result.setTableStatus(tableStatus);
@@ -20,10 +16,13 @@ public class DynamoDBManagerTask extends
 
         if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.INSERT_USER) {
             if (tableStatus.equalsIgnoreCase("ACTIVE")) {
-                DynamoDBManager.insertUsers();
+                DynamoDBClient.insertUsers();
+            }
+        } else if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.INSERT_ROOM) {
+            if (tableStatus.equalsIgnoreCase("ACTIVE")) {
+                DynamoDBClient.insertRoom(types[0].getParameterList());
             }
         }
-        result.setContext(types[0].getContext());
         return result;
     }
 
@@ -31,15 +30,13 @@ public class DynamoDBManagerTask extends
 
         if (!result.getTableStatus(Constants.TEST_TABLE_NAME).equalsIgnoreCase("ACTIVE")) {
 
-            Toast.makeText(
-                    result.getContext(),
-                    "The test table is not ready yet.\nTable Status: "
-                            + result.getTableStatus(Constants.TEST_TABLE_NAME), Toast.LENGTH_LONG)
-                    .show();
+            Log.i("LetThingsSpeakMessages", "The test table is not ready yet.\nTable Status: " + result.getTableStatus(Constants.TEST_TABLE_NAME).toString());
         } else if (result.getTableStatus(Constants.TEST_TABLE_NAME).equalsIgnoreCase("ACTIVE")
                 && result.getTaskType() == Constants.DynamoDBManagerType.INSERT_USER) {
-            Toast.makeText(result.getContext(),
-                    "Users inserted successfully!", Toast.LENGTH_SHORT).show();
+            Log.i("LetThingsSpeakMessages", "Users inserted successfully!");
+        } else if (result.getTableStatus(Constants.ROOM_TABLE).equalsIgnoreCase("ACTIVE")
+                && result.getTaskType() == Constants.DynamoDBManagerType.INSERT_ROOM) {
+            Log.i("LetThingsSpeakMessages", "Rooms inserted successfully!");
         }
     }
 }

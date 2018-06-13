@@ -1,9 +1,7 @@
-package com.iot.letthingsspeak.aws;
+package com.iot.letthingsspeak.aws.db;
 
 
 import android.content.Context;
-
-import com.iot.letthingsspeak.aws.db.Constants;
 
 public class DynamoDBManagerTaskResult {
     private Constants.DynamoDBManagerType taskType;

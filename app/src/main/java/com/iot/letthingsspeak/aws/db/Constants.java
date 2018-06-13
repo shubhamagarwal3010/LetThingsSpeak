@@ -37,6 +37,6 @@ public class Constants {
 
 
     public enum DynamoDBManagerType {
-        GET_TABLE_STATUS, CREATE_TABLE, INSERT_USER
+        GET_TABLE_STATUS, CREATE_TABLE, INSERT_USER, INSERT_ROOM
     }
 }
