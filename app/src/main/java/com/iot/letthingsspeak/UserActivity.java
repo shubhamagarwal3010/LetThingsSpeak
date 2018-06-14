@@ -300,10 +300,6 @@ public class UserActivity extends AppCompatActivity {
         finish();
     }
 
-    public void createTable(View v) {
-        dynamoDBManager.createTable();
-    }
-
     public void insertUsers(View v) {
         dynamoDBManager.insertUsers();
         insertRoomDetails("BedRoom");
