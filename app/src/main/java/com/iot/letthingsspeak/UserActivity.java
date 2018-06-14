@@ -50,6 +50,7 @@ import com.iot.letthingsspeak.aws.ChangePasswordActivity;
 import com.iot.letthingsspeak.aws.LetThingsSpeakLaunch;
 import com.iot.letthingsspeak.aws.UserProfile;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
+import com.iot.letthingsspeak.aws.db.RoomDO;
 import com.iot.letthingsspeak.configdevice.ConfigDevice;
 import com.iot.letthingsspeak.room.AddRoom;
 import com.iot.letthingsspeak.room.HomeAdapter;
@@ -58,6 +59,7 @@ import com.iot.letthingsspeak.room.RoomStore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class UserActivity extends AppCompatActivity {
     public static final int ACTIVITY_REQUEST_CODE = 201;
@@ -304,6 +306,8 @@ public class UserActivity extends AppCompatActivity {
     public void insertUsers(View v) {
         dynamoDBManager.insertUsers();
         insertRoom("BedRoom");
+        //Map<Double, RoomDO> userRoom = dynamoDBManager.getRoomsForUser();
+        //userRoom.containsKey()
     }
 
     public void insertRoom(String name) {

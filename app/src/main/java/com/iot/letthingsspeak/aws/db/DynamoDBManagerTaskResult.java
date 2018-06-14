@@ -7,6 +7,7 @@ public class DynamoDBManagerTaskResult {
     private Constants.DynamoDBManagerType taskType;
     private String tableStatus;
     private Context context;
+    private Object returnValue;
 
     public Constants.DynamoDBManagerType getTaskType() {
         return taskType;
@@ -30,5 +31,13 @@ public class DynamoDBManagerTaskResult {
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    public Object getReturnValue() {
+        return returnValue;
+    }
+
+    public void setReturnValue(Object returnValue) {
+        this.returnValue = returnValue;
     }
 }

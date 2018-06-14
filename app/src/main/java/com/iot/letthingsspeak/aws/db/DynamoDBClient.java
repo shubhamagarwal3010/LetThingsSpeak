@@ -4,12 +4,16 @@ import android.util.Log;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableResult;
 import com.iot.letthingsspeak.aws.AppHelper;
 import com.iot.letthingsspeak.aws.LetThingsSpeakLaunch;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DynamoDBClient {
@@ -116,6 +120,35 @@ public class DynamoDBClient {
                     .wipeCredentialsOnAuthError(ex);
         }
 
+        return null;
+    }
+
+
+    public static Map<Double, RoomDO> getRoomsForUser() {
+        String userId = AppHelper.getCurrUser();
+        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager
+                .ddb();
+        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
+        Map<Double, RoomDO> roomDOMap = new HashMap<>();
+
+        Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+        eav.put(":val1", new AttributeValue().withS(userId));
+
+        DynamoDBScanExpression dynamoDBScanExpression = new DynamoDBScanExpression();
+        dynamoDBScanExpression.withFilterExpression("userId = :val1").withExpressionAttributeValues(eav);
+
+        try {
+            List<UserRoomDO> userRoomDOList = mapper.scan(UserRoomDO.class, dynamoDBScanExpression);
+            for (UserRoomDO userRoomDO: userRoomDOList) {
+                Double roomId = userRoomDO.getRoomId();
+                RoomDO roomDO = mapper.load(RoomDO.class, roomId);
+                roomDOMap.put(roomId, roomDO);
+            }
+            return roomDOMap;
+        } catch (AmazonServiceException ex) {
+            LetThingsSpeakLaunch.amazonClientManager
+                    .wipeCredentialsOnAuthError(ex);
+        }
         return null;
     }
 
