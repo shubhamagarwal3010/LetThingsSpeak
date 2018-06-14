@@ -18,6 +18,10 @@ public class DynamoDBManagerTask extends
             if (tableStatus.equalsIgnoreCase("ACTIVE")) {
                 DynamoDBClient.insertUsers();
             }
+        } else if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.INSERT_ROOM_DETAILS) {
+            if (tableStatus.equalsIgnoreCase("ACTIVE")) {
+                DynamoDBClient.insertRoomDetails(types[0].getParameterList());
+            }
         } else if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.INSERT_ROOM) {
             if (tableStatus.equalsIgnoreCase("ACTIVE")) {
                 DynamoDBClient.insertRoom(types[0].getParameterList());
@@ -35,6 +39,9 @@ public class DynamoDBManagerTask extends
                 && result.getTaskType() == Constants.DynamoDBManagerType.INSERT_USER) {
             Log.i("LetThingsSpeakMessages", "Users inserted successfully!");
         } else if (result.getTableStatus(Constants.ROOM_TABLE).equalsIgnoreCase("ACTIVE")
+                && result.getTaskType() == Constants.DynamoDBManagerType.INSERT_ROOM_DETAILS) {
+            Log.i("LetThingsSpeakMessages", "Rooms details inserted successfully!");
+        } else if (result.getTableStatus(Constants.USER_ROOM_TABLE).equalsIgnoreCase("ACTIVE")
                 && result.getTaskType() == Constants.DynamoDBManagerType.INSERT_ROOM) {
             Log.i("LetThingsSpeakMessages", "Rooms inserted successfully!");
         }

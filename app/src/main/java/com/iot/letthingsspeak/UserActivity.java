@@ -35,6 +35,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -305,13 +306,18 @@ public class UserActivity extends AppCompatActivity {
 
     public void insertUsers(View v) {
         dynamoDBManager.insertUsers();
-        insertRoom("BedRoom");
-        //Map<Double, RoomDO> userRoom = dynamoDBManager.getRoomsForUser();
+        insertRoomDetails("BedRoom");
+
+        Object userRoom = dynamoDBManager.getRoomsForUser();
+        if(userRoom != null ) {
+            Log.i("room name", ((Map<Double, RoomDO>) userRoom).get(1211).toString());
+        }
         //userRoom.containsKey()
     }
 
-    public void insertRoom(String name) {
-        dynamoDBManager.insertRoom(name);
+    public void insertRoomDetails(String name) {
+        dynamoDBManager.insertRoomDetails(name);
+        dynamoDBManager.insertRoom((double) 1211);
     }
 
     /**
