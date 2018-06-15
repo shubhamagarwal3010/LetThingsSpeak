@@ -32,5 +32,37 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="@dimen/action_bar_text">
+
+        <Button
+            android:id="@+id/scan_wifi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="scanWifiNear"
+            android:text="Search for devices" />
+
+        <Button
+            android:id="@+id/scan_qr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="scanQRCode"
+            android:text="Scan QR to add device" />
+
+    </LinearLayout>
+
+<!--
+    <fragment
+        android:id="@+id/barcode_fragment"
+        android:name="info.androidhive.barcode.BarcodeReader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:auto_focus="true"
+        android:visibility="gone"
+        app:use_flash="false" />-->
 
 </android.support.design.widget.CoordinatorLayout>
