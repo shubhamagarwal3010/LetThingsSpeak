@@ -1,245 +1,99 @@
 package com.iot.letthingsspeak.aws.db;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
-import com.amazonaws.AmazonServiceException;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
-import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
-import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
-import com.amazonaws.services.dynamodbv2.model.DescribeTableResult;
-import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
-import com.amazonaws.services.dynamodbv2.model.KeyType;
-import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
-import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
-import com.iot.letthingsspeak.UserActivity;
-import com.iot.letthingsspeak.aws.AppHelper;
+import com.iot.letthingsspeak.aws.LetThingsSpeakLaunch;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class DynamoDBManager {
 
-    private static final String TAG = "DynamoDBManager";
+    AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonDynamoDBClient;
+    Object returnValue;
 
-    /*
-     * Creates a table with the following attributes: Table name: testTableName
-     * Hash key: userNo type N Read Capacity Units: 10 Write Capacity Units: 5
-     */
-    public static void createTable() {
 
-        Log.d(TAG, "Create table called");
-
-        AmazonDynamoDBClient ddb = UserActivity.clientManager
-                .ddb();
-
-        KeySchemaElement kse = new KeySchemaElement().withAttributeName(
-                "_userId").withKeyType(KeyType.HASH);
-        AttributeDefinition ad = new AttributeDefinition().withAttributeName(
-                "_userId").withAttributeType(ScalarAttributeType.N);
-        ProvisionedThroughput pt = new ProvisionedThroughput()
-                .withReadCapacityUnits(10l).withWriteCapacityUnits(5l);
-
-        CreateTableRequest request = new CreateTableRequest()
-                .withTableName(Constants.TEST_TABLE_NAME)
-                .withKeySchema(kse).withAttributeDefinitions(ad)
-                .withProvisionedThroughput(pt);
-
-        try {
-            Log.d(TAG, "Sending Create table request");
-            ddb.createTable(request);
-            Log.d(TAG, "Create request response successfully recieved");
-        } catch (AmazonServiceException ex) {
-            Log.e(TAG, "Error sending create table request", ex);
-            UserActivity.clientManager
-                    .wipeCredentialsOnAuthError(ex);
-        }
+    public void createTable() {
+        new DynamoDBManagerTask()
+                .execute(new Task(null, Constants.DynamoDBManagerType.CREATE_TABLE, Constants.TEST_TABLE_NAME, new HashMap<String, Object>()));
     }
 
-    /*
-     * Retrieves the table description and returns the table status as a string.
-     */
-    public static String getTestTableStatus() {
-
-        try {
-            AmazonDynamoDBClient ddb = UserActivity.clientManager
-                    .ddb();
-
-            DescribeTableRequest request = new DescribeTableRequest()
-                    .withTableName(Constants.TEST_TABLE_NAME);
-            DescribeTableResult result = ddb.describeTable(request);
-
-            String status = result.getTable().getTableStatus();
-            return status == null ? "" : status;
-
-        } catch (AmazonServiceException ex) {
-            UserActivity.clientManager
-                    .wipeCredentialsOnAuthError(ex);
-        }
-
-        return "";
+    public void insertUsers() {
+        new DynamoDBManagerTask()
+                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_USER, Constants.TEST_TABLE_NAME, new HashMap<String, Object>()));
     }
 
-    /*
-     * Inserts ten users with userNo from 1 to 10 and random names.
-     */
-    public static void insertUsers() {
-        AmazonDynamoDBClient ddb = UserActivity.clientManager
-                .ddb();
-        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
+    public void insertRoomDetails(final String roomName) {
+        new DynamoDBManagerTask()
+                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_ROOM_DETAILS, Constants.ROOM_TABLE, new HashMap<String, Object>() {{
+                    put("room_name", roomName);
+                }}));
+    }
+
+    public void insertRoom(final Double roomId) {
+        new DynamoDBManagerTask()
+                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_ROOM, Constants.USER_ROOM_TABLE, new HashMap<String, Object>() {{
+                    put("room_id", roomId);
+                }}));
+    }
+
+    public Object getRoomsForUser() {
+        new DynamoDBManagerTask().execute(new Task(null, Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER, Constants.USER_ROOM_TABLE, null));
+        return returnValue;
+    }
 
 
-        try {
-            //for (int i = 1; i <= 10; i++)
-            {
-                UserPreference userPreference = new UserPreference();
-                userPreference.setUserId(AppHelper.getCurrUser());
-                userPreference.setRoomName("Bed-Room");
-                userPreference.setDeviceName("Fan");
-                userPreference.setDeviceId(124.0);
+    public class DynamoDBManagerTask extends
+            AsyncTask<Task, Void, DynamoDBManagerTaskResult> {
 
-                Log.d(TAG, "Inserting data");
-                mapper.save(userPreference);
-                Log.d(TAG, "Data inserted");
+        protected DynamoDBManagerTaskResult doInBackground(Task... types) {
+
+            String tableStatus = DynamoDBClient.getTestTableStatus(types[0].getTableName());
+
+            DynamoDBManagerTaskResult result = new DynamoDBManagerTaskResult();
+            result.setTableStatus(tableStatus);
+            result.setTaskType(types[0].getDynamoDBManagerType());
+
+            if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.INSERT_USER) {
+                if (tableStatus.equalsIgnoreCase("ACTIVE")) {
+                    DynamoDBClient.insertUsers();
+                }
+            } else if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.INSERT_ROOM_DETAILS) {
+                if (tableStatus.equalsIgnoreCase("ACTIVE")) {
+                    DynamoDBClient.insertRoomDetails(types[0].getParameterList());
+                }
+            } else if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.INSERT_ROOM) {
+                if (tableStatus.equalsIgnoreCase("ACTIVE")) {
+                    DynamoDBClient.insertRoom(types[0].getParameterList());
+                }
+            } else if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER) {
+                if (tableStatus.equalsIgnoreCase("ACTIVE")) {
+                    Map<Double, RoomDO> roomDOMap = DynamoDBClient.getRoomsForUser();
+                    result.setReturnValue(roomDOMap);
+                }
             }
-        } catch (AmazonServiceException ex) {
-            Log.e(TAG, "Error inserting users");
-            UserActivity.clientManager
-                    .wipeCredentialsOnAuthError(ex);
+            return result;
         }
-    }    /*
-     * Inserts ten users with userNo from 1 to 10 and random names.
-     */
 
-    public static void insertRoom(String roomName) {
-        AmazonDynamoDBClient ddb = UserActivity.clientManager
-                .ddb();
-        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
+        protected void onPostExecute(DynamoDBManagerTaskResult result) {
+            returnValue = result.getReturnValue();
 
+            if (!result.getTableStatus(Constants.TEST_TABLE_NAME).equalsIgnoreCase("ACTIVE")) {
 
-        try {
-            //for (int i = 1; i <= 10; i++)
-            {
-                UserPreference userPreference = new UserPreference();
-                userPreference.setRoomName(roomName);
-
-                Log.d(TAG, "Inserting room");
-                mapper.save(userPreference);
-                Log.d(TAG, "Room inserted");
+                Log.i("LetThingsSpeakMessages", "The test table is not ready yet.\nTable Status: " + result.getTableStatus(Constants.TEST_TABLE_NAME).toString());
+            } else if (result.getTableStatus(Constants.TEST_TABLE_NAME).equalsIgnoreCase("ACTIVE")
+                    && result.getTaskType() == Constants.DynamoDBManagerType.INSERT_USER) {
+                Log.i("LetThingsSpeakMessages", "Users inserted successfully!");
+            } else if (result.getTableStatus(Constants.ROOM_TABLE).equalsIgnoreCase("ACTIVE")
+                    && result.getTaskType() == Constants.DynamoDBManagerType.INSERT_ROOM_DETAILS) {
+                Log.i("LetThingsSpeakMessages", "Room Details inserted successfully!");
+            } else if (result.getTableStatus(Constants.USER_ROOM_TABLE).equalsIgnoreCase("ACTIVE")
+                    && result.getTaskType() == Constants.DynamoDBManagerType.INSERT_ROOM) {
+                Log.i("LetThingsSpeakMessages", "Rooms inserted successfully!");
             }
-        } catch (AmazonServiceException ex) {
-            Log.e(TAG, "Error inserting room");
-            UserActivity.clientManager
-                    .wipeCredentialsOnAuthError(ex);
-        }
-    }
-
-    /*
-     * Retrieves all of the attribute/value pairs for the specified user.
-     */
-    public static UserPreference getUserPreference(int userNo) {
-
-        AmazonDynamoDBClient ddb = UserActivity.clientManager
-                .ddb();
-        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
-
-        try {
-            UserPreference userPreference = mapper.load(UserPreference.class,
-                    userNo);
-
-            return userPreference;
-
-        } catch (AmazonServiceException ex) {
-            UserActivity.clientManager
-                    .wipeCredentialsOnAuthError(ex);
-        }
-
-        return null;
-    }
-
-    /*
-     * Updates one attribute/value pair for the specified user.
-     */
-    public static void updateUserPreference(UserPreference updateUserPreference) {
-
-        AmazonDynamoDBClient ddb = UserActivity.clientManager
-                .ddb();
-        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
-
-        try {
-            mapper.save(updateUserPreference);
-
-        } catch (AmazonServiceException ex) {
-            UserActivity.clientManager
-                    .wipeCredentialsOnAuthError(ex);
-        }
-    }
-
-    @DynamoDBTable(tableName = Constants.TEST_TABLE_NAME)
-    public static class UserPreference {
-        private String _userId;
-        private Double _deviceId;
-        private String _deviceName;
-        private Double _pin;
-        private String _roomName;
-        private byte[] _status;
-
-        @DynamoDBHashKey(attributeName = "userId")
-        @DynamoDBAttribute(attributeName = "userId")
-        public String getUserId() {
-            return _userId;
-        }
-
-        public void setUserId(final String _userId) {
-            this._userId = _userId;
-        }
-
-        @DynamoDBRangeKey(attributeName = "deviceId")
-        @DynamoDBAttribute(attributeName = "deviceId")
-        public Double getDeviceId() {
-            return _deviceId;
-        }
-
-        public void setDeviceId(final Double _deviceId) {
-            this._deviceId = _deviceId;
-        }
-
-        @DynamoDBAttribute(attributeName = "deviceName")
-        public String getDeviceName() {
-            return _deviceName;
-        }
-
-        public void setDeviceName(final String _deviceName) {
-            this._deviceName = _deviceName;
-        }
-
-        @DynamoDBAttribute(attributeName = "pin")
-        public Double getPin() {
-            return _pin;
-        }
-
-        public void setPin(final Double _pin) {
-            this._pin = _pin;
-        }
-
-        @DynamoDBAttribute(attributeName = "roomName")
-        public String getRoomName() {
-            return _roomName;
-        }
-
-        public void setRoomName(final String _roomName) {
-            this._roomName = _roomName;
-        }
-
-        @DynamoDBAttribute(attributeName = "status")
-        public byte[] getStatus() {
-            return _status;
-        }
-
-        public void setStatus(final byte[] _status) {
-            this._status = _status;
         }
     }
 }

@@ -5,7 +5,7 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
-@DynamoDBTable(tableName = "letthingsspeak-mobilehub-849318221-gateway")
+@DynamoDBTable(tableName = Constants.GATEWAY_TABLE)
 
 public class GatewayDO {
     private Double _id;

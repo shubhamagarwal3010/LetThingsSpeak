@@ -121,19 +121,17 @@
             android:gravity="bottom"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/create_table_bttn"
-                android:layout_width="fill_parent"
+            <android.support.v7.widget.AppCompatButton
+                style="@style/Button.Primary"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/step1" />
-
-            <Button
-                android:id="@+id/insert_users_bttn"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/step2" />
+                android:layout_gravity="center"
+                android:layout_margin="25dp"
+                android:onClick="insertUsers"
+                android:padding="10dp"
+                android:text="Add Rooom"
+                android:textAllCaps="false"
+                android:textSize="18dp" />
         </LinearLayout>
 
 

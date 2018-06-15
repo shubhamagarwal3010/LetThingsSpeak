@@ -24,6 +24,19 @@ public class Constants {
     public static final Regions COGNITO_REGION = Regions.AP_SOUTH_1;  // Set your Cognito region if is different
 
     // Note that spaces are not allowed in the table name
-    public static final String TEST_TABLE_NAME = "letthingsspeak-mobilehub-849318221-LetThingsSpeak";
     public static final Regions DYNAMODB_REGION = Regions.AP_SOUTH_1;  // Set your DynamoDB region if is different
+
+    // Table Names
+    public static final String TEST_TABLE_NAME = "letthingsspeak-mobilehub-849318221-LetThingsSpeak";
+    public static final String USER_TABLE = "letthingsspeak-mobilehub-849318221-user";
+    public static final String ROOM_TABLE = "letthingsspeak-mobilehub-849318221-room";
+    public static final String GATEWAY_TABLE = "letthingsspeak-mobilehub-849318221-gateway";
+    public static final String DEVICE_TABLE = "letthingsspeak-mobilehub-849318221-device";
+    public static final String USER_ROOM_TABLE = "letthingsspeak-mobilehub-849318221-user_room";
+    public static final String DEVICE_MAP_TABLE = "letthingsspeak-mobilehub-849318221-device_map";
+
+
+    public enum DynamoDBManagerType {
+        GET_TABLE_STATUS, CREATE_TABLE, INSERT_USER, INSERT_ROOM, INSERT_ROOM_DETAILS, GET_ROOM_PREFERENCE, GET_ROOMS_FOR_USER
+    }
 }

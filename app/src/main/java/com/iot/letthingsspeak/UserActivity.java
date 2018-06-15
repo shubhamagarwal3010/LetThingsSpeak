@@ -18,12 +18,10 @@
 package com.iot.letthingsspeak;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -42,22 +40,18 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserDetails;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserSession;
 import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.aws.AboutApp;
 import com.iot.letthingsspeak.aws.AppHelper;
 import com.iot.letthingsspeak.aws.ChangePasswordActivity;
+import com.iot.letthingsspeak.aws.LetThingsSpeakLaunch;
 import com.iot.letthingsspeak.aws.UserProfile;
-import com.iot.letthingsspeak.aws.db.AmazonClientManager;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
+import com.iot.letthingsspeak.aws.db.RoomDO;
 import com.iot.letthingsspeak.configdevice.ConfigDevice;
 import com.iot.letthingsspeak.room.AddRoom;
 import com.iot.letthingsspeak.room.HomeAdapter;
@@ -66,14 +60,13 @@ import com.iot.letthingsspeak.room.RoomStore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class UserActivity extends AppCompatActivity {
     public static final int ACTIVITY_REQUEST_CODE = 201;
-    public static AmazonClientManager clientManager = null;
-    private final String TAG = "UserActivity";
     // To track changes to user details
-    private final List<String> attributesToDelete = new ArrayList<>();
     List<RoomDetails> room = new ArrayList<>();
+    DynamoDBManager dynamoDBManager = LetThingsSpeakLaunch.dynamoDBManager;
     private RecyclerView roomTypeRecyclerView;
     private NavigationView nDrawer;
     private DrawerLayout mDrawer;
@@ -81,11 +74,8 @@ public class UserActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private AlertDialog userDialog;
     private ProgressDialog waitDialog;
-    private ListView attributesList;
     // Cognito user objects
     private CognitoUser user;
-    private CognitoUserSession session;
-    private CognitoUserDetails details;
     // User details
     private String username;
 
@@ -95,7 +85,8 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        clientManager = new AmazonClientManager(this);
+        // Install a custom UncaughtExceptionHandler so we can debug crashes
+        CrashHandler.installHandler(this);
 
         // Set toolbar for this screen
         toolbar = findViewById(R.id.main_toolbar);
@@ -116,31 +107,6 @@ public class UserActivity extends AppCompatActivity {
         View navigationHeader = nDrawer.getHeaderView(0);
         TextView navHeaderSubTitle = navigationHeader.findViewById(R.id.textViewNavUserSub);
         navHeaderSubTitle.setText(username);
-
-        clientManager = new AmazonClientManager(this);
-
-        final Button createTableBttn = findViewById(R.id.create_table_bttn);
-        createTableBttn.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                Log.i(TAG, "createTableBttn clicked.");
-
-                new DynamoDBManagerTask()
-                        .execute(DynamoDBManagerType.CREATE_TABLE);
-            }
-        });
-
-        final Button insertUsersBttn = findViewById(R.id.insert_users_bttn);
-        insertUsersBttn.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                Log.i(TAG, "insertUsersBttn clicked.");
-
-                new DynamoDBManagerTask()
-                        .execute(DynamoDBManagerType.INSERT_USER);
-            }
-        });
-
 
         roomTypeRecyclerView = findViewById(R.id.activity_main_recyclerview);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
@@ -325,44 +291,6 @@ public class UserActivity extends AppCompatActivity {
         user = AppHelper.getPool().getUser(username);
     }
 
-    private void showWaitDialog(String message) {
-        closeWaitDialog();
-        waitDialog = new ProgressDialog(this);
-        waitDialog.setTitle(message);
-        waitDialog.show();
-    }
-
-    private void showDialogMessage(String title, String body, final boolean exit) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title).setMessage(body).setNeutralButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                try {
-                    userDialog.dismiss();
-                    if (exit) {
-                        exit();
-                    }
-                } catch (Exception e) {
-                    // Log failure
-                    Log.e(TAG, " -- Dialog dismiss failed");
-                    if (exit) {
-                        exit();
-                    }
-                }
-            }
-        });
-        userDialog = builder.create();
-        userDialog.show();
-    }
-
-    private void closeWaitDialog() {
-        try {
-            waitDialog.dismiss();
-        } catch (Exception e) {
-            //
-        }
-    }
-
     private void exit() {
         Intent intent = new Intent();
         if (username == null)
@@ -372,8 +300,20 @@ public class UserActivity extends AppCompatActivity {
         finish();
     }
 
-    private enum DynamoDBManagerType {
-        GET_TABLE_STATUS, CREATE_TABLE, INSERT_USER
+    public void insertUsers(View v) {
+        dynamoDBManager.insertUsers();
+        insertRoomDetails("BedRoom");
+
+        Object userRoom = dynamoDBManager.getRoomsForUser();
+        if(userRoom != null ) {
+            Log.i("room name", ((Map<Double, RoomDO>) userRoom).get(1211).toString());
+        }
+        //userRoom.containsKey()
+    }
+
+    public void insertRoomDetails(String name) {
+        dynamoDBManager.insertRoomDetails(name);
+        dynamoDBManager.insertRoom((double) 1211);
     }
 
     /**
@@ -411,79 +351,6 @@ public class UserActivity extends AppCompatActivity {
                     outRect.top = spacing; // item top
                 }
             }
-        }
-    }
-
-    private class DynamoDBManagerTask extends
-            AsyncTask<DynamoDBManagerType, Void, DynamoDBManagerTaskResult> {
-
-        protected DynamoDBManagerTaskResult doInBackground(
-                DynamoDBManagerType... types) {
-
-            String tableStatus = DynamoDBManager.getTestTableStatus();
-
-            DynamoDBManagerTaskResult result = new DynamoDBManagerTaskResult();
-            result.setTableStatus(tableStatus);
-            result.setTaskType(types[0]);
-
-            if (types[0] == DynamoDBManagerType.CREATE_TABLE) {
-                if (tableStatus.length() == 0) {
-                    DynamoDBManager.createTable();
-                }
-            } else if (types[0] == DynamoDBManagerType.INSERT_USER) {
-                if (tableStatus.equalsIgnoreCase("ACTIVE")) {
-                    DynamoDBManager.insertUsers();
-                }
-            }
-
-            return result;
-        }
-
-        protected void onPostExecute(DynamoDBManagerTaskResult result) {
-
-            if (result.getTaskType() == DynamoDBManagerType.CREATE_TABLE) {
-
-                if (result.getTableStatus().length() != 0) {
-                    Toast.makeText(
-                            UserActivity.this,
-                            "The test table already exists.\nTable Status: "
-                                    + result.getTableStatus(),
-                            Toast.LENGTH_LONG).show();
-                }
-
-            } else if (!result.getTableStatus().equalsIgnoreCase("ACTIVE")) {
-
-                Toast.makeText(
-                        UserActivity.this,
-                        "The test table is not ready yet.\nTable Status: "
-                                + result.getTableStatus(), Toast.LENGTH_LONG)
-                        .show();
-            } else if (result.getTableStatus().equalsIgnoreCase("ACTIVE")
-                    && result.getTaskType() == DynamoDBManagerType.INSERT_USER) {
-                Toast.makeText(UserActivity.this,
-                        "Users inserted successfully!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private class DynamoDBManagerTaskResult {
-        private DynamoDBManagerType taskType;
-        private String tableStatus;
-
-        public DynamoDBManagerType getTaskType() {
-            return taskType;
-        }
-
-        public void setTaskType(DynamoDBManagerType taskType) {
-            this.taskType = taskType;
-        }
-
-        public String getTableStatus() {
-            return tableStatus;
-        }
-
-        public void setTableStatus(String tableStatus) {
-            this.tableStatus = tableStatus;
         }
     }
 }
