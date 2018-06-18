@@ -298,10 +298,11 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void insertUsers(View v) {
-        dynamoDBManager.insertRoom((double) 1211,true,"BedRoom", "bedimage", "My Bed Room");
+        dynamoDBManager.insertRoom((double) 1211, true, "BedRoom", "bedimage", "My Bed Room");
         dynamoDBManager.insertDevice(
-                (double) 1,false, null, (double) 101, (double) 1,
+                (double) 1, false, null, (double) 101, (double) 1,
                 "bulbImage", "Bulb", (double) 1211, "Main light");
+        dynamoDBManager.insertGateway((double) 1011, "bed Switch Hub", (double) 4);
 
 
 //        Object userRoom = dynamoDBManager.getRoomsForUser();

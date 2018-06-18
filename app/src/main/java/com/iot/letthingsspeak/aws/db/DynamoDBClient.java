@@ -86,11 +86,11 @@ public class DynamoDBClient {
             roomDO.setImageId((String) parameterList.get("image_id"));
             roomDO.setTag((String) parameterList.get("tag"));
 
-            Log.d(TAG, "Inserting room details");
+            Log.d(TAG, "Inserting room");
             mapper.save(roomDO);
             Log.d(TAG, "Room details inserted");
         } catch (AmazonServiceException ex) {
-            Log.e(TAG, "Error inserting room details");
+            Log.e(TAG, "Error inserting room");
             LetThingsSpeakLaunch.amazonClientManager
                     .wipeCredentialsOnAuthError(ex);
         }
@@ -114,11 +114,33 @@ public class DynamoDBClient {
             deviceDO.setRoomId((double) parameterList.get("roomId"));
             deviceDO.setTag((String) parameterList.get("tag"));
 
-            Log.d(TAG, "Inserting device details");
+            Log.d(TAG, "Inserting device");
             mapper.save(deviceDO);
             Log.d(TAG, "Device details inserted");
         } catch (AmazonServiceException ex) {
-            Log.e(TAG, "Error inserting device details");
+            Log.e(TAG, "Error inserting device");
+            LetThingsSpeakLaunch.amazonClientManager
+                    .wipeCredentialsOnAuthError(ex);
+        }
+    }
+
+    public static void insertGateway(Map<String, Object> parameterList) {
+        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager.ddb();
+        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
+
+
+        try {
+            GatewayDO gatewayDO = new GatewayDO();
+            gatewayDO.setUserId(AppHelper.getCurrUser());
+            gatewayDO.setGatewayId((double) parameterList.get("gatewayId"));
+            gatewayDO.setName((String) parameterList.get("name"));
+            gatewayDO.setPinCount((double) parameterList.get("pinCount"));
+
+            Log.d(TAG, "Inserting gateway");
+            mapper.save(gatewayDO);
+            Log.d(TAG, "Device gateway inserted");
+        } catch (AmazonServiceException ex) {
+            Log.e(TAG, "Error gateway device");
             LetThingsSpeakLaunch.amazonClientManager
                     .wipeCredentialsOnAuthError(ex);
         }

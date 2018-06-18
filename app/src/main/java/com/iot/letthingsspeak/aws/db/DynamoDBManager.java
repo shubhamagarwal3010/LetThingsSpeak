@@ -26,6 +26,7 @@ public class DynamoDBManager {
                     put("tag", tag);
                 }}));
     }
+
     public void insertDevice(final Double deviceId, final Boolean currentState, final List<String> delegatedIds, final Double gatewayId,
                              final Double gatewayPin, final String imageId, final String name, final Double roomId, final String tag) {
         new DynamoDBManagerTask()
@@ -39,6 +40,15 @@ public class DynamoDBManager {
                     put("name", name);
                     put("roomId", roomId);
                     put("tag", tag);
+                }}));
+    }
+
+    public void insertGateway(final Double gatewayId, final String name, final Double pinCount) {
+        new DynamoDBManagerTask()
+                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_GATEWAY, Constants.GATEWAY_TABLE, new HashMap<String, Object>() {{
+                    put("gatewayId", gatewayId);
+                    put("name", name);
+                    put("pinCount", pinCount);
                 }}));
     }
 
@@ -67,6 +77,10 @@ public class DynamoDBManager {
                 if (tableStatus.equalsIgnoreCase("ACTIVE")) {
                     DynamoDBClient.insertDevice(types[0].getParameterList());
                 }
+            } else if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.INSERT_GATEWAY) {
+                if (tableStatus.equalsIgnoreCase("ACTIVE")) {
+                    DynamoDBClient.insertGateway(types[0].getParameterList());
+                }
             } else if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER) {
                 if (tableStatus.equalsIgnoreCase("ACTIVE")) {
                     Map<Double, RoomDO> roomDOMap = DynamoDBClient.getRoomsForUser();
@@ -81,10 +95,13 @@ public class DynamoDBManager {
 
             if (result.getTableStatus(Constants.ROOM_TABLE).equalsIgnoreCase("ACTIVE")
                     && result.getTaskType() == Constants.DynamoDBManagerType.INSERT_ROOM) {
-                Log.i("LetThingsSpeakMessages", "Room Details inserted successfully!");
+                Log.i("LetThingsSpeakMessages", "Room inserted successfully!");
             } else if (result.getTableStatus(Constants.DEVICE_TABLE).equalsIgnoreCase("ACTIVE")
                     && result.getTaskType() == Constants.DynamoDBManagerType.INSERT_DEVICE) {
-                Log.i("LetThingsSpeakMessages", "Device Details inserted successfully!");
+                Log.i("LetThingsSpeakMessages", "Device inserted successfully!");
+            } else if (result.getTableStatus(Constants.GATEWAY_TABLE).equalsIgnoreCase("ACTIVE")
+                    && result.getTaskType() == Constants.DynamoDBManagerType.INSERT_GATEWAY) {
+                Log.i("LetThingsSpeakMessages", "Gateway inserted successfully!");
             }
         }
     }

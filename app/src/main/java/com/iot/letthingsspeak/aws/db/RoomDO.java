@@ -2,7 +2,6 @@ package com.iot.letthingsspeak.aws.db;
 
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
@@ -25,6 +24,7 @@ public class RoomDO {
     public void setUserId(final String _userId) {
         this._userId = _userId;
     }
+
     @DynamoDBRangeKey(attributeName = "roomId")
     @DynamoDBAttribute(attributeName = "roomId")
     public Double getRoomId() {
@@ -34,6 +34,7 @@ public class RoomDO {
     public void setRoomId(final Double _roomId) {
         this._roomId = _roomId;
     }
+
     @DynamoDBAttribute(attributeName = "imageId")
     public String getImageId() {
         return _imageId;
@@ -42,6 +43,7 @@ public class RoomDO {
     public void setImageId(final String _imageId) {
         this._imageId = _imageId;
     }
+
     @DynamoDBAttribute(attributeName = "isAdmin")
     public Boolean getIsAdmin() {
         return _isAdmin;
@@ -50,6 +52,7 @@ public class RoomDO {
     public void setIsAdmin(final Boolean _isAdmin) {
         this._isAdmin = _isAdmin;
     }
+
     @DynamoDBAttribute(attributeName = "name")
     public String getName() {
         return _name;
@@ -58,6 +61,7 @@ public class RoomDO {
     public void setName(final String _name) {
         this._name = _name;
     }
+
     @DynamoDBAttribute(attributeName = "tag")
     public String getTag() {
         return _tag;

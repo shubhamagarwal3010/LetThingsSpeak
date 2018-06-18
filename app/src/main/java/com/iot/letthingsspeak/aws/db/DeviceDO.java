@@ -2,7 +2,6 @@ package com.iot.letthingsspeak.aws.db;
 
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
@@ -32,6 +31,7 @@ public class DeviceDO {
     public void setUserId(final String _userId) {
         this._userId = _userId;
     }
+
     @DynamoDBRangeKey(attributeName = "deviceId")
     @DynamoDBAttribute(attributeName = "deviceId")
     public Double getDeviceId() {
@@ -41,6 +41,7 @@ public class DeviceDO {
     public void setDeviceId(final Double _deviceId) {
         this._deviceId = _deviceId;
     }
+
     @DynamoDBAttribute(attributeName = "authToken")
     public String getAuthToken() {
         return _authToken;
@@ -49,6 +50,7 @@ public class DeviceDO {
     public void setAuthToken(final String _authToken) {
         this._authToken = _authToken;
     }
+
     @DynamoDBAttribute(attributeName = "currentState")
     public Boolean getCurrentState() {
         return _currentState;
@@ -57,6 +59,7 @@ public class DeviceDO {
     public void setCurrentState(final Boolean _currentState) {
         this._currentState = _currentState;
     }
+
     @DynamoDBAttribute(attributeName = "delegatedIds")
     public List<String> getDelegatedIds() {
         return _delegatedIds;
@@ -65,6 +68,7 @@ public class DeviceDO {
     public void setDelegatedIds(final List<String> _delegatedIds) {
         this._delegatedIds = _delegatedIds;
     }
+
     @DynamoDBAttribute(attributeName = "gatewayId")
     public Double getGatewayId() {
         return _gatewayId;
@@ -73,6 +77,7 @@ public class DeviceDO {
     public void setGatewayId(final Double _gatewayId) {
         this._gatewayId = _gatewayId;
     }
+
     @DynamoDBAttribute(attributeName = "gatewayPin")
     public Double getGatewayPin() {
         return _gatewayPin;
@@ -81,6 +86,7 @@ public class DeviceDO {
     public void setGatewayPin(final Double _gatewayPin) {
         this._gatewayPin = _gatewayPin;
     }
+
     @DynamoDBAttribute(attributeName = "imageId")
     public String getImageId() {
         return _imageId;
@@ -89,6 +95,7 @@ public class DeviceDO {
     public void setImageId(final String _imageId) {
         this._imageId = _imageId;
     }
+
     @DynamoDBAttribute(attributeName = "name")
     public String getName() {
         return _name;
@@ -97,6 +104,7 @@ public class DeviceDO {
     public void setName(final String _name) {
         this._name = _name;
     }
+
     @DynamoDBAttribute(attributeName = "roomId")
     public Double getRoomId() {
         return _roomId;
@@ -105,6 +113,7 @@ public class DeviceDO {
     public void setRoomId(final Double _roomId) {
         this._roomId = _roomId;
     }
+
     @DynamoDBAttribute(attributeName = "tag")
     public String getTag() {
         return _tag;
