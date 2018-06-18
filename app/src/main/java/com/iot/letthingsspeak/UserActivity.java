@@ -298,17 +298,17 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void insertUsers(View v) {
-        insertRoom("BedRoom");
+        dynamoDBManager.insertRoom((double) 1211,true,"BedRoom", "bedimage", "My Bed Room");
+        dynamoDBManager.insertDevice(
+                (double) 1,false, null, (double) 101, (double) 1,
+                "bulbImage", "Bulb", (double) 1211, "Main light");
+
 
 //        Object userRoom = dynamoDBManager.getRoomsForUser();
 //        if (userRoom != null) {
 //            Log.i("room name", ((Map<Double, RoomDO>) userRoom).get(1211).toString());
 //        }
         //userRoom.containsKey()
-    }
-
-    public void insertRoom(String name) {
-        dynamoDBManager.insertRoom((double) 1211,true,"BedRoom", "bedimage", "My Bed Room");
     }
 
     /**

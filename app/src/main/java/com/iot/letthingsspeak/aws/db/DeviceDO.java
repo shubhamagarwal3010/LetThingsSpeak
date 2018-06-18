@@ -20,7 +20,6 @@ public class DeviceDO {
     private Double _gatewayPin;
     private String _imageId;
     private String _name;
-    private String _ownerId;
     private Double _roomId;
     private String _tag;
 
@@ -97,14 +96,6 @@ public class DeviceDO {
 
     public void setName(final String _name) {
         this._name = _name;
-    }
-    @DynamoDBAttribute(attributeName = "ownerId")
-    public String getOwnerId() {
-        return _ownerId;
-    }
-
-    public void setOwnerId(final String _ownerId) {
-        this._ownerId = _ownerId;
     }
     @DynamoDBAttribute(attributeName = "roomId")
     public Double getRoomId() {

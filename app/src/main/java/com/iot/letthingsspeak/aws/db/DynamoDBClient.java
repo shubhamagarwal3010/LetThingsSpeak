@@ -96,6 +96,34 @@ public class DynamoDBClient {
         }
     }
 
+    public static void insertDevice(Map<String, Object> parameterList) {
+        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager.ddb();
+        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
+
+
+        try {
+            DeviceDO deviceDO = new DeviceDO();
+            deviceDO.setUserId(AppHelper.getCurrUser());
+            deviceDO.setDeviceId((double) parameterList.get("deviceId"));
+            deviceDO.setCurrentState((Boolean) parameterList.get("currentState"));
+            deviceDO.setDelegatedIds((List<String>) parameterList.get("delegatedIds"));
+            deviceDO.setGatewayId((double) parameterList.get("gatewayId"));
+            deviceDO.setGatewayPin((double) parameterList.get("gatewayPin"));
+            deviceDO.setImageId((String) parameterList.get("image_id"));
+            deviceDO.setName((String) parameterList.get("name"));
+            deviceDO.setRoomId((double) parameterList.get("roomId"));
+            deviceDO.setTag((String) parameterList.get("tag"));
+
+            Log.d(TAG, "Inserting device details");
+            mapper.save(deviceDO);
+            Log.d(TAG, "Device details inserted");
+        } catch (AmazonServiceException ex) {
+            Log.e(TAG, "Error inserting device details");
+            LetThingsSpeakLaunch.amazonClientManager
+                    .wipeCredentialsOnAuthError(ex);
+        }
+    }
+
 
     public static Map<Double, RoomDO> getRoomsForUser() {
         String userId = AppHelper.getCurrUser();
