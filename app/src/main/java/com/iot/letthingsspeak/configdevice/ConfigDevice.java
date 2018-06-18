@@ -1,6 +1,7 @@
 package com.iot.letthingsspeak.configdevice;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,10 +18,13 @@ public class ConfigDevice extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config_device);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Toolbar toolbar = findViewById(R.id.toolbarConfigDevice);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
@@ -33,8 +37,6 @@ public class ConfigDevice extends AppCompatActivity {
 
         TextView main_title = findViewById(R.id.config_device_toolbar_title);
         main_title.setText("Configure Device");
-
-
     }
 
 
