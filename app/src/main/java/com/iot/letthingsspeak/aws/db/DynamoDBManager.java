@@ -33,10 +33,11 @@ public class DynamoDBManager {
                 }}));
     }
 
-    public void insertRoom(final Double roomId) {
+    public void insertRoom(final Double roomId, final Boolean isAdmin) {
         new DynamoDBManagerTask()
                 .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_ROOM, Constants.USER_ROOM_TABLE, new HashMap<String, Object>() {{
                     put("room_id", roomId);
+                    put("isAdmin", isAdmin);
                 }}));
     }
 

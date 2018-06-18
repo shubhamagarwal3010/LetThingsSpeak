@@ -21,6 +21,32 @@ public class DynamoDBClient {
 
 
     /*
+     * Add User details
+     */
+
+    public static void insertUser(Map<String, Object> parameterList) {
+        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager.ddb();
+        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
+
+
+        try {
+            //for (int i = 1; i <= 10; i++)
+            {
+                UserDO userDO = new UserDO();
+                userDO.setUserId(AppHelper.getCurrUser());
+                //userDO.setDetails(AppHelper.getUserDetails();
+
+                Log.d(TAG, "Inserting user");
+                mapper.save(userDO);
+                Log.d(TAG, "User inserted");
+            }
+        } catch (AmazonServiceException ex) {
+            Log.e(TAG, "Error inserting user");
+            LetThingsSpeakLaunch.amazonClientManager
+                    .wipeCredentialsOnAuthError(ex);
+        }
+    }
+    /*
      * Retrieves the table description and returns the table status as a string.
      */
     public static String getTestTableStatus(String tableName) {
@@ -114,6 +140,7 @@ public class DynamoDBClient {
                 UserRoomDO userRoomDO = new UserRoomDO();
                 userRoomDO.setUserId(AppHelper.getCurrUser());
                 userRoomDO.setRoomId((Double) parameterList.get("room_id"));
+                userRoomDO.setIsAdmin((Boolean) parameterList.get("isAdmin"));
                 userRoomDO.setIsAdmin(true);
 
                 Log.d(TAG, "Inserting room");

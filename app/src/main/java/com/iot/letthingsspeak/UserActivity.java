@@ -304,16 +304,16 @@ public class UserActivity extends AppCompatActivity {
         dynamoDBManager.insertUsers();
         insertRoomDetails("BedRoom");
 
-        Object userRoom = dynamoDBManager.getRoomsForUser();
-        if (userRoom != null) {
-            Log.i("room name", ((Map<Double, RoomDO>) userRoom).get(1211).toString());
-        }
+//        Object userRoom = dynamoDBManager.getRoomsForUser();
+//        if (userRoom != null) {
+//            Log.i("room name", ((Map<Double, RoomDO>) userRoom).get(1211).toString());
+//        }
         //userRoom.containsKey()
     }
 
     public void insertRoomDetails(String name) {
         dynamoDBManager.insertRoomDetails(name);
-        dynamoDBManager.insertRoom((double) 1211);
+        dynamoDBManager.insertRoom((double) 1211, true);
     }
 
     /**
