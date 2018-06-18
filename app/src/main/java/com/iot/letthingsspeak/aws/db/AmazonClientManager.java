@@ -43,11 +43,6 @@ public class AmazonClientManager {
         return ddb;
     }
 
-    public boolean hasCredentials() {
-        return (!(Constants.IDENTITY_POOL_ID.equalsIgnoreCase("CHANGE_ME")
-                || Constants.TEST_TABLE_NAME.equalsIgnoreCase("CHANGE_ME")));
-    }
-
     public void validateCredentials() {
 
         if (ddb == null) {

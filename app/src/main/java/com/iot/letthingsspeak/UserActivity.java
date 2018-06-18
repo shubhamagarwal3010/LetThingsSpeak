@@ -298,8 +298,7 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void insertUsers(View v) {
-        dynamoDBManager.insertUsers();
-        insertRoomDetails("BedRoom");
+        insertRoom("BedRoom");
 
 //        Object userRoom = dynamoDBManager.getRoomsForUser();
 //        if (userRoom != null) {
@@ -308,8 +307,8 @@ public class UserActivity extends AppCompatActivity {
         //userRoom.containsKey()
     }
 
-    public void insertRoomDetails(String name) {
-        dynamoDBManager.insertRoomDetails((double) 1211,true,"BedRoom", "bedimage", "My Bed Room");
+    public void insertRoom(String name) {
+        dynamoDBManager.insertRoom((double) 1211,true,"BedRoom", "bedimage", "My Bed Room");
     }
 
     /**

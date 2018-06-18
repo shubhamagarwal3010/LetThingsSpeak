@@ -15,20 +15,9 @@ public class DynamoDBManager {
     AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonDynamoDBClient;
     Object returnValue;
 
-
-    public void createTable() {
+    public void insertRoom(final Double roomId, final Boolean isAdmin, final String roomName, final String imageId, final String tag) {
         new DynamoDBManagerTask()
-                .execute(new Task(null, Constants.DynamoDBManagerType.CREATE_TABLE, Constants.TEST_TABLE_NAME, new HashMap<String, Object>()));
-    }
-
-    public void insertUsers() {
-        new DynamoDBManagerTask()
-                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_USER, Constants.TEST_TABLE_NAME, new HashMap<String, Object>()));
-    }
-
-    public void insertRoomDetails(final Double roomId, final Boolean isAdmin, final String roomName, final String imageId, final String tag) {
-        new DynamoDBManagerTask()
-                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_ROOM_DETAILS, Constants.ROOM_TABLE, new HashMap<String, Object>() {{
+                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_ROOM, Constants.ROOM_TABLE, new HashMap<String, Object>() {{
                     put("room_id", roomId);
                     put("isAdmin", isAdmin);
                     put("room_name", roomName);
@@ -54,13 +43,9 @@ public class DynamoDBManager {
             result.setTableStatus(tableStatus);
             result.setTaskType(types[0].getDynamoDBManagerType());
 
-            if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.INSERT_USER) {
+            if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.INSERT_ROOM) {
                 if (tableStatus.equalsIgnoreCase("ACTIVE")) {
-                    DynamoDBClient.insertUsers();
-                }
-            } else if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.INSERT_ROOM_DETAILS) {
-                if (tableStatus.equalsIgnoreCase("ACTIVE")) {
-                    DynamoDBClient.insertRoomDetails(types[0].getParameterList());
+                    DynamoDBClient.insertRoom(types[0].getParameterList());
                 }
             } else if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER) {
                 if (tableStatus.equalsIgnoreCase("ACTIVE")) {
@@ -74,14 +59,8 @@ public class DynamoDBManager {
         protected void onPostExecute(DynamoDBManagerTaskResult result) {
             returnValue = result.getReturnValue();
 
-            if (!result.getTableStatus(Constants.TEST_TABLE_NAME).equalsIgnoreCase("ACTIVE")) {
-
-                Log.i("LetThingsSpeakMessages", "The test table is not ready yet.\nTable Status: " + result.getTableStatus(Constants.TEST_TABLE_NAME).toString());
-            } else if (result.getTableStatus(Constants.TEST_TABLE_NAME).equalsIgnoreCase("ACTIVE")
-                    && result.getTaskType() == Constants.DynamoDBManagerType.INSERT_USER) {
-                Log.i("LetThingsSpeakMessages", "Users inserted successfully!");
-            } else if (result.getTableStatus(Constants.ROOM_TABLE).equalsIgnoreCase("ACTIVE")
-                    && result.getTaskType() == Constants.DynamoDBManagerType.INSERT_ROOM_DETAILS) {
+            if (result.getTableStatus(Constants.ROOM_TABLE).equalsIgnoreCase("ACTIVE")
+                    && result.getTaskType() == Constants.DynamoDBManagerType.INSERT_ROOM) {
                 Log.i("LetThingsSpeakMessages", "Room Details inserted successfully!");
             }
         }
