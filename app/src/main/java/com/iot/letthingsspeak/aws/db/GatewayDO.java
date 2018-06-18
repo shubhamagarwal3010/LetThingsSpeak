@@ -3,29 +3,38 @@ package com.iot.letthingsspeak.aws.db;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexHashKey;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
 @DynamoDBTable(tableName = Constants.GATEWAY_TABLE)
 
 public class GatewayDO {
-    private Double _id;
+    private String _userId;
+    private Double _gatewayId;
     private String _authToken;
     private String _name;
     private Double _pinCount;
     private String _tag;
-    private String _userId;
 
-    @DynamoDBHashKey(attributeName = "id")
-    @DynamoDBAttribute(attributeName = "id")
-    public Double getId() {
-        return _id;
+    @DynamoDBHashKey(attributeName = "userId")
+    @DynamoDBAttribute(attributeName = "userId")
+    public String getUserId() {
+        return _userId;
     }
 
-    public void setId(final Double _id) {
-        this._id = _id;
+    public void setUserId(final String _userId) {
+        this._userId = _userId;
+    }
+    @DynamoDBRangeKey(attributeName = "gatewayId")
+    @DynamoDBAttribute(attributeName = "gatewayId")
+    public Double getGatewayId() {
+        return _gatewayId;
     }
 
-    @DynamoDBIndexHashKey(attributeName = "auth_token", globalSecondaryIndexName = "index_gateway_auth_token")
+    public void setGatewayId(final Double _gatewayId) {
+        this._gatewayId = _gatewayId;
+    }
+    @DynamoDBAttribute(attributeName = "authToken")
     public String getAuthToken() {
         return _authToken;
     }
@@ -33,7 +42,6 @@ public class GatewayDO {
     public void setAuthToken(final String _authToken) {
         this._authToken = _authToken;
     }
-
     @DynamoDBAttribute(attributeName = "name")
     public String getName() {
         return _name;
@@ -42,8 +50,7 @@ public class GatewayDO {
     public void setName(final String _name) {
         this._name = _name;
     }
-
-    @DynamoDBAttribute(attributeName = "pin_count")
+    @DynamoDBAttribute(attributeName = "pinCount")
     public Double getPinCount() {
         return _pinCount;
     }
@@ -51,23 +58,13 @@ public class GatewayDO {
     public void setPinCount(final Double _pinCount) {
         this._pinCount = _pinCount;
     }
-
-    @DynamoDBIndexHashKey(attributeName = "tag", globalSecondaryIndexName = "index_gateway_tag")
+    @DynamoDBAttribute(attributeName = "tag")
     public String getTag() {
         return _tag;
     }
 
     public void setTag(final String _tag) {
         this._tag = _tag;
-    }
-
-    @DynamoDBIndexHashKey(attributeName = "userId", globalSecondaryIndexName = "index_room_gateway_user_id")
-    public String getUserId() {
-        return _userId;
-    }
-
-    public void setUserId(final String _userId) {
-        this._userId = _userId;
     }
 
 }
