@@ -6,8 +6,6 @@ import android.util.Log;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.iot.letthingsspeak.aws.LetThingsSpeakLaunch;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -16,40 +14,19 @@ public class DynamoDBManager {
     AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonDynamoDBClient;
     Object returnValue;
 
-    public void insertRoom(final Double roomId, final Boolean isAdmin, final String roomName, final String imageId, final String tag) {
+    public void insertRoom(final Map<String, Object> parameterList) {
         new DynamoDBManagerTask()
-                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_ROOM, Constants.ROOM_TABLE, new HashMap<String, Object>() {{
-                    put("room_id", roomId);
-                    put("isAdmin", isAdmin);
-                    put("room_name", roomName);
-                    put("image_id", imageId);
-                    put("tag", tag);
-                }}));
+                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_ROOM, Constants.ROOM_TABLE, parameterList));
     }
 
-    public void insertDevice(final Double deviceId, final Boolean currentState, final List<String> delegatedIds, final Double gatewayId,
-                             final Double gatewayPin, final String imageId, final String name, final Double roomId, final String tag) {
+    public void insertDevice(final Map<String, Object> parameterList) {
         new DynamoDBManagerTask()
-                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_DEVICE, Constants.DEVICE_TABLE, new HashMap<String, Object>() {{
-                    put("deviceId", deviceId);
-                    put("currentState", currentState);
-                    put("delegatedIds", delegatedIds);
-                    put("gatewayId", gatewayId);
-                    put("gatewayPin", gatewayPin);
-                    put("imageId", imageId);
-                    put("name", name);
-                    put("roomId", roomId);
-                    put("tag", tag);
-                }}));
+                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_DEVICE, Constants.DEVICE_TABLE, parameterList));
     }
 
-    public void insertGateway(final Double gatewayId, final String name, final Double pinCount) {
+    public void insertGateway(final Map<String, Object> parameterList) {
         new DynamoDBManagerTask()
-                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_GATEWAY, Constants.GATEWAY_TABLE, new HashMap<String, Object>() {{
-                    put("gatewayId", gatewayId);
-                    put("name", name);
-                    put("pinCount", pinCount);
-                }}));
+                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_GATEWAY, Constants.GATEWAY_TABLE, parameterList));
     }
 
     public Object getRoomsForUser() {

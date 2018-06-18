@@ -57,6 +57,7 @@ import com.iot.letthingsspeak.room.RoomDetails;
 import com.iot.letthingsspeak.room.RoomStore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
@@ -298,11 +299,32 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void insertUsers(View v) {
-        dynamoDBManager.insertRoom((double) 1211, true, "BedRoom", "bedimage", "My Bed Room");
-        dynamoDBManager.insertDevice(
-                (double) 1, false, null, (double) 101, (double) 1,
-                "bulbImage", "Bulb", (double) 1211, "Main light");
-        dynamoDBManager.insertGateway((double) 1011, "bed Switch Hub", (double) 4);
+        dynamoDBManager.insertRoom(new HashMap<String, Object>() {{
+            put("room_id", (double) 1211);
+            put("isAdmin", true);
+            put("room_name", "BedRoom");
+            put("image_id", "bedimage");
+            put("tag", "My Bed Room");
+        }});
+
+        dynamoDBManager.insertDevice(new HashMap<String, Object>() {{
+            put("deviceId", (double) 1);
+            put("currentState", false);
+            put("delegatedIds", null);
+            put("gatewayId", (double) 101);
+            put("gatewayPin", (double) 1);
+            put("imageId", "bulbImage");
+            put("name", "Bulb");
+            put("roomId", (double) 1211);
+            put("tag", "Main light");
+        }});
+
+
+        dynamoDBManager.insertGateway(new HashMap<String, Object>() {{
+            put("gatewayId", (double) 1012);
+            put("name", "bed Switch Hub");
+            put("pinCount", (double) 3);
+        }});
 
 
 //        Object userRoom = dynamoDBManager.getRoomsForUser();
