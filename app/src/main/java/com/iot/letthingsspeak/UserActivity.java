@@ -35,7 +35,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,7 +50,6 @@ import com.iot.letthingsspeak.aws.ChangePasswordActivity;
 import com.iot.letthingsspeak.aws.LetThingsSpeakLaunch;
 import com.iot.letthingsspeak.aws.UserProfile;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
-import com.iot.letthingsspeak.aws.db.RoomDO;
 import com.iot.letthingsspeak.configdevice.ConfigDevice;
 import com.iot.letthingsspeak.room.AddRoom;
 import com.iot.letthingsspeak.room.HomeAdapter;
@@ -60,7 +58,6 @@ import com.iot.letthingsspeak.room.RoomStore;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class UserActivity extends AppCompatActivity {
     public static final int ACTIVITY_REQUEST_CODE = 201;
@@ -312,8 +309,7 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void insertRoomDetails(String name) {
-        dynamoDBManager.insertRoomDetails(name);
-        dynamoDBManager.insertRoom((double) 1211, true);
+        dynamoDBManager.insertRoomDetails((double) 1211,true,"BedRoom", "bedimage", "My Bed Room");
     }
 
     /**

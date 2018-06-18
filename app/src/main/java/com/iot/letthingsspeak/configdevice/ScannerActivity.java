@@ -10,9 +10,9 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.barcode.Barcode;
 import com.iot.letthingsspeak.R;
 import com.iot.letthingsspeak.configdevice.utils.BarcodeReader;
-import com.google.android.gms.vision.barcode.Barcode;
 
 import java.util.List;
 

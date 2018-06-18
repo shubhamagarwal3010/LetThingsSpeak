@@ -26,23 +26,19 @@ public class DynamoDBManager {
                 .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_USER, Constants.TEST_TABLE_NAME, new HashMap<String, Object>()));
     }
 
-    public void insertRoomDetails(final String roomName) {
+    public void insertRoomDetails(final Double roomId, final Boolean isAdmin, final String roomName, final String imageId, final String tag) {
         new DynamoDBManagerTask()
                 .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_ROOM_DETAILS, Constants.ROOM_TABLE, new HashMap<String, Object>() {{
-                    put("room_name", roomName);
-                }}));
-    }
-
-    public void insertRoom(final Double roomId, final Boolean isAdmin) {
-        new DynamoDBManagerTask()
-                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_ROOM, Constants.USER_ROOM_TABLE, new HashMap<String, Object>() {{
                     put("room_id", roomId);
                     put("isAdmin", isAdmin);
+                    put("room_name", roomName);
+                    put("image_id", imageId);
+                    put("tag", tag);
                 }}));
     }
 
     public Object getRoomsForUser() {
-        new DynamoDBManagerTask().execute(new Task(null, Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER, Constants.USER_ROOM_TABLE, null));
+        new DynamoDBManagerTask().execute(new Task(null, Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER, Constants.ROOM_TABLE, null));
         return returnValue;
     }
 
@@ -66,10 +62,6 @@ public class DynamoDBManager {
                 if (tableStatus.equalsIgnoreCase("ACTIVE")) {
                     DynamoDBClient.insertRoomDetails(types[0].getParameterList());
                 }
-            } else if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.INSERT_ROOM) {
-                if (tableStatus.equalsIgnoreCase("ACTIVE")) {
-                    DynamoDBClient.insertRoom(types[0].getParameterList());
-                }
             } else if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER) {
                 if (tableStatus.equalsIgnoreCase("ACTIVE")) {
                     Map<Double, RoomDO> roomDOMap = DynamoDBClient.getRoomsForUser();
@@ -91,9 +83,6 @@ public class DynamoDBManager {
             } else if (result.getTableStatus(Constants.ROOM_TABLE).equalsIgnoreCase("ACTIVE")
                     && result.getTaskType() == Constants.DynamoDBManagerType.INSERT_ROOM_DETAILS) {
                 Log.i("LetThingsSpeakMessages", "Room Details inserted successfully!");
-            } else if (result.getTableStatus(Constants.USER_ROOM_TABLE).equalsIgnoreCase("ACTIVE")
-                    && result.getTaskType() == Constants.DynamoDBManagerType.INSERT_ROOM) {
-                Log.i("LetThingsSpeakMessages", "Rooms inserted successfully!");
             }
         }
     }
