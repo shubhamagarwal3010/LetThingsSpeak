@@ -166,7 +166,7 @@ public class DynamoDBClient {
 
         try {
             List<UserRoomDO> userRoomDOList = mapper.scan(UserRoomDO.class, dynamoDBScanExpression);
-            for (UserRoomDO userRoomDO: userRoomDOList) {
+            for (UserRoomDO userRoomDO : userRoomDOList) {
                 Double roomId = userRoomDO.getRoomId();
                 RoomDO roomDO = mapper.load(RoomDO.class, roomId);
                 roomDOMap.put(roomId, roomDO);

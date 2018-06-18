@@ -2,7 +2,6 @@ package com.iot.letthingsspeak.configdevice;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -11,15 +10,11 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
 
-import com.google.android.gms.vision.barcode.Barcode;
 import com.iot.letthingsspeak.R;
-import com.iot.letthingsspeak.configdevice.utils.WifiConnectionReceiver;
+import com.iot.letthingsspeak.configdevice.utils.BarcodeReader;
+import com.google.android.gms.vision.barcode.Barcode;
 
 import java.util.List;
-
-import info.androidhive.barcode.BarcodeReader;
-
-import static android.content.ContentValues.TAG;
 
 public class ScannerActivity extends AppCompatActivity implements BarcodeReader.BarcodeReaderListener {
 
@@ -62,7 +57,7 @@ public class ScannerActivity extends AppCompatActivity implements BarcodeReader.
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         String networkSSID = barcode.displayValue.split("###")[0];
-        String   networkPassword =barcode.displayValue.split("###")[1];
+        String networkPassword = barcode.displayValue.split("###")[1];
 
         connectToWifi(networkSSID, networkPassword);
         /*if (!isTextNullOrEmpty(networkSSID) && !isTextNullOrEmpty(networkPassword)) {
@@ -104,8 +99,7 @@ public class ScannerActivity extends AppCompatActivity implements BarcodeReader.
             wifiManager.disconnect();
             wifiManager.enableNetwork(netId, true);
             wifiManager.reconnect();
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

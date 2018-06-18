@@ -1,4 +1,5 @@
 package com.iot.letthingsspeak.configdevice.utils;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,13 +20,13 @@ import static android.content.ContentValues.TAG;
  * you can do the following
  * <p>
  * <code>
- *
+ * <p>
  * adb shell am broadcast -a android.intent.action.WIFI_ON
- *
+ * <p>
  * adb shell am broadcast -a android.intent.action.WIFI_OFF
- *
+ * <p>
  * adb shell am broadcast -a android.intent.action.CONNECT_TO_WIFI -e ssid {ssid} -e password {pwd}
- *
+ * <p>
  * </code>
  */
 public class WifiConnectionReceiver extends BroadcastReceiver {
@@ -48,6 +49,14 @@ public class WifiConnectionReceiver extends BroadcastReceiver {
     private WifiManager wifiManager;
 
     public WifiConnectionReceiver() {
+    }
+
+    @NonNull
+    public static IntentFilter getIntentFilterForWifiConnectionReceiver() {
+        final IntentFilter randomIntentFilter = new IntentFilter(ACTION_WIFI_ON);
+        randomIntentFilter.addAction(ACTION_WIFI_OFF);
+        randomIntentFilter.addAction(ACTION_CONNECT_TO_WIFI);
+        return randomIntentFilter;
     }
 
     public void onReceive(Context c, Intent intent) {
@@ -106,14 +115,6 @@ public class WifiConnectionReceiver extends BroadcastReceiver {
         wifiManager.disconnect();
         wifiManager.enableNetwork(netId, true);
         wifiManager.reconnect();
-    }
-
-    @NonNull
-    public static IntentFilter getIntentFilterForWifiConnectionReceiver() {
-        final IntentFilter randomIntentFilter = new IntentFilter(ACTION_WIFI_ON);
-        randomIntentFilter.addAction(ACTION_WIFI_OFF);
-        randomIntentFilter.addAction(ACTION_CONNECT_TO_WIFI);
-        return randomIntentFilter;
     }
 
 }

@@ -1,24 +1,14 @@
 package com.iot.letthingsspeak.configdevice;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.vision.barcode.Barcode;
 import com.iot.letthingsspeak.R;
-
-import java.util.List;
-
-import info.androidhive.barcode.BarcodeReader;
 
 public class ConfigDevice extends AppCompatActivity {
 

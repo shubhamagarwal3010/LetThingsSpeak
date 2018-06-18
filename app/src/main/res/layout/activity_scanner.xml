@@ -9,7 +9,7 @@
     <!-- Barcode Reader fragment -->
     <fragment
         android:id="@+id/barcode_fragment"
-        android:name="info.androidhive.barcode.BarcodeReader"
+        android:name="com.iot.letthingsspeak.configdevice.utils.BarcodeReader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:auto_focus="true"

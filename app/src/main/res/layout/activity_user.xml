@@ -129,7 +129,7 @@
                 android:layout_margin="25dp"
                 android:onClick="insertUsers"
                 android:padding="10dp"
-                android:text="Add Rooom"
+                android:text="Add Room"
                 android:textAllCaps="false"
                 android:textSize="18dp" />
         </LinearLayout>

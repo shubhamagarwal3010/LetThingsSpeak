@@ -305,7 +305,7 @@ public class UserActivity extends AppCompatActivity {
         insertRoomDetails("BedRoom");
 
         Object userRoom = dynamoDBManager.getRoomsForUser();
-        if(userRoom != null ) {
+        if (userRoom != null) {
             Log.i("room name", ((Map<Double, RoomDO>) userRoom).get(1211).toString());
         }
         //userRoom.containsKey()
