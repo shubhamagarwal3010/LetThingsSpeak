@@ -11,7 +11,6 @@ import java.util.Map;
 
 public class DynamoDBManager {
 
-    AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonDynamoDBClient;
     Object returnValue;
 
     public void insertRoom(final Map<String, Object> parameterList) {
