@@ -2,12 +2,16 @@ package com.iot.letthingsspeak.configdevice;
 
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.barcode.Barcode;
@@ -29,6 +33,33 @@ public class ScannerActivity extends AppCompatActivity implements BarcodeReader.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
+
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        Toolbar toolbar = findViewById(R.id.toolbarConfigDevice);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        TextView main_title = findViewById(R.id.config_device_toolbar_title);
+        main_title.setText("Scan QR Code");
+
+
+
+
+
+
 
         // getting barcode instance
         barcodeReader = (BarcodeReader) getSupportFragmentManager().findFragmentById(R.id.barcode_fragment);
