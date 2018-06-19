@@ -50,6 +50,7 @@ import com.iot.letthingsspeak.aws.AppHelper;
 import com.iot.letthingsspeak.aws.ChangePasswordActivity;
 import com.iot.letthingsspeak.aws.LetThingsSpeakLaunch;
 import com.iot.letthingsspeak.aws.UserProfile;
+import com.iot.letthingsspeak.aws.db.Constants;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 import com.iot.letthingsspeak.aws.db.RoomDO;
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
@@ -322,25 +323,21 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
             put("tag", "Main light");
         }});
 
-
         dynamoDBManager.insertGateway(new HashMap<String, Object>() {{
             put("gatewayId", (double) 1012);
             put("name", "bed Switch Hub");
             put("pinCount", (double) 3);
         }});
 
-
         dynamoDBManager.getRoomsForUser(this);
-
     }
 
     @Override
-    public void publishResulstsOnSuccess(Object data) {
-        if (data != null) {
+    public void publishResultsOnSuccess(Constants.DynamoDBManagerType type, Object data) {
+        if (type == Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER) {
             Log.i("room name", ((Map<String, RoomDO>) data).get("1211").getName());
         }
     }
-
 
     /**
      * RecyclerView item decoration - give equal margin around grid item

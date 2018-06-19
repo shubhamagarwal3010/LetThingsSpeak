@@ -33,6 +33,7 @@ public class DynamoDBManager {
     }
 
 
+
     private class DynamoDBManagerTask extends
             AsyncTask<Task, Void, DynamoDBManagerTaskResult> {
 
@@ -82,7 +83,7 @@ public class DynamoDBManager {
             } else if (result.getTableStatus(Constants.USER_ROOM_TABLE).equalsIgnoreCase("ACTIVE")
                     && result.getTaskType() == Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER) {
                 returnValue = result.getReturnValue();
-                ((DbDataListener) result.getContext()).publishResulstsOnSuccess(returnValue);
+                ((DbDataListener) result.getContext()).publishResultsOnSuccess(Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER, returnValue);
                 Log.i("LetThingsSpeakMessages", "User Room retrieved successfully!");
             }
         }
