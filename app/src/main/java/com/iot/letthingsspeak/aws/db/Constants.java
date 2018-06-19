@@ -31,9 +31,10 @@ public class Constants {
     public static final String ROOM_TABLE = "letthingsspeak-mobilehub-849318221-room";
     public static final String GATEWAY_TABLE = "letthingsspeak-mobilehub-849318221-gateway";
     public static final String DEVICE_TABLE = "letthingsspeak-mobilehub-849318221-device";
+    public static final String USER_ROOM_TABLE = "letthingsspeak-mobilehub-849318221-userRoom";
 
 
     public enum DynamoDBManagerType {
-        GET_TABLE_STATUS, INSERT_ROOM, GET_ROOM_PREFERENCE, GET_ROOMS_FOR_USER, INSERT_DEVICE, INSERT_GATEWAY
+        GET_TABLE_STATUS, INSERT_ROOM, INSERT_ROOM_USER, GET_ROOM_PREFERENCE, GET_ROOMS_FOR_USER, INSERT_DEVICE, INSERT_GATEWAY
     }
 }

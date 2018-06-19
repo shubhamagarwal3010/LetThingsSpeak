@@ -35,6 +35,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,6 +51,8 @@ import com.iot.letthingsspeak.aws.ChangePasswordActivity;
 import com.iot.letthingsspeak.aws.LetThingsSpeakLaunch;
 import com.iot.letthingsspeak.aws.UserProfile;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
+import com.iot.letthingsspeak.aws.db.RoomDO;
+import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
 import com.iot.letthingsspeak.configdevice.ConfigDevice;
 import com.iot.letthingsspeak.room.AddRoom;
 import com.iot.letthingsspeak.room.HomeAdapter;
@@ -59,8 +62,9 @@ import com.iot.letthingsspeak.room.RoomStore;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class UserActivity extends AppCompatActivity {
+public class UserActivity extends AppCompatActivity implements DbDataListener {
     public static final int ACTIVITY_REQUEST_CODE = 201;
     // To track changes to user details
     List<RoomDetails> room = new ArrayList<>();
@@ -300,8 +304,7 @@ public class UserActivity extends AppCompatActivity {
 
     public void insertUsers(View v) {
         dynamoDBManager.insertRoom(new HashMap<String, Object>() {{
-            put("room_id", (double) 1211);
-            put("isAdmin", true);
+            put("room_id", "1211");
             put("room_name", "BedRoom");
             put("image_id", "bedimage");
             put("tag", "My Bed Room");
@@ -327,12 +330,17 @@ public class UserActivity extends AppCompatActivity {
         }});
 
 
-//        Object userRoom = dynamoDBManager.getRoomsForUser();
-//        if (userRoom != null) {
-//            Log.i("room name", ((Map<Double, RoomDO>) userRoom).get(1211).toString());
-//        }
-        //userRoom.containsKey()
+        dynamoDBManager.getRoomsForUser(this);
+
     }
+
+    @Override
+    public void publishResulstsOnSuccess(Object data) {
+        if (data != null) {
+            Log.i("room name", ((Map<String, RoomDO>) data).get("1211").getName());
+        }
+    }
+
 
     /**
      * RecyclerView item decoration - give equal margin around grid item

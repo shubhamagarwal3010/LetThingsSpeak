@@ -2,6 +2,8 @@ package com.iot.letthingsspeak.aws.db;
 
 import android.content.Context;
 
+import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
+
 import java.util.Map;
 
 public class Task {
@@ -9,12 +11,22 @@ public class Task {
     private Constants.DynamoDBManagerType dynamoDBManagerType;
     private String tableName;
     private Map<String, Object> parameterList;
+    private DbDataListener listener;
 
-    public Task(Context context, Constants.DynamoDBManagerType dynamoDBManagerType, String tableName, Map<String, Object> parameterList) {
+    public Task(DbDataListener listener, Context context, Constants.DynamoDBManagerType dynamoDBManagerType, String tableName, Map<String, Object> parameterList) {
+        this.listener = listener;
         this.context = context;
         this.dynamoDBManagerType = dynamoDBManagerType;
         this.tableName = tableName;
         this.parameterList = parameterList;
+    }
+
+    public DbDataListener getListener() {
+        return listener;
+    }
+
+    public void setListener(DbDataListener listener) {
+        this.listener = listener;
     }
 
     public Context getContext() {

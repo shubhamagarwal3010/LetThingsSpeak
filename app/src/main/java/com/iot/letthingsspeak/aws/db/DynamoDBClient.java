@@ -79,8 +79,7 @@ public class DynamoDBClient {
 
         try {
             RoomDO roomDO = new RoomDO();
-            roomDO.setRoomId((double) parameterList.get("room_id"));
-            roomDO.setIsAdmin((Boolean) parameterList.get("isAdmin"));
+            roomDO.setRoomId((String) parameterList.get("room_id"));
             roomDO.setUserId(AppHelper.getCurrUser());
             roomDO.setName((String) parameterList.get("room_name"));
             roomDO.setImageId((String) parameterList.get("image_id"));
@@ -147,25 +146,33 @@ public class DynamoDBClient {
     }
 
 
-    public static Map<Double, RoomDO> getRoomsForUser() {
+    public static Map<String, RoomDO> getRoomsForUser() {
         String userId = AppHelper.getCurrUser();
         AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager
                 .ddb();
         DynamoDBMapper mapper = new DynamoDBMapper(ddb);
-        Map<Double, RoomDO> roomDOMap = new HashMap<>();
+        Map<String, RoomDO> roomDOMap = new HashMap<>();
 
-        Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
-        eav.put(":val1", new AttributeValue().withS(userId));
+        Map<String, AttributeValue> eav1 = new HashMap<String, AttributeValue>();
+        eav1.put(":val1", new AttributeValue().withS(userId));
 
-        DynamoDBScanExpression dynamoDBScanExpression = new DynamoDBScanExpression();
-        dynamoDBScanExpression.withFilterExpression("userId = :val1").withExpressionAttributeValues(eav);
+        DynamoDBScanExpression dynamoDBScanExpression1 = new DynamoDBScanExpression();
+        dynamoDBScanExpression1.withFilterExpression("userId = :val1").withExpressionAttributeValues(eav1);
+
 
         try {
-            List<RoomDO> userRoomDOList = mapper.scan(RoomDO.class, dynamoDBScanExpression);
-            for (RoomDO userRoomDO : userRoomDOList) {
-                Double roomId = userRoomDO.getRoomId();
-                RoomDO roomDO = mapper.load(RoomDO.class, roomId);
-                roomDOMap.put(roomId, roomDO);
+            List<UserRoomDO> userRoomDOList = mapper.scan(UserRoomDO.class, dynamoDBScanExpression1);
+            for (UserRoomDO userRoomDO : userRoomDOList) {
+                String roomId = userRoomDO.getRoomId();
+
+                Map<String, AttributeValue> eav2 = new HashMap<String, AttributeValue>();
+                eav2.put(":val1", new AttributeValue().withS(roomId));
+
+                DynamoDBScanExpression dynamoDBScanExpression2 = new DynamoDBScanExpression();
+                dynamoDBScanExpression2.withFilterExpression("roomId = :val1").withExpressionAttributeValues(eav2);
+
+                List<RoomDO> roomDOList = mapper.scan(RoomDO.class, dynamoDBScanExpression2);
+                roomDOMap.put(roomId, roomDOList.get(0));
             }
             return roomDOMap;
         } catch (AmazonServiceException ex) {

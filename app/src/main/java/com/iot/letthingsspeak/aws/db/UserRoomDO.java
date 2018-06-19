@@ -5,14 +5,12 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
-@DynamoDBTable(tableName = Constants.ROOM_TABLE)
+@DynamoDBTable(tableName = Constants.USER_ROOM_TABLE)
 
-public class RoomDO {
+public class UserRoomDO {
     private String _userId;
     private String _roomId;
-    private String _imageId;
-    private String _name;
-    private String _tag;
+    private Boolean _isAdmin;
 
     @DynamoDBHashKey(attributeName = "userId")
     @DynamoDBAttribute(attributeName = "userId")
@@ -34,31 +32,13 @@ public class RoomDO {
         this._roomId = _roomId;
     }
 
-    @DynamoDBAttribute(attributeName = "imageId")
-    public String getImageId() {
-        return _imageId;
+    @DynamoDBAttribute(attributeName = "isAdmin")
+    public Boolean getIsAdmin() {
+        return _isAdmin;
     }
 
-    public void setImageId(final String _imageId) {
-        this._imageId = _imageId;
-    }
-
-    @DynamoDBAttribute(attributeName = "name")
-    public String getName() {
-        return _name;
-    }
-
-    public void setName(final String _name) {
-        this._name = _name;
-    }
-
-    @DynamoDBAttribute(attributeName = "tag")
-    public String getTag() {
-        return _tag;
-    }
-
-    public void setTag(final String _tag) {
-        this._tag = _tag;
+    public void setIsAdmin(final Boolean _isAdmin) {
+        this._isAdmin = _isAdmin;
     }
 
 }
