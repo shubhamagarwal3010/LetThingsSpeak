@@ -14,9 +14,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.barcode.Barcode;
 import com.iot.letthingsspeak.R;
 import com.iot.letthingsspeak.configdevice.utils.BarcodeReader;
-import com.google.android.gms.vision.barcode.Barcode;
 
 import java.util.List;
 

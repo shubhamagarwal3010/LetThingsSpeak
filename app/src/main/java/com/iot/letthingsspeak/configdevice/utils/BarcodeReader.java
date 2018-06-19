@@ -48,29 +48,25 @@ import info.androidhive.barcode.camera.CameraSourcePreview;
 import info.androidhive.barcode.camera.GraphicOverlay;
 
 public class BarcodeReader extends Fragment implements View.OnTouchListener, BarcodeGraphicTracker.BarcodeGraphicTrackerListener {
+    public static final String BarcodeObject = "Barcode";
     private static final String TAG = BarcodeReader.class.getSimpleName();
-
     // intent request code to handle updating play services if needed.
     private static final int RC_HANDLE_GMS = 9001;
-
+    private static final int PERMISSION_CALLBACK_CONSTANT = 101;
+    private static final int REQUEST_PERMISSION_SETTING = 102;
     // constants used to pass extra data in the intent
     private boolean autoFocus = false;
     private boolean useFlash = false;
     private String beepSoundFile;
-    public static final String BarcodeObject = "Barcode";
     private boolean isPaused = false;
-
     private CameraSource mCameraSource;
     private CameraSourcePreview mPreview;
     private GraphicOverlay<BarcodeGraphic> mGraphicOverlay;
-
     // helper objects for detecting taps and pinches.
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
     private BarcodeReaderListener mListener;
     private SharedPreferences permissionStatus;
-    private static final int PERMISSION_CALLBACK_CONSTANT = 101;
-    private static final int REQUEST_PERMISSION_SETTING = 102;
     private boolean sentToSettings = false;
 
     public BarcodeReader() {
@@ -464,6 +460,39 @@ public class BarcodeReader extends Fragment implements View.OnTouchListener, Bar
         }
     }
 
+    public void playBeep() {
+        MediaPlayer m = new MediaPlayer();
+        try {
+            if (m.isPlaying()) {
+                m.stop();
+                m.release();
+                m = new MediaPlayer();
+            }
+
+            AssetFileDescriptor descriptor = getActivity().getAssets().openFd(beepSoundFile != null ? beepSoundFile : "beep.mp3");
+            m.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+            descriptor.close();
+
+            m.prepare();
+            m.setVolume(1f, 1f);
+            m.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public interface BarcodeReaderListener {
+        void onScanned(Barcode barcode);
+
+        void onScannedMultiple(List<Barcode> barcodes);
+
+        void onBitmapScanned(SparseArray<Barcode> sparseArray);
+
+        void onScanError(String errorMessage);
+
+        void onCameraPermissionDenied();
+    }
+
     private class CaptureGestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
@@ -523,38 +552,5 @@ public class BarcodeReader extends Fragment implements View.OnTouchListener, Bar
         public void onScaleEnd(ScaleGestureDetector detector) {
             mCameraSource.doZoom(detector.getScaleFactor());
         }
-    }
-
-    public void playBeep() {
-        MediaPlayer m = new MediaPlayer();
-        try {
-            if (m.isPlaying()) {
-                m.stop();
-                m.release();
-                m = new MediaPlayer();
-            }
-
-            AssetFileDescriptor descriptor = getActivity().getAssets().openFd(beepSoundFile != null ? beepSoundFile : "beep.mp3");
-            m.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
-            descriptor.close();
-
-            m.prepare();
-            m.setVolume(1f, 1f);
-            m.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public interface BarcodeReaderListener {
-        void onScanned(Barcode barcode);
-
-        void onScannedMultiple(List<Barcode> barcodes);
-
-        void onBitmapScanned(SparseArray<Barcode> sparseArray);
-
-        void onScanError(String errorMessage);
-
-        void onCameraPermissionDenied();
     }
 }

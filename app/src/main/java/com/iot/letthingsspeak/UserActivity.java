@@ -52,6 +52,7 @@ import com.iot.letthingsspeak.aws.LetThingsSpeakLaunch;
 import com.iot.letthingsspeak.aws.UserProfile;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 import com.iot.letthingsspeak.aws.db.RoomDO;
+import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
 import com.iot.letthingsspeak.configdevice.ConfigDevice;
 import com.iot.letthingsspeak.room.AddRoom;
 import com.iot.letthingsspeak.room.HomeAdapter;
@@ -59,10 +60,11 @@ import com.iot.letthingsspeak.room.RoomDetails;
 import com.iot.letthingsspeak.room.RoomStore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserActivity extends AppCompatActivity {
+public class UserActivity extends AppCompatActivity implements DbDataListener {
     public static final int ACTIVITY_REQUEST_CODE = 201;
     // To track changes to user details
     List<RoomDetails> room = new ArrayList<>();
@@ -301,20 +303,44 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void insertUsers(View v) {
-        dynamoDBManager.insertUsers();
-        insertRoomDetails("BedRoom");
+        dynamoDBManager.insertRoom(new HashMap<String, Object>() {{
+            put("room_id", "1211");
+            put("room_name", "BedRoom");
+            put("image_id", "bedimage");
+            put("tag", "My Bed Room");
+        }});
 
-        Object userRoom = dynamoDBManager.getRoomsForUser();
-        if (userRoom != null) {
-            Log.i("room name", ((Map<Double, RoomDO>) userRoom).get(1211).toString());
+        dynamoDBManager.insertDevice(new HashMap<String, Object>() {{
+            put("deviceId", (double) 1);
+            put("currentState", false);
+            put("delegatedIds", null);
+            put("gatewayId", (double) 101);
+            put("gatewayPin", (double) 1);
+            put("imageId", "bulbImage");
+            put("name", "Bulb");
+            put("roomId", (double) 1211);
+            put("tag", "Main light");
+        }});
+
+
+        dynamoDBManager.insertGateway(new HashMap<String, Object>() {{
+            put("gatewayId", (double) 1012);
+            put("name", "bed Switch Hub");
+            put("pinCount", (double) 3);
+        }});
+
+
+        dynamoDBManager.getRoomsForUser(this);
+
+    }
+
+    @Override
+    public void publishResulstsOnSuccess(Object data) {
+        if (data != null) {
+            Log.i("room name", ((Map<String, RoomDO>) data).get("1211").getName());
         }
-        //userRoom.containsKey()
     }
 
-    public void insertRoomDetails(String name) {
-        dynamoDBManager.insertRoomDetails(name);
-        dynamoDBManager.insertRoom((double) 1211);
-    }
 
     /**
      * RecyclerView item decoration - give equal margin around grid item

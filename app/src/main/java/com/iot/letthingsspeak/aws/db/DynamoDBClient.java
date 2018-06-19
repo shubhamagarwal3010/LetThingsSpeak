@@ -21,6 +21,33 @@ public class DynamoDBClient {
 
 
     /*
+     * Add User details
+     */
+
+    public static void insertUser(Map<String, Object> parameterList) {
+        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager.ddb();
+        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
+
+
+        try {
+            //for (int i = 1; i <= 10; i++)
+            {
+                UserDO userDO = new UserDO();
+                userDO.setUserId(AppHelper.getCurrUser());
+                //userDO.setDetails(AppHelper.getUserDetails();
+
+                Log.d(TAG, "Inserting user");
+                mapper.save(userDO);
+                Log.d(TAG, "User inserted");
+            }
+        } catch (AmazonServiceException ex) {
+            Log.e(TAG, "Error inserting user");
+            LetThingsSpeakLaunch.amazonClientManager
+                    .wipeCredentialsOnAuthError(ex);
+        }
+    }
+
+    /*
      * Retrieves the table description and returns the table status as a string.
      */
     public static String getTestTableStatus(String tableName) {
@@ -45,81 +72,22 @@ public class DynamoDBClient {
     }
 
 
-    /*
-     * Inserts ten users with userNo from 1 to 10 and random names.
-     */
-    public static void insertUsers() {
-//        AmazonDynamoDBClient ddb = UserActivity.clientManager
-//                .ddb();
-        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager.ddb();
-        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
-
-
-        try {
-            //for (int i = 1; i <= 10; i++)
-            {
-                LetThingsSpeakDO letThingsSpeakDO = new LetThingsSpeakDO();
-                letThingsSpeakDO.setUserId(AppHelper.getCurrUser());
-                letThingsSpeakDO.setRoomName("Kitchen");
-                letThingsSpeakDO.setDeviceName("Bulb");
-                letThingsSpeakDO.setDeviceId(124.0);
-
-                Log.d(TAG, "Inserting data");
-                mapper.save(letThingsSpeakDO);
-                Log.d(TAG, "Data inserted");
-            }
-        } catch (AmazonServiceException ex) {
-            Log.e(TAG, "Error inserting users");
-            LetThingsSpeakLaunch.amazonClientManager
-                    .wipeCredentialsOnAuthError(ex);
-        }
-    }    /*
-     * Inserts ten users with userNo from 1 to 10 and random names.
-     */
-
-    public static void insertRoomDetails(Map<String, Object> parameterList) {
-        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager.ddb();
-        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
-
-
-        try {
-            //for (int i = 1; i <= 10; i++)
-            {
-                RoomDO roomDO = new RoomDO();
-                roomDO.setId((double) 1211);
-                roomDO.setName((String) parameterList.get("room_name"));
-
-                Log.d(TAG, "Inserting room details");
-                mapper.save(roomDO);
-                Log.d(TAG, "Room details inserted");
-            }
-        } catch (AmazonServiceException ex) {
-            Log.e(TAG, "Error inserting room details");
-            LetThingsSpeakLaunch.amazonClientManager
-                    .wipeCredentialsOnAuthError(ex);
-        }
-    }
-    /*
-     * Inserts ten users with userNo from 1 to 10 and random names.
-     */
-
     public static void insertRoom(Map<String, Object> parameterList) {
         AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager.ddb();
         DynamoDBMapper mapper = new DynamoDBMapper(ddb);
 
 
         try {
-            //for (int i = 1; i <= 10; i++)
-            {
-                UserRoomDO userRoomDO = new UserRoomDO();
-                userRoomDO.setUserId(AppHelper.getCurrUser());
-                userRoomDO.setRoomId((Double) parameterList.get("room_id"));
-                userRoomDO.setIsAdmin(true);
+            RoomDO roomDO = new RoomDO();
+            roomDO.setRoomId((String) parameterList.get("room_id"));
+            roomDO.setUserId(AppHelper.getCurrUser());
+            roomDO.setName((String) parameterList.get("room_name"));
+            roomDO.setImageId((String) parameterList.get("image_id"));
+            roomDO.setTag((String) parameterList.get("tag"));
 
-                Log.d(TAG, "Inserting room");
-                mapper.save(userRoomDO);
-                Log.d(TAG, "Room inserted");
-            }
+            Log.d(TAG, "Inserting room");
+            mapper.save(roomDO);
+            Log.d(TAG, "Room details inserted");
         } catch (AmazonServiceException ex) {
             Log.e(TAG, "Error inserting room");
             LetThingsSpeakLaunch.amazonClientManager
@@ -127,49 +95,84 @@ public class DynamoDBClient {
         }
     }
 
-    /*
-     * Retrieves all of the attribute/value pairs for the specified user.
-     */
-    public static LetThingsSpeakDO getUserPreference(int userNo) {
-
-        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager
-                .ddb();
+    public static void insertDevice(Map<String, Object> parameterList) {
+        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager.ddb();
         DynamoDBMapper mapper = new DynamoDBMapper(ddb);
 
+
         try {
-            LetThingsSpeakDO letThingsSpeakDO = mapper.load(LetThingsSpeakDO.class,
-                    userNo);
+            DeviceDO deviceDO = new DeviceDO();
+            deviceDO.setUserId(AppHelper.getCurrUser());
+            deviceDO.setDeviceId((double) parameterList.get("deviceId"));
+            deviceDO.setCurrentState((Boolean) parameterList.get("currentState"));
+            deviceDO.setDelegatedIds((List<String>) parameterList.get("delegatedIds"));
+            deviceDO.setGatewayId((double) parameterList.get("gatewayId"));
+            deviceDO.setGatewayPin((double) parameterList.get("gatewayPin"));
+            deviceDO.setImageId((String) parameterList.get("image_id"));
+            deviceDO.setName((String) parameterList.get("name"));
+            deviceDO.setRoomId((double) parameterList.get("roomId"));
+            deviceDO.setTag((String) parameterList.get("tag"));
 
-            return letThingsSpeakDO;
-
+            Log.d(TAG, "Inserting device");
+            mapper.save(deviceDO);
+            Log.d(TAG, "Device details inserted");
         } catch (AmazonServiceException ex) {
+            Log.e(TAG, "Error inserting device");
             LetThingsSpeakLaunch.amazonClientManager
                     .wipeCredentialsOnAuthError(ex);
         }
+    }
 
-        return null;
+    public static void insertGateway(Map<String, Object> parameterList) {
+        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager.ddb();
+        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
+
+
+        try {
+            GatewayDO gatewayDO = new GatewayDO();
+            gatewayDO.setUserId(AppHelper.getCurrUser());
+            gatewayDO.setGatewayId((double) parameterList.get("gatewayId"));
+            gatewayDO.setName((String) parameterList.get("name"));
+            gatewayDO.setPinCount((double) parameterList.get("pinCount"));
+
+            Log.d(TAG, "Inserting gateway");
+            mapper.save(gatewayDO);
+            Log.d(TAG, "Device gateway inserted");
+        } catch (AmazonServiceException ex) {
+            Log.e(TAG, "Error gateway device");
+            LetThingsSpeakLaunch.amazonClientManager
+                    .wipeCredentialsOnAuthError(ex);
+        }
     }
 
 
-    public static Map<Double, RoomDO> getRoomsForUser() {
+    public static Map<String, RoomDO> getRoomsForUser() {
         String userId = AppHelper.getCurrUser();
         AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager
                 .ddb();
         DynamoDBMapper mapper = new DynamoDBMapper(ddb);
-        Map<Double, RoomDO> roomDOMap = new HashMap<>();
+        Map<String, RoomDO> roomDOMap = new HashMap<>();
 
-        Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
-        eav.put(":val1", new AttributeValue().withS(userId));
+        Map<String, AttributeValue> eav1 = new HashMap<String, AttributeValue>();
+        eav1.put(":val1", new AttributeValue().withS(userId));
 
-        DynamoDBScanExpression dynamoDBScanExpression = new DynamoDBScanExpression();
-        dynamoDBScanExpression.withFilterExpression("userId = :val1").withExpressionAttributeValues(eav);
+        DynamoDBScanExpression dynamoDBScanExpression1 = new DynamoDBScanExpression();
+        dynamoDBScanExpression1.withFilterExpression("userId = :val1").withExpressionAttributeValues(eav1);
+
 
         try {
-            List<UserRoomDO> userRoomDOList = mapper.scan(UserRoomDO.class, dynamoDBScanExpression);
+            List<UserRoomDO> userRoomDOList = mapper.scan(UserRoomDO.class, dynamoDBScanExpression1);
             for (UserRoomDO userRoomDO : userRoomDOList) {
-                Double roomId = userRoomDO.getRoomId();
-                RoomDO roomDO = mapper.load(RoomDO.class, roomId);
-                roomDOMap.put(roomId, roomDO);
+                String roomId = userRoomDO.getRoomId();
+
+                Map<String, AttributeValue> eav2 = new HashMap<String, AttributeValue>();
+                eav2.put(":val1", new AttributeValue().withS(roomId));
+
+                DynamoDBScanExpression dynamoDBScanExpression2 = new DynamoDBScanExpression();
+                dynamoDBScanExpression2.withFilterExpression("roomId = :val1").withExpressionAttributeValues(eav2);
+
+                List<RoomDO> roomDOList = mapper.scan(RoomDO.class, dynamoDBScanExpression2);
+                roomDOMap.put(roomId, roomDOList.get(0));
             }
             return roomDOMap;
         } catch (AmazonServiceException ex) {
@@ -177,23 +180,5 @@ public class DynamoDBClient {
                     .wipeCredentialsOnAuthError(ex);
         }
         return null;
-    }
-
-    /*
-     * Updates one attribute/value pair for the specified user.
-     */
-    public static void updateUserPreference(LetThingsSpeakDO updateLetThingsSpeakDO) {
-
-        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager
-                .ddb();
-        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
-
-        try {
-            mapper.save(updateLetThingsSpeakDO);
-
-        } catch (AmazonServiceException ex) {
-            LetThingsSpeakLaunch.amazonClientManager
-                    .wipeCredentialsOnAuthError(ex);
-        }
     }
 }

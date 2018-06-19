@@ -2,26 +2,36 @@ package com.iot.letthingsspeak.aws.db;
 
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexHashKey;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
 @DynamoDBTable(tableName = Constants.ROOM_TABLE)
 
 public class RoomDO {
-    private Double _id;
+    private String _userId;
+    private String _roomId;
     private String _imageId;
     private String _name;
     private String _tag;
-    private String _userId;
 
-    @DynamoDBHashKey(attributeName = "id")
-    @DynamoDBAttribute(attributeName = "id")
-    public Double getId() {
-        return _id;
+    @DynamoDBHashKey(attributeName = "userId")
+    @DynamoDBAttribute(attributeName = "userId")
+    public String getUserId() {
+        return _userId;
     }
 
-    public void setId(final Double _id) {
-        this._id = _id;
+    public void setUserId(final String _userId) {
+        this._userId = _userId;
+    }
+
+    @DynamoDBRangeKey(attributeName = "roomId")
+    @DynamoDBAttribute(attributeName = "roomId")
+    public String getRoomId() {
+        return _roomId;
+    }
+
+    public void setRoomId(final String _roomId) {
+        this._roomId = _roomId;
     }
 
     @DynamoDBAttribute(attributeName = "imageId")
@@ -42,22 +52,13 @@ public class RoomDO {
         this._name = _name;
     }
 
-    @DynamoDBIndexHashKey(attributeName = "tag", globalSecondaryIndexName = "index_room_tag")
+    @DynamoDBAttribute(attributeName = "tag")
     public String getTag() {
         return _tag;
     }
 
     public void setTag(final String _tag) {
         this._tag = _tag;
-    }
-
-    @DynamoDBIndexHashKey(attributeName = "userId", globalSecondaryIndexName = "index_room_user_id")
-    public String getUserId() {
-        return _userId;
-    }
-
-    public void setUserId(final String _userId) {
-        this._userId = _userId;
     }
 
 }
