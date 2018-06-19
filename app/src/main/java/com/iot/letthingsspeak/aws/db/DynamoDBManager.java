@@ -33,7 +33,6 @@ public class DynamoDBManager {
     }
 
 
-
     private class DynamoDBManagerTask extends
             AsyncTask<Task, Void, DynamoDBManagerTaskResult> {
 

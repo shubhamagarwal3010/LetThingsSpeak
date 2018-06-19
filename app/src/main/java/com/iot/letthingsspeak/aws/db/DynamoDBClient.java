@@ -3,14 +3,9 @@ package com.iot.letthingsspeak.aws.db;
 import android.util.Log;
 
 import com.amazonaws.AmazonServiceException;
-import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
-import com.amazonaws.services.dynamodbv2.document.Table;
-import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
-import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableResult;
@@ -187,13 +182,13 @@ public class DynamoDBClient {
         return null;
     }
 
-    public static void updateRoom(Map<String, Object> attributeValues) {
-        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager
-                .ddb();
-        DynamoDB dynamoDB = new DynamoDB(ddb);
-        //attributeValues.get("")
-        Table table = dynamoDB.getTable(Constants.ROOM_TABLE);
-        //UpdateItemSpec updateItemSpec = new UpdateItemSpec().withUpdateExpression("set #na = :val").withNameMap(new NameMap().with("#na",))
-
-    }
+//    public static void updateRoom(Map<String, Object> attributeValues) {
+//        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager
+//                .ddb();
+//        DynamoDB dynamoDB = new DynamoDB(ddb);
+//        //attributeValues.get("")
+//        Table table = dynamoDB.getTable(Constants.ROOM_TABLE);
+//        //UpdateItemSpec updateItemSpec = new UpdateItemSpec().withUpdateExpression("set #na = :val").withNameMap(new NameMap().with("#na",))
+//
+//    }
 }

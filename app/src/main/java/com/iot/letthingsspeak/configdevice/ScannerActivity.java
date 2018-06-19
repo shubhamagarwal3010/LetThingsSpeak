@@ -56,11 +56,6 @@ public class ScannerActivity extends AppCompatActivity implements BarcodeReader.
         main_title.setText("Scan QR Code");
 
 
-
-
-
-
-
         // getting barcode instance
         barcodeReader = (BarcodeReader) getSupportFragmentManager().findFragmentById(R.id.barcode_fragment);
 
