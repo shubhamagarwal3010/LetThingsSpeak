@@ -329,7 +329,7 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
             put("pinCount", (double) 3);
         }});
 
-        dynamoDBManager.getRoomsForUser(this);
+        //dynamoDBManager.getRoomsForUser(this);
     }
 
     @Override
