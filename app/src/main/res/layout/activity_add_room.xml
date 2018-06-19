@@ -107,12 +107,25 @@
                         android:textSize="18sp" />
 
                 </android.support.design.widget.TextInputLayout>
-
+                <TextView
+                    style="@style/TextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="20dp"
+                    android:text="Choose room icon"
+                    android:textColor="@color/black_effective"
+                    android:textSize="18sp"/>
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/horizontalRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipToPadding="false" />
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:clipToPadding="false"
+                    android:scrollbars="horizontal" />
 
                 <android.support.v7.widget.AppCompatButton
                     style="@style/Button.Primary"

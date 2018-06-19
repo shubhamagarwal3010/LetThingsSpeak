@@ -30,6 +30,7 @@ public class AddRoom extends AppCompatActivity implements View.OnClickListener {
             R.mipmap.room_bed3, R.mipmap.room_exterior, R.mipmap.room_kitchen,
             R.mipmap.room_kitchen2, R.mipmap.room_living, R.mipmap.room_living2,
             R.mipmap.room_living3, R.mipmap.room_workplace));
+
     private EditText roomName;
     private EditText roomTag;
     private RecyclerView mHorizontalRecyclerView;

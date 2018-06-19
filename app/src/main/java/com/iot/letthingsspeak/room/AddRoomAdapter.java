@@ -1,5 +1,6 @@
 package com.iot.letthingsspeak.room;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.R;
 
 import java.util.ArrayList;
@@ -34,11 +36,15 @@ public class AddRoomAdapter extends RecyclerView.Adapter<AddRoomAdapter.AddRoomV
     }
 
     @Override
-    public void onBindViewHolder(final AddRoomViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final AddRoomViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         final int model = imageModelArrayList.get(position);
 
-        holder.imageView.setImageResource(model);
-
+        //holder.imageView.setImageResource(model);
+        try {
+            Glide.with(context).load(model).into(holder.imageView);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

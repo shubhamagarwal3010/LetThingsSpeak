@@ -75,7 +75,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".room.AddRoom"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".device.AddDevice"
             android:theme="@style/AppTheme.NoActionBar" />
