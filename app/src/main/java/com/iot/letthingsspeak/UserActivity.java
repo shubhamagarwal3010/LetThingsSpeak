@@ -56,7 +56,7 @@ import com.iot.letthingsspeak.aws.db.RoomDO;
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
 import com.iot.letthingsspeak.configdevice.ConfigDevice;
 import com.iot.letthingsspeak.room.AddRoom;
-import com.iot.letthingsspeak.room.HomeAdapter;
+import com.iot.letthingsspeak.room.RoomAdapter;
 import com.iot.letthingsspeak.room.RoomDetails;
 import com.iot.letthingsspeak.room.RoomStore;
 
@@ -121,9 +121,9 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
         room.add(new RoomDetails("Living Room ", "0"));
 
         RoomStore.setRoomDetails(room);
-        HomeAdapter homeAdapter;
-        homeAdapter = new HomeAdapter(this, RoomStore.getRoomDetails());
-        roomTypeRecyclerView.setAdapter(homeAdapter);
+        RoomAdapter roomAdapter;
+        roomAdapter = new RoomAdapter(this, RoomStore.getRoomDetails());
+        roomTypeRecyclerView.setAdapter(roomAdapter);
 
         try {
             Glide.with(this).load(R.drawable.smart_home).into((ImageView) findViewById(R.id.backdrop));
@@ -204,8 +204,8 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
 
                 RoomStore.setRoomDetails(room);
 
-                HomeAdapter homeAdapter = new HomeAdapter(this, RoomStore.getRoomDetails());
-                roomTypeRecyclerView.setAdapter(homeAdapter);
+                RoomAdapter roomAdapter = new RoomAdapter(this, RoomStore.getRoomDetails());
+                roomTypeRecyclerView.setAdapter(roomAdapter);
             }
         }
         switch (requestCode) {
@@ -305,9 +305,9 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
 
     public void insertUsers(View v) {
         dynamoDBManager.insertRoom(new HashMap<String, Object>() {{
-            put("room_id", "1211");
-            put("room_name", "BedRoom");
-            put("image_id", "bedimage");
+            put("roomId", "1211");
+            put("roomName", "BedRoom");
+            put("imageId", "bedimage");
             put("tag", "My Bed Room");
         }});
 

@@ -79,10 +79,10 @@ public class DynamoDBClient {
 
         try {
             RoomDO roomDO = new RoomDO();
-            roomDO.setRoomId((String) parameterList.get("room_id"));
+            roomDO.setRoomId((String) parameterList.get("roomId"));
             roomDO.setUserId(AppHelper.getCurrUser());
-            roomDO.setName((String) parameterList.get("room_name"));
-            roomDO.setImageId((String) parameterList.get("image_id"));
+            roomDO.setName((String) parameterList.get("roomName"));
+            roomDO.setImageId((String) parameterList.get("imageId"));
             roomDO.setTag((String) parameterList.get("tag"));
 
             Log.d(TAG, "Inserting room");

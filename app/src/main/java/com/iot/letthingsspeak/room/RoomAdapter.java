@@ -22,28 +22,28 @@ import com.iot.letthingsspeak.device.DeviceActivity;
 import java.util.List;
 
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeNewsViewHolder> {
+public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
     public int ROOM_DETAILS_REQUEST_CODE = 9283;
     private Context mContext;
     private List<RoomDetails> roomDetails;
 
-    public HomeAdapter(Context mContext, List<RoomDetails> newsArticles) {
+    public RoomAdapter(Context mContext, List<RoomDetails> roomDetails) {
         this.mContext = mContext;
-        this.roomDetails = newsArticles;
+        this.roomDetails = roomDetails;
     }
 
     @NonNull
     @Override
-    public HomeNewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_view_home, parent, false);
-        HomeNewsViewHolder homeNewsViewHolder = new HomeNewsViewHolder(view);
-        return homeNewsViewHolder;
+        RoomViewHolder roomViewHolder = new RoomViewHolder(view);
+        return roomViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final HomeNewsViewHolder holder, final int position) {
-        RoomDetails newsArticle = roomDetails.get(position);
-        holder.roomTitle.setText(newsArticle.getRoomType());
+    public void onBindViewHolder(final RoomViewHolder holder, final int position) {
+        RoomDetails roomDetails = this.roomDetails.get(position);
+        holder.roomTitle.setText(roomDetails.getRoomType());
 
 
         holder.overflow.setOnClickListener(new View.OnClickListener() {
@@ -72,11 +72,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeNewsViewHo
         popup.show();
     }
 
-    public class HomeNewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class RoomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView roomImage, overflow;
         TextView roomTitle;
 
-        public HomeNewsViewHolder(View itemView) {
+        public RoomViewHolder(View itemView) {
             super(itemView);
             roomImage = itemView.findViewById(R.id.card_news_image);
             roomTitle = itemView.findViewById(R.id.room_category);
