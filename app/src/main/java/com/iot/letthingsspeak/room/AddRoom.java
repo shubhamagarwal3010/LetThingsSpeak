@@ -101,6 +101,12 @@ public class AddRoom extends AppCompatActivity implements View.OnClickListener, 
             put("roomName", roomName.getText().toString());
             put("imageId", (double) roomImageId);
         }});
+
+        dynamoDBManager.insertUserRoom(new HashMap<String, Object>() {{
+            put("roomId", "1212");
+            put("isAdmin", true);
+        }});
+
         Intent intent = new Intent();
         intent.putExtra(ADDED_ROOM, roomName.getText().toString());
         setResult(RESULT_OK, intent);

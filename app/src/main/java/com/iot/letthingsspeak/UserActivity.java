@@ -310,6 +310,11 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
             put("imageId", (double) 1234);
         }});
 
+        dynamoDBManager.insertUserRoom(new HashMap<String, Object>() {{
+            put("roomId", "1211");
+            put("isAdmin", true);
+        }});
+
         dynamoDBManager.insertDevice(new HashMap<String, Object>() {{
             put("deviceId", (double) 1);
             put("currentState", false);

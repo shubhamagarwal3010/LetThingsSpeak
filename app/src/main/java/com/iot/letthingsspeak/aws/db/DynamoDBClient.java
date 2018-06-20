@@ -76,7 +76,6 @@ public class DynamoDBClient {
         AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager.ddb();
         DynamoDBMapper mapper = new DynamoDBMapper(ddb);
 
-
         try {
             RoomDO roomDO = new RoomDO();
             roomDO.setRoomId((String) parameterList.get("roomId"));
@@ -84,9 +83,29 @@ public class DynamoDBClient {
             roomDO.setName((String) parameterList.get("roomName"));
             roomDO.setImageId((double) parameterList.get("imageId"));
 
-            Log.d(TAG, "Inserting room");
+            Log.d(TAG, "Inserting room details");
             mapper.save(roomDO);
             Log.d(TAG, "Room details inserted");
+        } catch (AmazonServiceException ex) {
+            Log.e(TAG, "Error inserting room details");
+            LetThingsSpeakLaunch.amazonClientManager
+                    .wipeCredentialsOnAuthError(ex);
+        }
+    }
+
+    public static void insertUserRoom(Map<String, Object> parameterList) {
+        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager.ddb();
+        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
+
+        try {
+            UserRoomDO userRoomDO = new UserRoomDO();
+            userRoomDO.setRoomId((String) parameterList.get("roomId"));
+            userRoomDO.setUserId(AppHelper.getCurrUser());
+            userRoomDO.setIsAdmin((Boolean) parameterList.get("isAdmin"));
+
+            Log.d(TAG, "Inserting room");
+            mapper.save(userRoomDO);
+            Log.d(TAG, "Room inserted");
         } catch (AmazonServiceException ex) {
             Log.e(TAG, "Error inserting room");
             LetThingsSpeakLaunch.amazonClientManager
