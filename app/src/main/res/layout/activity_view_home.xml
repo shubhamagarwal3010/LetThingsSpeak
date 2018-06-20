@@ -20,9 +20,8 @@
             <ImageView
                 android:id="@+id/card_news_image"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/album_cover_height"
+                android:layout_height="@dimen/room_image_height"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
                 android:scaleType="fitXY" />
 
             <TextView

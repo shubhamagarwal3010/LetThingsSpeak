@@ -42,7 +42,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amazonaws.AmazonServiceException;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.aws.AboutApp;
@@ -57,8 +56,6 @@ import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
 import com.iot.letthingsspeak.configdevice.ConfigDevice;
 import com.iot.letthingsspeak.room.AddRoom;
 import com.iot.letthingsspeak.room.RoomAdapter;
-import com.iot.letthingsspeak.room.RoomDetails;
-import com.iot.letthingsspeak.room.RoomStore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,7 +64,7 @@ import java.util.List;
 public class UserActivity extends AppCompatActivity implements DbDataListener {
     public static final int ACTIVITY_REQUEST_CODE = 201;
     // To track changes to user details
-    List<RoomDetails> room = new ArrayList<>();
+    List<RoomDO> room = new ArrayList<>();
     DynamoDBManager dynamoDBManager = LetThingsSpeakLaunch.dynamoDBManager;
     private RecyclerView roomTypeRecyclerView;
     private NavigationView nDrawer;
@@ -191,15 +188,7 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
 
         if (resultCode == RESULT_OK) {
             if (requestCode == ACTIVITY_REQUEST_CODE) {
-                String message = data.getStringExtra(AddRoom.ROOM_NAME);
-                Integer imageId = data.getIntExtra(AddRoom.ROOM_ICON, 0);
-
-                room.add(new RoomDetails(message, imageId, "1"));
-
-                RoomStore.setRoomDetails(room);
-
-                RoomAdapter roomAdapter = new RoomAdapter(this, RoomStore.getRoomDetails());
-                roomTypeRecyclerView.setAdapter(roomAdapter);
+                dynamoDBManager.getRoomsForUser(this);
             }
         }
         switch (requestCode) {
@@ -332,19 +321,8 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
     public void publishResultsOnSuccess(Constants.DynamoDBManagerType type, Object data) {
         if (type == Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER) {
 
-            try {
-                List<RoomDO> roomDOList = ((List<RoomDO>) data);
-                for (RoomDO roomDO : roomDOList) {
-                    room.add(new RoomDetails(roomDO.getName(), (roomDO.getImageId()).intValue(), "0"));
-                }
-            } catch (AmazonServiceException ex) {
-                LetThingsSpeakLaunch.amazonClientManager
-                        .wipeCredentialsOnAuthError(ex);
-            }
-
-            RoomStore.setRoomDetails(room);
             RoomAdapter roomAdapter;
-            roomAdapter = new RoomAdapter(this, RoomStore.getRoomDetails());
+            roomAdapter = new RoomAdapter(this, (List<RoomDO>) data);
             roomTypeRecyclerView.setAdapter(roomAdapter);
             //Log.i("room name", ((Map<String, RoomDO>) data).get("1211").getName());
             //Log.i("room name", ((Map<String, RoomDO>) data).get("1212").getName());

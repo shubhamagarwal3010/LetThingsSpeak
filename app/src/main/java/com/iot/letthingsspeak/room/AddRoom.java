@@ -27,7 +27,7 @@ import java.util.HashMap;
 import static com.iot.letthingsspeak.util.Util.generateRandomChars;
 
 
-public class AddRoom extends AppCompatActivity implements View.OnClickListener, ClickItemListener {
+public class AddRoom extends AppCompatActivity implements ClickItemListener {
 
     public static final String ROOM_NAME = "ROOM_NAME";
     public static final String ROOM_ICON = "ROOM_ICON";
@@ -57,11 +57,15 @@ public class AddRoom extends AppCompatActivity implements View.OnClickListener, 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        
         TextView main_title = findViewById(R.id.add_room_toolbar_title);
         main_title.setText("Room Config");
-
-        RelativeLayout background_activity_main = (RelativeLayout) findViewById(R.id.background_activity_add_room);
-        background_activity_main.setOnClickListener(this);
 
         mHorizontalRecyclerView = (RecyclerView) findViewById(R.id.horizontalRecyclerView);
         horizontalAdapter = new AddRoomImageAdapter(imageRepo, getApplication(), this);
@@ -82,6 +86,7 @@ public class AddRoom extends AppCompatActivity implements View.OnClickListener, 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 TextView label = findViewById(R.id.textViewRoomNameMessage);
+                roomName.setBackground(null);
                 label.setText("");
             }
 
@@ -117,14 +122,6 @@ public class AddRoom extends AppCompatActivity implements View.OnClickListener, 
         intent.putExtra(ROOM_ICON, roomImageId);
         setResult(RESULT_OK, intent);
         finish();
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.background_activity_add_room) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        }
     }
 
     @Override
