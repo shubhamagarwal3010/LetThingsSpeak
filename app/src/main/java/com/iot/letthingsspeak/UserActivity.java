@@ -307,7 +307,7 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
         dynamoDBManager.insertRoom(new HashMap<String, Object>() {{
             put("roomId", "1211");
             put("roomName", "BedRoom");
-            put("imageId", "bedimage");
+            put("imageId", (double) 1234);
             put("tag", "My Bed Room");
         }});
 

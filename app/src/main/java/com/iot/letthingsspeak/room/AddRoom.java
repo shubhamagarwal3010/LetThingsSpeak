@@ -16,13 +16,14 @@ import android.widget.TextView;
 import com.iot.letthingsspeak.R;
 import com.iot.letthingsspeak.aws.LetThingsSpeakLaunch;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
+import com.iot.letthingsspeak.room.callbacks.ClickItemListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
 
-public class AddRoom extends AppCompatActivity implements View.OnClickListener {
+public class AddRoom extends AppCompatActivity implements View.OnClickListener, ClickItemListener {
 
     public static final String ADDED_ROOM = "NEW_ROOM";
     DynamoDBManager dynamoDBManager = LetThingsSpeakLaunch.dynamoDBManager;
@@ -30,11 +31,11 @@ public class AddRoom extends AppCompatActivity implements View.OnClickListener {
             R.mipmap.room_bed3, R.mipmap.room_exterior, R.mipmap.room_kitchen,
             R.mipmap.room_kitchen2, R.mipmap.room_living, R.mipmap.room_living2,
             R.mipmap.room_living3, R.mipmap.room_workplace));
-
+    Integer roomImageId;
     private EditText roomName;
     private EditText roomTag;
     private RecyclerView mHorizontalRecyclerView;
-    private AddRoomAdapter horizontalAdapter;
+    private AddRoomImageAdapter horizontalAdapter;
     private LinearLayoutManager horizontalLayoutManager;
 
     @Override
@@ -57,7 +58,7 @@ public class AddRoom extends AppCompatActivity implements View.OnClickListener {
         background_activity_main.setOnClickListener(this);
 
         mHorizontalRecyclerView = (RecyclerView) findViewById(R.id.horizontalRecyclerView);
-        horizontalAdapter = new AddRoomAdapter(imageRepo, getApplication());
+        horizontalAdapter = new AddRoomImageAdapter(imageRepo, getApplication(), this);
 
         horizontalLayoutManager = new LinearLayoutManager(AddRoom.this, LinearLayoutManager.HORIZONTAL, false);
         mHorizontalRecyclerView.setLayoutManager(horizontalLayoutManager);
@@ -72,7 +73,7 @@ public class AddRoom extends AppCompatActivity implements View.OnClickListener {
         dynamoDBManager.insertRoom(new HashMap<String, Object>() {{
             put("roomId", "1212");
             put("roomName", roomName.getText().toString());
-            put("imageId", "bedimage");
+            put("imageId", (double) roomImageId);
             put("tag", roomTag.getText().toString());
         }});
         Intent intent = new Intent();
@@ -87,5 +88,10 @@ public class AddRoom extends AppCompatActivity implements View.OnClickListener {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
+    }
+
+    @Override
+    public void publishResultsOnSuccess(Integer value) {
+        roomImageId = value;
     }
 }

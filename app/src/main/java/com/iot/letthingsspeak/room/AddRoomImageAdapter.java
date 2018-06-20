@@ -12,17 +12,20 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.R;
+import com.iot.letthingsspeak.room.callbacks.ClickItemListener;
 
 import java.util.ArrayList;
 
-public class AddRoomAdapter extends RecyclerView.Adapter<AddRoomAdapter.AddRoomViewHolder> {
+public class AddRoomImageAdapter extends RecyclerView.Adapter<AddRoomImageAdapter.AddRoomViewHolder> {
 
     private ArrayList<Integer> imageModelArrayList;
     private Context context;
+    private ClickItemListener listener;
 
-    public AddRoomAdapter(ArrayList<Integer> horizontalList, Context context) {
+    public AddRoomImageAdapter(ArrayList<Integer> horizontalList, Context context, ClickItemListener listener) {
         this.imageModelArrayList = horizontalList;
         this.context = context;
+        this.listener = listener;
     }
 
     @Override
@@ -49,6 +52,8 @@ public class AddRoomAdapter extends RecyclerView.Adapter<AddRoomAdapter.AddRoomV
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, model + " - " + position, Toast.LENGTH_SHORT).show();
+
+                listener.publishResultsOnSuccess(model);
             }
         });
     }

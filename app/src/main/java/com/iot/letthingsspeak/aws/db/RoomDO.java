@@ -10,7 +10,7 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 public class RoomDO {
     private String _userId;
     private String _roomId;
-    private String _imageId;
+    private Double _imageId;
     private String _name;
     private String _tag;
 
@@ -35,11 +35,11 @@ public class RoomDO {
     }
 
     @DynamoDBAttribute(attributeName = "imageId")
-    public String getImageId() {
+    public Double getImageId() {
         return _imageId;
     }
 
-    public void setImageId(final String _imageId) {
+    public void setImageId(final Double _imageId) {
         this._imageId = _imageId;
     }
 
