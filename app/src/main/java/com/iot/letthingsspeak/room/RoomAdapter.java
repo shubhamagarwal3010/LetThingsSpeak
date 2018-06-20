@@ -23,7 +23,7 @@ import com.iot.letthingsspeak.device.DeviceActivity;
 import java.util.List;
 
 
-public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder>{
+public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
     public static final String TITLE_KEY = "letthingsspeak.constants.title";
     public static final String ROOM_NAME = "";
     public static final int ACTIVITY_REQUEST_CODE = 202;

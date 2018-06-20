@@ -10,9 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.iot.letthingsspeak.R;
@@ -63,7 +61,7 @@ public class AddRoom extends AppCompatActivity implements ClickItemListener {
                 onBackPressed();
             }
         });
-        
+
         TextView main_title = findViewById(R.id.add_room_toolbar_title);
         main_title.setText("Room Config");
 
