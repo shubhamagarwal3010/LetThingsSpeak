@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -31,12 +33,12 @@ public class AddRoom extends AppCompatActivity implements View.OnClickListener, 
             R.mipmap.room_bed3, R.mipmap.room_exterior, R.mipmap.room_kitchen,
             R.mipmap.room_kitchen2, R.mipmap.room_living, R.mipmap.room_living2,
             R.mipmap.room_living3, R.mipmap.room_workplace));
-    Integer roomImageId;
+    private Integer roomImageId = 0;
     private EditText roomName;
-    private EditText roomTag;
     private RecyclerView mHorizontalRecyclerView;
     private AddRoomImageAdapter horizontalAdapter;
     private LinearLayoutManager horizontalLayoutManager;
+    private String roomNameInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,18 +65,41 @@ public class AddRoom extends AppCompatActivity implements View.OnClickListener, 
         horizontalLayoutManager = new LinearLayoutManager(AddRoom.this, LinearLayoutManager.HORIZONTAL, false);
         mHorizontalRecyclerView.setLayoutManager(horizontalLayoutManager);
         mHorizontalRecyclerView.setAdapter(horizontalAdapter);
+        init();
+    }
 
+    private void init() {
+        roomName = findViewById(R.id.room_name);
+        roomName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                TextView label = findViewById(R.id.textViewRoomNameMessage);
+                label.setText("");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     public void addRoomToList(View view) {
         roomName = findViewById(R.id.room_name);
-        roomTag = findViewById(R.id.room_tag);
-
+        roomNameInput = roomName.getText().toString();
+        if (roomNameInput == null || roomNameInput.isEmpty()) {
+            TextView label = findViewById(R.id.textViewRoomNameMessage);
+            label.setText("Room name cannot be empty");
+            roomName.setBackground(getDrawable(R.drawable.text_border_error));
+            return;
+        }
         dynamoDBManager.insertRoom(new HashMap<String, Object>() {{
             put("roomId", "1212");
             put("roomName", roomName.getText().toString());
             put("imageId", (double) roomImageId);
-            put("tag", roomTag.getText().toString());
         }});
         Intent intent = new Intent();
         intent.putExtra(ADDED_ROOM, roomName.getText().toString());

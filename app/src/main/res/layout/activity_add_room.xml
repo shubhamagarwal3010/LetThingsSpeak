@@ -58,55 +58,45 @@
                 android:layout_margin="20dp"
                 android:orientation="vertical">
 
-                <android.support.design.widget.TextInputLayout
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColorHint="@color/gray"
-                    app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:paddingBottom="10dp"
+                    android:text="Room Name"
+                    android:textColor="@color/black_effective"
+                    android:textSize="18sp" />
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/room_name"
-                        style="@style/TextStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:background="@drawable/input_border_bottom"
-                        android:cursorVisible="true"
-                        android:gravity="center|left|bottom"
-                        android:hint="Room Name"
-                        android:inputType="text"
-                        android:maxLength="50"
-                        android:paddingBottom="30dp"
-                        android:textColor="@color/black_effective"
-                        android:textSize="18sp" />
-
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/room_name"
+                    style="@style/TextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColorHint="@color/gray"
-                    app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/input_border_bottom"
+                    android:cursorVisible="true"
+                    android:gravity="center|left|bottom"
+                    android:inputType="text"
+                    android:maxLength="50"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/black_effective"
+                    android:textSize="18sp" />
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/room_tag"
-                        style="@style/TextStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:background="@drawable/input_border_bottom"
-                        android:cursorVisible="true"
-                        android:gravity="center|left|bottom"
-                        android:hint="Room Tag"
-                        android:inputType="text"
-                        android:maxLength="50"
-                        android:paddingBottom="30dp"
-                        android:textColor="@color/black_effective"
-                        android:textSize="18sp" />
-
-                </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:id="@+id/textViewRoomNameMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/editTextRegGivenName"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text=" "
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/alert"
+                    android:textSize="@dimen/activity_text_padding" />
 
                 <TextView
                     style="@style/TextStyle"

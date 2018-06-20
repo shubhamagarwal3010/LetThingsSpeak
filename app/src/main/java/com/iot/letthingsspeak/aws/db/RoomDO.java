@@ -12,7 +12,6 @@ public class RoomDO {
     private String _roomId;
     private Double _imageId;
     private String _name;
-    private String _tag;
 
     @DynamoDBHashKey(attributeName = "userId")
     @DynamoDBAttribute(attributeName = "userId")
@@ -51,14 +50,4 @@ public class RoomDO {
     public void setName(final String _name) {
         this._name = _name;
     }
-
-    @DynamoDBAttribute(attributeName = "tag")
-    public String getTag() {
-        return _tag;
-    }
-
-    public void setTag(final String _tag) {
-        this._tag = _tag;
-    }
-
 }

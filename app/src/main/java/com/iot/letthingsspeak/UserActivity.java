@@ -308,7 +308,6 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
             put("roomId", "1211");
             put("roomName", "BedRoom");
             put("imageId", (double) 1234);
-            put("tag", "My Bed Room");
         }});
 
         dynamoDBManager.insertDevice(new HashMap<String, Object>() {{
