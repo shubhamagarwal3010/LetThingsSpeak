@@ -4,9 +4,11 @@ public class RoomDetails {
 
     private String roomType;
     private String status;
+    private Integer imageId;
 
-    public RoomDetails(String roomType, String status) {
+    public RoomDetails(String roomType, Integer imageId, String status) {
         this.roomType = roomType;
+        this.imageId = imageId;
         this.status = status;
     }
 
@@ -16,6 +18,14 @@ public class RoomDetails {
 
     public void setRoomType(String roomType) {
         this.roomType = roomType;
+    }
+
+    public Integer getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(Integer imageId) {
+        this.imageId = imageId;
     }
 
     public String getStatus() {

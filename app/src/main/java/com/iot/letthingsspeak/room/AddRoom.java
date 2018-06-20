@@ -27,7 +27,9 @@ import java.util.HashMap;
 
 public class AddRoom extends AppCompatActivity implements View.OnClickListener, ClickItemListener {
 
-    public static final String ADDED_ROOM = "NEW_ROOM";
+    public static final String ROOM_NAME = "ROOM_NAME";
+    public static final String ROOM_ICON = "ROOM_ICON";
+
     DynamoDBManager dynamoDBManager = LetThingsSpeakLaunch.dynamoDBManager;
     ArrayList<Integer> imageRepo = new ArrayList<Integer>(Arrays.asList(R.mipmap.room_bed, R.mipmap.room_bed2,
             R.mipmap.room_bed3, R.mipmap.room_exterior, R.mipmap.room_kitchen,
@@ -97,18 +99,19 @@ public class AddRoom extends AppCompatActivity implements View.OnClickListener, 
             return;
         }
         dynamoDBManager.insertRoom(new HashMap<String, Object>() {{
-            put("roomId", "1212");
+            put("roomId", "1213");
             put("roomName", roomName.getText().toString());
             put("imageId", (double) roomImageId);
         }});
 
         dynamoDBManager.insertUserRoom(new HashMap<String, Object>() {{
-            put("roomId", "1212");
+            put("roomId", "1213");
             put("isAdmin", true);
         }});
 
         Intent intent = new Intent();
-        intent.putExtra(ADDED_ROOM, roomName.getText().toString());
+        intent.putExtra(ROOM_NAME, roomName.getText().toString());
+        intent.putExtra(ROOM_ICON, roomImageId);
         setResult(RESULT_OK, intent);
         finish();
     }

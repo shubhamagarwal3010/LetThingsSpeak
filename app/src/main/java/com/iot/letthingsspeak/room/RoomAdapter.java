@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.R;
 import com.iot.letthingsspeak.constants.Constants;
 import com.iot.letthingsspeak.device.DeviceActivity;
@@ -45,7 +46,15 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         RoomDetails roomDetails = this.roomDetails.get(position);
         holder.roomTitle.setText(roomDetails.getRoomType());
 
-
+        Integer image = roomDetails.getImageId();
+        if (image == 0) {
+            image = 2131492873;
+        }
+        try {
+            Glide.with(mContext).load(image).into(holder.roomImage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

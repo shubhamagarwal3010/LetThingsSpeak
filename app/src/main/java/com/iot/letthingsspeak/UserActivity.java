@@ -111,19 +111,14 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
         TextView navHeaderSubTitle = navigationHeader.findViewById(R.id.textViewNavUserSub);
         navHeaderSubTitle.setText(username);
 
+        dynamoDBManager.getRoomsForUser(this);
         roomTypeRecyclerView = findViewById(R.id.activity_main_recyclerview);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         roomTypeRecyclerView.setLayoutManager(mLayoutManager);
         roomTypeRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         roomTypeRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        room.add(new RoomDetails("Bed Room ", "1"));
+        room.add(new RoomDetails("Bed Room ", 0, "1"));
 
-        room.add(new RoomDetails("Living Room ", "0"));
-
-        RoomStore.setRoomDetails(room);
-        RoomAdapter roomAdapter;
-        roomAdapter = new RoomAdapter(this, RoomStore.getRoomDetails());
-        roomTypeRecyclerView.setAdapter(roomAdapter);
 
         try {
             Glide.with(this).load(R.drawable.smart_home).into((ImageView) findViewById(R.id.backdrop));
@@ -198,9 +193,10 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
 
         if (resultCode == RESULT_OK) {
             if (requestCode == ACTIVITY_REQUEST_CODE) {
-                String message = data.getStringExtra(AddRoom.ADDED_ROOM);
+                String message = data.getStringExtra(AddRoom.ROOM_NAME);
+                Integer imageId = data.getIntExtra(AddRoom.ROOM_ICON, 0);
 
-                room.add(new RoomDetails(message, "1"));
+                room.add(new RoomDetails(message, imageId, "1"));
 
                 RoomStore.setRoomDetails(room);
 
@@ -307,7 +303,7 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
         dynamoDBManager.insertRoom(new HashMap<String, Object>() {{
             put("roomId", "1211");
             put("roomName", "BedRoom");
-            put("imageId", (double) 1234);
+            put("imageId", (double) 2131492873);
         }});
 
         dynamoDBManager.insertUserRoom(new HashMap<String, Object>() {{
@@ -332,14 +328,21 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
             put("name", "bed Switch Hub");
             put("pinCount", (double) 3);
         }});
-
-        //dynamoDBManager.getRoomsForUser(this);
     }
 
     @Override
     public void publishResultsOnSuccess(Constants.DynamoDBManagerType type, Object data) {
         if (type == Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER) {
+
+            room.add(new RoomDetails(((Map<String, RoomDO>) data).get("1212").getName(), (((Map<String, RoomDO>) data).get("1212").getImageId()).intValue(), "0"));
+            room.add(new RoomDetails(((Map<String, RoomDO>) data).get("1213").getName(), (((Map<String, RoomDO>) data).get("1213").getImageId()).intValue(), "0"));
+
+            RoomStore.setRoomDetails(room);
+            RoomAdapter roomAdapter;
+            roomAdapter = new RoomAdapter(this, RoomStore.getRoomDetails());
+            roomTypeRecyclerView.setAdapter(roomAdapter);
             Log.i("room name", ((Map<String, RoomDO>) data).get("1211").getName());
+            Log.i("room name", ((Map<String, RoomDO>) data).get("1212").getName());
         }
     }
 

@@ -23,8 +23,7 @@
                 android:layout_height="@dimen/album_cover_height"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:scaleType="fitXY"
-                android:src="@mipmap/bedroom_actionbar" />
+                android:scaleType="fitXY" />
 
             <TextView
                 android:id="@+id/room_category"
