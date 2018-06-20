@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

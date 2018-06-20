@@ -35,7 +35,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,8 +44,6 @@ import android.widget.TextView;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBScanExpression;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.aws.AboutApp;
 import com.iot.letthingsspeak.aws.AppHelper;
@@ -56,7 +53,6 @@ import com.iot.letthingsspeak.aws.UserProfile;
 import com.iot.letthingsspeak.aws.db.Constants;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 import com.iot.letthingsspeak.aws.db.RoomDO;
-import com.iot.letthingsspeak.aws.db.UserRoomDO;
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
 import com.iot.letthingsspeak.configdevice.ConfigDevice;
 import com.iot.letthingsspeak.room.AddRoom;
@@ -67,7 +63,6 @@ import com.iot.letthingsspeak.room.RoomStore;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class UserActivity extends AppCompatActivity implements DbDataListener {
     public static final int ACTIVITY_REQUEST_CODE = 201;
@@ -120,7 +115,6 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
         roomTypeRecyclerView.setLayoutManager(mLayoutManager);
         roomTypeRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         roomTypeRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        room.add(new RoomDetails("Bed Room ", 0, "1"));
 
         dynamoDBManager.getRoomsForUser(this);
 

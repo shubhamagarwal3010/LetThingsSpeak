@@ -17,13 +17,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.R;
-import com.iot.letthingsspeak.constants.Constants;
 import com.iot.letthingsspeak.device.DeviceActivity;
 
 import java.util.List;
 
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
+    public static final String TITLE_KEY = "letthingsspeak.constants.title";
     public int ROOM_DETAILS_REQUEST_CODE = 9283;
     private Context mContext;
     private List<RoomDetails> roomDetails;
@@ -98,7 +98,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             Context context = view.getContext();
             Intent intent = new Intent(context.getApplicationContext(), DeviceActivity.class);
             RoomDetails roomDetail = roomDetails.get(getAdapterPosition());
-            intent.putExtra(Constants.TITLE_KEY, roomDetail.getRoomType());
+            intent.putExtra(TITLE_KEY, roomDetail.getRoomType());
             ((Activity) context).startActivityForResult(intent, ROOM_DETAILS_REQUEST_CODE);
 
         }

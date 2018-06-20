@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import static com.iot.letthingsspeak.util.Util.generateRandomChars;
+
 
 public class AddRoom extends AppCompatActivity implements View.OnClickListener, ClickItemListener {
 
@@ -98,14 +100,15 @@ public class AddRoom extends AppCompatActivity implements View.OnClickListener, 
             roomName.setBackground(getDrawable(R.drawable.text_border_error));
             return;
         }
+        final String roomId = generateRandomChars();
         dynamoDBManager.insertRoom(new HashMap<String, Object>() {{
-            put("roomId", "1213");
+            put("roomId", roomId);
             put("roomName", roomName.getText().toString());
             put("imageId", (double) roomImageId);
         }});
 
         dynamoDBManager.insertUserRoom(new HashMap<String, Object>() {{
-            put("roomId", "1213");
+            put("roomId", roomId);
             put("isAdmin", true);
         }});
 
@@ -128,4 +131,5 @@ public class AddRoom extends AppCompatActivity implements View.OnClickListener, 
     public void publishResultsOnSuccess(Integer value) {
         roomImageId = value;
     }
+
 }

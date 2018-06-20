@@ -18,7 +18,7 @@ import com.iot.letthingsspeak.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.iot.letthingsspeak.constants.Constants.TITLE_KEY;
+import static com.iot.letthingsspeak.room.RoomAdapter.TITLE_KEY;
 
 public class DeviceActivity extends AppCompatActivity {
     public static final int DEVICE_ACTIVITY_REQUEST_CODE = 202;
