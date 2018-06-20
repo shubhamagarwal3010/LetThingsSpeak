@@ -43,7 +43,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.aws.AboutApp;
 import com.iot.letthingsspeak.aws.AppHelper;
@@ -53,6 +56,7 @@ import com.iot.letthingsspeak.aws.UserProfile;
 import com.iot.letthingsspeak.aws.db.Constants;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 import com.iot.letthingsspeak.aws.db.RoomDO;
+import com.iot.letthingsspeak.aws.db.UserRoomDO;
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
 import com.iot.letthingsspeak.configdevice.ConfigDevice;
 import com.iot.letthingsspeak.room.AddRoom;
@@ -111,7 +115,6 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
         TextView navHeaderSubTitle = navigationHeader.findViewById(R.id.textViewNavUserSub);
         navHeaderSubTitle.setText(username);
 
-        dynamoDBManager.getRoomsForUser(this);
         roomTypeRecyclerView = findViewById(R.id.activity_main_recyclerview);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         roomTypeRecyclerView.setLayoutManager(mLayoutManager);
@@ -119,6 +122,7 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
         roomTypeRecyclerView.setItemAnimator(new DefaultItemAnimator());
         room.add(new RoomDetails("Bed Room ", 0, "1"));
 
+        dynamoDBManager.getRoomsForUser(this);
 
         try {
             Glide.with(this).load(R.drawable.smart_home).into((ImageView) findViewById(R.id.backdrop));
@@ -334,15 +338,22 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
     public void publishResultsOnSuccess(Constants.DynamoDBManagerType type, Object data) {
         if (type == Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER) {
 
-            room.add(new RoomDetails(((Map<String, RoomDO>) data).get("1212").getName(), (((Map<String, RoomDO>) data).get("1212").getImageId()).intValue(), "0"));
-            room.add(new RoomDetails(((Map<String, RoomDO>) data).get("1213").getName(), (((Map<String, RoomDO>) data).get("1213").getImageId()).intValue(), "0"));
+            try {
+                List<RoomDO> roomDOList = ((List<RoomDO>) data);
+                for (RoomDO roomDO : roomDOList) {
+                    room.add(new RoomDetails(roomDO.getName(), (roomDO.getImageId()).intValue(), "0"));
+                }
+            } catch (AmazonServiceException ex) {
+                LetThingsSpeakLaunch.amazonClientManager
+                        .wipeCredentialsOnAuthError(ex);
+            }
 
             RoomStore.setRoomDetails(room);
             RoomAdapter roomAdapter;
             roomAdapter = new RoomAdapter(this, RoomStore.getRoomDetails());
             roomTypeRecyclerView.setAdapter(roomAdapter);
-            Log.i("room name", ((Map<String, RoomDO>) data).get("1211").getName());
-            Log.i("room name", ((Map<String, RoomDO>) data).get("1212").getName());
+            //Log.i("room name", ((Map<String, RoomDO>) data).get("1211").getName());
+            //Log.i("room name", ((Map<String, RoomDO>) data).get("1212").getName());
         }
     }
 

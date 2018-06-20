@@ -12,6 +12,7 @@ import com.amazonaws.services.dynamodbv2.model.DescribeTableResult;
 import com.iot.letthingsspeak.aws.AppHelper;
 import com.iot.letthingsspeak.aws.LetThingsSpeakLaunch;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -165,12 +166,12 @@ public class DynamoDBClient {
     }
 
 
-    public static Map<String, RoomDO> getRoomsForUser() {
+    public static List<RoomDO> getRoomsForUser() {
         String userId = AppHelper.getCurrUser();
         AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager
                 .ddb();
         DynamoDBMapper mapper = new DynamoDBMapper(ddb);
-        Map<String, RoomDO> roomDOMap = new HashMap<>();
+        List<RoomDO> roomDOMap = new ArrayList<RoomDO>();
 
         Map<String, AttributeValue> eav1 = new HashMap<String, AttributeValue>();
         eav1.put(":val1", new AttributeValue().withS(userId));
@@ -190,7 +191,7 @@ public class DynamoDBClient {
                 dynamoDBScanExpression2.withFilterExpression("roomId = :val1").withExpressionAttributeValues(eav2);
 
                 List<RoomDO> roomDOList = mapper.scan(RoomDO.class, dynamoDBScanExpression2);
-                roomDOMap.put(roomId, roomDOList.get(0));
+                roomDOMap.add(roomDOList.get(0));
             }
             return roomDOMap;
         } catch (AmazonServiceException ex) {
@@ -199,6 +200,7 @@ public class DynamoDBClient {
         }
         return null;
     }
+
 
 //    public static void updateRoom(Map<String, Object> attributeValues) {
 //        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager

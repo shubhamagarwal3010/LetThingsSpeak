@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -71,7 +73,7 @@ public class DynamoDBManager {
                 }
             } else if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER) {
                 if (tableStatus.equalsIgnoreCase("ACTIVE")) {
-                    Map<String, RoomDO> roomDOMap = DynamoDBClient.getRoomsForUser();
+                    List<RoomDO> roomDOMap = DynamoDBClient.getRoomsForUser();
                     result.setReturnValue(roomDOMap);
                 }
             }
