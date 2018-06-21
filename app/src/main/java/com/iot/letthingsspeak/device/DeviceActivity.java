@@ -18,7 +18,7 @@ import com.iot.letthingsspeak.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.iot.letthingsspeak.room.RoomAdapter.TITLE_KEY;
+import static com.iot.letthingsspeak.room.views.RoomAdapter.TITLE_KEY;
 
 public class DeviceActivity extends AppCompatActivity {
     public static final int DEVICE_ACTIVITY_REQUEST_CODE = 202;
@@ -70,7 +70,7 @@ public class DeviceActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DeviceActivity.this, AddDevice.class);
+                Intent intent = new Intent(DeviceActivity.this, AddDeviceActivity.class);
                 startActivityForResult(intent, DEVICE_ACTIVITY_REQUEST_CODE);
             }
         });
@@ -81,7 +81,7 @@ public class DeviceActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == DEVICE_ACTIVITY_REQUEST_CODE) {
-                String message = data.getStringExtra(AddDevice.ADDED_DEVICE);
+                String message = data.getStringExtra(AddDeviceActivity.ADDED_DEVICE);
 
                 device.add(new DeviceDetails(message, "1"));
 

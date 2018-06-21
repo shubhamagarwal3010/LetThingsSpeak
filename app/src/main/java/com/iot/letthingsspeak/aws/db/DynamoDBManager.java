@@ -1,10 +1,10 @@
 package com.iot.letthingsspeak.aws.db;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
+import com.iot.letthingsspeak.room.model.RoomDO;
 
 import java.util.List;
 import java.util.Map;

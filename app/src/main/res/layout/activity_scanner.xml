@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".configdevice.ScannerActivity">
+    tools:context=".device.configuration.views.ScannerActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
         <!-- Barcode Reader fragment -->
         <fragment
             android:id="@+id/barcode_fragment"
-            android:name="com.iot.letthingsspeak.configdevice.utils.BarcodeReader"
+            android:name="com.iot.letthingsspeak.device.configuration.utils.BarcodeReader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:auto_focus="true"

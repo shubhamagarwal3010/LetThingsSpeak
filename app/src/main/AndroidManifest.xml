@@ -15,14 +15,14 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <application
-        android:name=".aws.LetThingsSpeakLaunch"
+        android:name=".LetThingsSpeakApplication"
         android:allowBackup="true"
         android:icon="@mipmap/cognito"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".aws.MainActivity"
+            android:name=".identity.views.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,60 +35,60 @@
             android:label="@string/title_activity_user"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".aws.RegisterUser"
+            android:name=".identity.views.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".aws.AboutApp"
+            android:name=".AboutAppActivity"
             android:label="@string/title_activity_about_app"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".aws.SignUpConfirm"
+            android:name=".identity.views.OTPActivity"
             android:label="@string/title_activity_sign_up_confirm"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".aws.MFAActivity"
+            android:name=".identity.views.MFAActivity"
             android:label="@string/title_activity_mfa"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".aws.ForgotPasswordActivity"
+            android:name=".identity.views.ForgotPasswordActivity"
             android:label="@string/title_activity_forgot_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".aws.ChangePasswordActivity"
+            android:name=".identity.views.ChangePasswordActivity"
             android:label="@string/title_activity_change_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".aws.NewPassword"
+            android:name=".identity.views.NewPasswordActivity"
             android:label="@string/title_activity_new_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".aws.ChooseMFA"
+            android:name=".identity.views.ChooseMFAActivity"
             android:label="@string/title_activity_choose_mfa"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".aws.UserProfile"
+            android:name=".identity.views.UserProfileActivity"
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".device.DeviceActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".room.AddRoom"
+            android:name=".room.views.AddRoomActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".device.AddDevice"
+            android:name=".device.AddDeviceActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".configdevice.ConfigDevice"
+            android:name=".device.configuration.views.ConfigDeviceActivity"
             android:label="@string/title_activity_config_device"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".configdevice.ScannerActivity"
+            android:name=".device.configuration.views.ScannerActivity"
             android:label="@string/title_activity_config_device"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".room.UpdateRoom"
+            android:name=".room.views.UpdateRoomActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity

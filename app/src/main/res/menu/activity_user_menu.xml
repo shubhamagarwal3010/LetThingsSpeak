@@ -16,4 +16,4 @@
   -->
 
 <menu xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.iot.letthingsspeak.aws.MainActivity"></menu>
+    tools:context="com.iot.letthingsspeak.identity.views.LoginActivity"></menu>

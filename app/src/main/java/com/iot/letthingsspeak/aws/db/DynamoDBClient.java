@@ -10,7 +10,12 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
 import com.amazonaws.services.dynamodbv2.model.DescribeTableResult;
 import com.iot.letthingsspeak.aws.AppHelper;
-import com.iot.letthingsspeak.aws.LetThingsSpeakLaunch;
+import com.iot.letthingsspeak.LetThingsSpeakApplication;
+import com.iot.letthingsspeak.device.model.DeviceDO;
+import com.iot.letthingsspeak.device.model.GatewayDO;
+import com.iot.letthingsspeak.identity.model.UserDO;
+import com.iot.letthingsspeak.room.model.RoomDO;
+import com.iot.letthingsspeak.room.model.UserRoomDO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +31,7 @@ public class DynamoDBClient {
      */
 
     public static void insertUser(Map<String, Object> parameterList) {
-        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager.ddb();
+        AmazonDynamoDBClient ddb = LetThingsSpeakApplication.amazonClientManager.ddb();
         DynamoDBMapper mapper = new DynamoDBMapper(ddb);
 
 
@@ -43,7 +48,7 @@ public class DynamoDBClient {
             }
         } catch (AmazonServiceException ex) {
             Log.e(TAG, "Error inserting user");
-            LetThingsSpeakLaunch.amazonClientManager
+            LetThingsSpeakApplication.amazonClientManager
                     .wipeCredentialsOnAuthError(ex);
         }
     }
@@ -54,7 +59,7 @@ public class DynamoDBClient {
     public static String getTestTableStatus(String tableName) {
 
         try {
-            AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager
+            AmazonDynamoDBClient ddb = LetThingsSpeakApplication.amazonClientManager
                     .ddb();
 
             DescribeTableRequest request = new DescribeTableRequest()
@@ -65,7 +70,7 @@ public class DynamoDBClient {
             return status == null ? "" : status;
 
         } catch (AmazonServiceException ex) {
-            LetThingsSpeakLaunch.amazonClientManager
+            LetThingsSpeakApplication.amazonClientManager
                     .wipeCredentialsOnAuthError(ex);
         }
 
@@ -74,7 +79,7 @@ public class DynamoDBClient {
 
 
     public static void insertRoom(Map<String, Object> parameterList) {
-        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager.ddb();
+        AmazonDynamoDBClient ddb = LetThingsSpeakApplication.amazonClientManager.ddb();
         DynamoDBMapper mapper = new DynamoDBMapper(ddb);
 
         try {
@@ -89,13 +94,13 @@ public class DynamoDBClient {
             Log.d(TAG, "Room details inserted");
         } catch (AmazonServiceException ex) {
             Log.e(TAG, "Error inserting room details");
-            LetThingsSpeakLaunch.amazonClientManager
+            LetThingsSpeakApplication.amazonClientManager
                     .wipeCredentialsOnAuthError(ex);
         }
     }
 
     public static void insertUserRoom(Map<String, Object> parameterList) {
-        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager.ddb();
+        AmazonDynamoDBClient ddb = LetThingsSpeakApplication.amazonClientManager.ddb();
         DynamoDBMapper mapper = new DynamoDBMapper(ddb);
 
         try {
@@ -109,13 +114,13 @@ public class DynamoDBClient {
             Log.d(TAG, "Room inserted");
         } catch (AmazonServiceException ex) {
             Log.e(TAG, "Error inserting room");
-            LetThingsSpeakLaunch.amazonClientManager
+            LetThingsSpeakApplication.amazonClientManager
                     .wipeCredentialsOnAuthError(ex);
         }
     }
 
     public static void insertDevice(Map<String, Object> parameterList) {
-        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager.ddb();
+        AmazonDynamoDBClient ddb = LetThingsSpeakApplication.amazonClientManager.ddb();
         DynamoDBMapper mapper = new DynamoDBMapper(ddb);
 
         //IdentityManager.getDefaultIdentityManager().getCachedUserID();
@@ -138,13 +143,13 @@ public class DynamoDBClient {
             Log.d(TAG, "Device details inserted");
         } catch (AmazonServiceException ex) {
             Log.e(TAG, "Error inserting device");
-            LetThingsSpeakLaunch.amazonClientManager
+            LetThingsSpeakApplication.amazonClientManager
                     .wipeCredentialsOnAuthError(ex);
         }
     }
 
     public static void insertGateway(Map<String, Object> parameterList) {
-        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager.ddb();
+        AmazonDynamoDBClient ddb = LetThingsSpeakApplication.amazonClientManager.ddb();
         DynamoDBMapper mapper = new DynamoDBMapper(ddb);
 
 
@@ -160,7 +165,7 @@ public class DynamoDBClient {
             Log.d(TAG, "Device gateway inserted");
         } catch (AmazonServiceException ex) {
             Log.e(TAG, "Error gateway device");
-            LetThingsSpeakLaunch.amazonClientManager
+            LetThingsSpeakApplication.amazonClientManager
                     .wipeCredentialsOnAuthError(ex);
         }
     }
@@ -168,7 +173,7 @@ public class DynamoDBClient {
 
     public static List<RoomDO> getRoomsForUser() {
         String userId = AppHelper.getCurrUser();
-        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager
+        AmazonDynamoDBClient ddb = LetThingsSpeakApplication.amazonClientManager
                 .ddb();
         DynamoDBMapper mapper = new DynamoDBMapper(ddb);
         List<RoomDO> roomDOMap = new ArrayList<RoomDO>();
@@ -195,7 +200,7 @@ public class DynamoDBClient {
             }
             return roomDOMap;
         } catch (AmazonServiceException ex) {
-            LetThingsSpeakLaunch.amazonClientManager
+            LetThingsSpeakApplication.amazonClientManager
                     .wipeCredentialsOnAuthError(ex);
         }
         return null;
@@ -203,7 +208,7 @@ public class DynamoDBClient {
 
 
 //    public static void updateRoom(Map<String, Object> attributeValues) {
-//        AmazonDynamoDBClient ddb = LetThingsSpeakLaunch.amazonClientManager
+//        AmazonDynamoDBClient ddb = LetThingsSpeakApplication.amazonClientManager
 //                .ddb();
 //        DynamoDB dynamoDB = new DynamoDB(ddb);
 //        //attributeValues.get("")

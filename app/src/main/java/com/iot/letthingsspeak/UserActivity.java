@@ -44,19 +44,17 @@ import android.widget.TextView;
 
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.bumptech.glide.Glide;
-import com.iot.letthingsspeak.aws.AboutApp;
 import com.iot.letthingsspeak.aws.AppHelper;
-import com.iot.letthingsspeak.aws.ChangePasswordActivity;
-import com.iot.letthingsspeak.aws.LetThingsSpeakLaunch;
-import com.iot.letthingsspeak.aws.UserProfile;
+import com.iot.letthingsspeak.identity.views.ChangePasswordActivity;
+import com.iot.letthingsspeak.identity.views.UserProfileActivity;
 import com.iot.letthingsspeak.aws.db.Constants;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
-import com.iot.letthingsspeak.aws.db.RoomDO;
+import com.iot.letthingsspeak.room.model.RoomDO;
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
-import com.iot.letthingsspeak.configdevice.ConfigDevice;
+import com.iot.letthingsspeak.device.configuration.views.ConfigDeviceActivity;
 import com.iot.letthingsspeak.device.DeviceList;
-import com.iot.letthingsspeak.room.AddRoom;
-import com.iot.letthingsspeak.room.RoomAdapter;
+import com.iot.letthingsspeak.room.views.AddRoomActivity;
+import com.iot.letthingsspeak.room.views.RoomAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,7 +64,7 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
     public static final int ACTIVITY_REQUEST_CODE = 201;
     // To track changes to user details
     List<RoomDO> room = new ArrayList<>();
-    DynamoDBManager dynamoDBManager = LetThingsSpeakLaunch.dynamoDBManager;
+    DynamoDBManager dynamoDBManager = LetThingsSpeakApplication.dynamoDBManager;
     private RecyclerView roomTypeRecyclerView;
     private NavigationView nDrawer;
     private DrawerLayout mDrawer;
@@ -125,7 +123,7 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UserActivity.this, AddRoom.class);
+                Intent intent = new Intent(UserActivity.this, AddRoomActivity.class);
                 startActivityForResult(intent, ACTIVITY_REQUEST_CODE);
             }
         });
@@ -228,7 +226,7 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
                 break;
             case R.id.nav_user_about:
                 // For the inquisitive
-                Intent aboutAppActivity = new Intent(this, AboutApp.class);
+                Intent aboutAppActivity = new Intent(this, AboutAppActivity.class);
                 startActivity(aboutAppActivity);
                 break;
         }
@@ -242,13 +240,13 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
 
     // Show User Profile
     private void userProfile() {
-        Intent userProfileActivity = new Intent(this, UserProfile.class);
+        Intent userProfileActivity = new Intent(this, UserProfileActivity.class);
         startActivity(userProfileActivity);
     }
 
     // Configure Device
     private void configDevice() {
-        Intent configDeviceActivity = new Intent(this, ConfigDevice.class);
+        Intent configDeviceActivity = new Intent(this, ConfigDeviceActivity.class);
         startActivity(configDeviceActivity);
     }
 
