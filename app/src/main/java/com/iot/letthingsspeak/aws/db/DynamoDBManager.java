@@ -16,26 +16,26 @@ public class DynamoDBManager {
 
     public void insertRoom(final Map<String, Object> parameterList) {
         new DynamoDBManagerTask()
-                .execute(new Task(null, null, Constants.DynamoDBManagerType.INSERT_ROOM, Constants.ROOM_TABLE, parameterList));
+                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_ROOM, Constants.ROOM_TABLE, parameterList));
     }
 
     public void insertUserRoom(final Map<String, Object> parameterList) {
         new DynamoDBManagerTask()
-                .execute(new Task(null, null, Constants.DynamoDBManagerType.INSERT_USER_ROOM, Constants.USER_ROOM_TABLE, parameterList));
+                .execute(new Task(null,  Constants.DynamoDBManagerType.INSERT_USER_ROOM, Constants.USER_ROOM_TABLE, parameterList));
     }
 
     public void insertDevice(final Map<String, Object> parameterList) {
         new DynamoDBManagerTask()
-                .execute(new Task(null, null, Constants.DynamoDBManagerType.INSERT_DEVICE, Constants.DEVICE_TABLE, parameterList));
+                .execute(new Task(null,  Constants.DynamoDBManagerType.INSERT_DEVICE, Constants.DEVICE_TABLE, parameterList));
     }
 
     public void insertGateway(final Map<String, Object> parameterList) {
         new DynamoDBManagerTask()
-                .execute(new Task(null, null, Constants.DynamoDBManagerType.INSERT_GATEWAY, Constants.GATEWAY_TABLE, parameterList));
+                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_GATEWAY, Constants.GATEWAY_TABLE, parameterList));
     }
 
-    public void getRoomsForUser(Context listener) {
-        new DynamoDBManagerTask().execute(new Task((DbDataListener) listener, listener, Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER, Constants.ROOM_TABLE, null));
+    public void getRoomsForUser(DbDataListener listener) {
+        new DynamoDBManagerTask().execute(new Task(listener, Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER, Constants.ROOM_TABLE, null));
     }
 
 
@@ -52,7 +52,6 @@ public class DynamoDBManager {
             DynamoDBManagerTaskResult result = new DynamoDBManagerTaskResult();
             result.setTableStatus(tableStatus);
             result.setTaskType(types[0].getDynamoDBManagerType());
-            result.setContext(types[0].getContext());
 
             if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.INSERT_ROOM) {
                 if (tableStatus.equalsIgnoreCase("ACTIVE")) {
@@ -95,7 +94,7 @@ public class DynamoDBManager {
             } else if (result.getTableStatus(Constants.USER_ROOM_TABLE).equalsIgnoreCase("ACTIVE")
                     && result.getTaskType() == Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER) {
                 returnValue = result.getReturnValue();
-                ((DbDataListener) result.getContext()).publishResultsOnSuccess(Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER, returnValue);
+                listener.publishResultsOnSuccess(Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER, returnValue);
                 Log.i("LetThingsSpeakMessages", "User Room retrieved successfully!");
             }
         }
