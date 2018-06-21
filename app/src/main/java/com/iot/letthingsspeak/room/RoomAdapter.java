@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.R;
@@ -124,7 +123,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
                     Intent intent = new Intent(mContext, UpdateRoom.class);
                     intent.putExtra(ROOM_DETAILS, roomDetails);
                     ((Activity) mContext).startActivityForResult(intent, ACTIVITY_REQUEST_CODE);
-                    Toast.makeText(mContext, roomDetails.getName(), Toast.LENGTH_SHORT).show();
                     return true;
                 default:
             }

@@ -54,6 +54,7 @@ import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 import com.iot.letthingsspeak.aws.db.RoomDO;
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
 import com.iot.letthingsspeak.configdevice.ConfigDevice;
+import com.iot.letthingsspeak.device.DeviceList;
 import com.iot.letthingsspeak.room.AddRoom;
 import com.iot.letthingsspeak.room.RoomAdapter;
 
@@ -189,25 +190,6 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
         exit();
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-            if (requestCode == ACTIVITY_REQUEST_CODE) {
-                dynamoDBManager.getRoomsForUser(this);
-            }
-        }
-        switch (requestCode) {
-            case 21:
-                // Verify attributes
-                if (resultCode == RESULT_OK) {
-                    boolean refresh = data.getBooleanExtra("refresh", true);
-                    if (refresh) {
-                    }
-                }
-                break;
-        }
-    }
 
     // Handle when the a navigation item is selected
     private void setNavDrawer() {
@@ -228,12 +210,13 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
         // Find which item was selected
         switch (item.getItemId()) {
             case R.id.nav_user_profile:
-                // Change password
                 userProfile();
                 break;
             case R.id.nav_config_device:
-                // Change password
                 configDevice();
+                break;
+            case R.id.nav_device_list:
+                showDeviceList();
                 break;
             case R.id.nav_user_change_password:
                 // Change password
@@ -266,6 +249,12 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
     // Configure Device
     private void configDevice() {
         Intent configDeviceActivity = new Intent(this, ConfigDevice.class);
+        startActivity(configDeviceActivity);
+    }
+
+    // Configure Device
+    private void showDeviceList() {
+        Intent configDeviceActivity = new Intent(this, DeviceList.class);
         startActivity(configDeviceActivity);
     }
 

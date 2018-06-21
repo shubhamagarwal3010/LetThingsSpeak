@@ -91,6 +91,9 @@
             android:name=".room.UpdateRoom"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".device.DeviceList"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

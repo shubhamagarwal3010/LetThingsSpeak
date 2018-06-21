@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.R;
@@ -51,8 +50,6 @@ public class AddRoomImageAdapter extends RecyclerView.Adapter<AddRoomImageAdapte
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, model + " - " + position, Toast.LENGTH_SHORT).show();
-
                 listener.publishResultsOnSuccess(model);
             }
         });
