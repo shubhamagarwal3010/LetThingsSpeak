@@ -5,9 +5,11 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
+import java.io.Serializable;
+
 @DynamoDBTable(tableName = Constants.ROOM_TABLE)
 
-public class RoomDO {
+public class RoomDO implements Serializable {
     private String _userId;
     private String _roomId;
     private Double _imageId;

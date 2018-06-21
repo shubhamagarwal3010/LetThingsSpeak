@@ -131,6 +131,12 @@ public class UserActivity extends AppCompatActivity implements DbDataListener {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dynamoDBManager.getRoomsForUser(this);
+    }
+
     /**
      * Initializing collapsing toolbar
      * Will show and hide the toolbar title on scroll

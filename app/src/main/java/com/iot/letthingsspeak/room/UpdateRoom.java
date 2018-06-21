@@ -16,13 +16,14 @@ import android.widget.TextView;
 import com.iot.letthingsspeak.R;
 import com.iot.letthingsspeak.aws.LetThingsSpeakLaunch;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
+import com.iot.letthingsspeak.aws.db.RoomDO;
 import com.iot.letthingsspeak.room.callbacks.ClickItemListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import static com.iot.letthingsspeak.util.Util.generateRandomChars;
+import static com.iot.letthingsspeak.room.RoomAdapter.ROOM_DETAILS;
 
 
 public class UpdateRoom extends AppCompatActivity implements ClickItemListener {
@@ -35,6 +36,7 @@ public class UpdateRoom extends AppCompatActivity implements ClickItemListener {
             R.mipmap.room_bed3, R.mipmap.room_exterior, R.mipmap.room_kitchen,
             R.mipmap.room_kitchen2, R.mipmap.room_living, R.mipmap.room_living2,
             R.mipmap.room_living3, R.mipmap.room_workplace));
+    RoomDO roomDO;
     private Integer roomImageId = 0;
     private EditText roomName;
     private RecyclerView mHorizontalRecyclerView;
@@ -71,11 +73,13 @@ public class UpdateRoom extends AppCompatActivity implements ClickItemListener {
         horizontalLayoutManager = new LinearLayoutManager(UpdateRoom.this, LinearLayoutManager.HORIZONTAL, false);
         mHorizontalRecyclerView.setLayoutManager(horizontalLayoutManager);
         mHorizontalRecyclerView.setAdapter(horizontalAdapter);
+        roomDO = (RoomDO) getIntent().getSerializableExtra(ROOM_DETAILS);
         init();
     }
 
     private void init() {
         roomName = findViewById(R.id.update_room_name);
+        roomName.setText(roomDO.getName());
         roomName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -103,21 +107,17 @@ public class UpdateRoom extends AppCompatActivity implements ClickItemListener {
             roomName.setBackground(getDrawable(R.drawable.text_border_error));
             return;
         }
-        final String roomId = generateRandomChars();
+        if (roomImageId == 0) {
+            roomImageId = roomDO.getImageId().intValue();
+        }
+
         dynamoDBManager.insertRoom(new HashMap<String, Object>() {{
-            put("roomId", roomId);
+            put("roomId", roomDO.getRoomId());
             put("roomName", roomName.getText().toString());
             put("imageId", (double) roomImageId);
         }});
 
-        dynamoDBManager.insertUserRoom(new HashMap<String, Object>() {{
-            put("roomId", roomId);
-            put("isAdmin", true);
-        }});
-
         Intent intent = new Intent();
-        intent.putExtra(ROOM_NAME, roomName.getText().toString());
-        intent.putExtra(ROOM_ICON, roomImageId);
         setResult(RESULT_OK, intent);
         finish();
     }

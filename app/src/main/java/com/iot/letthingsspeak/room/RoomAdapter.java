@@ -25,7 +25,7 @@ import java.util.List;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
     public static final String TITLE_KEY = "letthingsspeak.constants.title";
-    public static final String ROOM_NAME = "";
+    public static final String ROOM_DETAILS = "ROOM_DETAILS";
     public static final int ACTIVITY_REQUEST_CODE = 202;
     public int ROOM_DETAILS_REQUEST_CODE = 9283;
     private Context mContext;
@@ -46,7 +46,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
 
     @Override
     public void onBindViewHolder(final RoomViewHolder holder, final int position) {
-        RoomDO roomDetails = this.roomDetails.get(position);
+        final RoomDO roomDetails = this.roomDetails.get(position);
         holder.roomTitle.setText(roomDetails.getName());
 
         Integer image = (roomDetails.getImageId()).intValue();
@@ -61,7 +61,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPopupMenu(holder.overflow);
+                showPopupMenu(holder.overflow, roomDetails);
             }
         });
     }
@@ -75,12 +75,12 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     /**
      * Showing popup menu when tapping on 3 dots
      */
-    private void showPopupMenu(View view) {
+    private void showPopupMenu(View view, RoomDO roomDetails) {
         // inflate menu
         PopupMenu popup = new PopupMenu(mContext, view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.menu_album, popup.getMenu());
-        popup.setOnMenuItemClickListener(new MyMenuItemClickListener());
+        popup.setOnMenuItemClickListener(new MyMenuItemClickListener(roomDetails));
         popup.show();
     }
 
@@ -111,8 +111,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
      * Click listener for popup menu items
      */
     class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
+        RoomDO roomDetails;
 
-        public MyMenuItemClickListener() {
+        public MyMenuItemClickListener(RoomDO roomDetails) {
+            this.roomDetails = roomDetails;
         }
 
         @Override
@@ -120,12 +122,14 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             switch (menuItem.getItemId()) {
                 case R.id.room_settings:
                     Intent intent = new Intent(mContext, UpdateRoom.class);
+                    intent.putExtra(ROOM_DETAILS, roomDetails);
                     ((Activity) mContext).startActivityForResult(intent, ACTIVITY_REQUEST_CODE);
-                    Toast.makeText(mContext, "Settings", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, roomDetails.getName(), Toast.LENGTH_SHORT).show();
                     return true;
                 default:
             }
             return false;
         }
     }
+
 }
