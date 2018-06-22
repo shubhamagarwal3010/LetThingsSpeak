@@ -11,8 +11,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.iot.letthingsspeak.R;
 import com.iot.letthingsspeak.LetThingsSpeakApplication;
+import com.iot.letthingsspeak.R;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 
 import java.util.HashMap;

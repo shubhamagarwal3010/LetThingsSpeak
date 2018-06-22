@@ -21,12 +21,12 @@ public class DynamoDBManager {
 
     public void insertUserRoom(final Map<String, Object> parameterList) {
         new DynamoDBManagerTask()
-                .execute(new Task(null,  Constants.DynamoDBManagerType.INSERT_USER_ROOM, Constants.USER_ROOM_TABLE, parameterList));
+                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_USER_ROOM, Constants.USER_ROOM_TABLE, parameterList));
     }
 
     public void insertDevice(final Map<String, Object> parameterList) {
         new DynamoDBManagerTask()
-                .execute(new Task(null,  Constants.DynamoDBManagerType.INSERT_DEVICE, Constants.DEVICE_TABLE, parameterList));
+                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_DEVICE, Constants.DEVICE_TABLE, parameterList));
     }
 
     public void insertGateway(final Map<String, Object> parameterList) {

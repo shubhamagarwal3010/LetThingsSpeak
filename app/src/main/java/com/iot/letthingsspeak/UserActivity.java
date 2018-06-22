@@ -45,14 +45,14 @@ import android.widget.TextView;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.aws.AppHelper;
-import com.iot.letthingsspeak.identity.views.ChangePasswordActivity;
-import com.iot.letthingsspeak.identity.views.UserProfileActivity;
 import com.iot.letthingsspeak.aws.db.Constants;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
-import com.iot.letthingsspeak.room.model.RoomDO;
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
-import com.iot.letthingsspeak.device.configuration.views.ConfigDeviceActivity;
 import com.iot.letthingsspeak.device.DeviceList;
+import com.iot.letthingsspeak.device.configuration.views.ConfigDeviceActivity;
+import com.iot.letthingsspeak.identity.views.ChangePasswordActivity;
+import com.iot.letthingsspeak.identity.views.UserProfileActivity;
+import com.iot.letthingsspeak.room.model.RoomDO;
 import com.iot.letthingsspeak.room.views.AddRoomActivity;
 import com.iot.letthingsspeak.room.views.RoomAdapter;
 

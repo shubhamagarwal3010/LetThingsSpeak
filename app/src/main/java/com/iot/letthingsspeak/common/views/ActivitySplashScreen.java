@@ -23,42 +23,38 @@ import com.iot.letthingsspeak.R;
 import com.iot.letthingsspeak.identity.views.LoginActivity;
 
 
-public class ActivitySplashScreen extends Activity
-{
-    
+public class ActivitySplashScreen extends Activity {
+
     private static long SPLASH_MILLIS = 450;
-    
-    
+
+
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         RelativeLayout layout = (RelativeLayout) View.inflate(
-            this, R.layout.activity_splash_screen, null);
-        
+                this, R.layout.activity_splash_screen, null);
+
         addContentView(layout, new LayoutParams(LayoutParams.MATCH_PARENT,
-            LayoutParams.MATCH_PARENT));
-        
+                LayoutParams.MATCH_PARENT));
+
         final Handler handler = new Handler();
-        handler.postDelayed(new Runnable()
-        {
-            
+        handler.postDelayed(new Runnable() {
+
             @Override
-            public void run()
-            {
-                
+            public void run() {
+
                 Intent intent = new Intent(ActivitySplashScreen.this,
-                    LoginActivity.class);
+                        LoginActivity.class);
                 startActivity(intent);
-                
+
             }
-            
+
         }, SPLASH_MILLIS);
     }
-    
+
 }

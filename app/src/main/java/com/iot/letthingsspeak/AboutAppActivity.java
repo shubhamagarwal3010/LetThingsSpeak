@@ -25,8 +25,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.iot.letthingsspeak.R;
-
 public class AboutAppActivity extends AppCompatActivity {
 
     @Override

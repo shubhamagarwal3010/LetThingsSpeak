@@ -13,11 +13,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.iot.letthingsspeak.R;
 import com.iot.letthingsspeak.LetThingsSpeakApplication;
+import com.iot.letthingsspeak.R;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
-import com.iot.letthingsspeak.room.model.RoomDO;
 import com.iot.letthingsspeak.room.callbacks.ClickItemListener;
+import com.iot.letthingsspeak.room.model.RoomDO;
 
 import java.util.ArrayList;
 import java.util.Arrays;

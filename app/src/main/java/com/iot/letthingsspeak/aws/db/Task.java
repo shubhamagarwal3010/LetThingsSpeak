@@ -1,7 +1,5 @@
 package com.iot.letthingsspeak.aws.db;
 
-import android.content.Context;
-
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
 
 import java.util.Map;

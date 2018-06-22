@@ -16,8 +16,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.R;
-import com.iot.letthingsspeak.room.model.RoomDO;
 import com.iot.letthingsspeak.device.DeviceActivity;
+import com.iot.letthingsspeak.room.model.RoomDO;
 
 import java.util.List;
 
