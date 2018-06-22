@@ -22,6 +22,7 @@
     <color name="cyan_dark">#70BDC6</color>
     <color name="navy_blue">#214258</color>
     <color name="navy_blue_dark">#1C3A4E</color>
+    <color name="device_background">#545B64</color>
 
 
     <color name="light_gray">#dbdbdb</color>

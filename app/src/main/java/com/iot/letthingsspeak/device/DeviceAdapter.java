@@ -5,8 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.iot.letthingsspeak.R;
 
@@ -28,9 +28,20 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DeviceViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final DeviceViewHolder holder, final int position) {
         DeviceDetails deviceDetail = this.deviceDetails.get(position);
         holder.cardTitleTextView.setText(deviceDetail.getDeviceName());
+
+        holder.deviceState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.deviceState.isChecked()) {
+                    holder.deviceState.setBackgroundResource(R.drawable.on);
+                } else {
+                    holder.deviceState.setBackgroundResource(R.drawable.off);
+                }
+            }
+        });
     }
 
     @Override
@@ -39,12 +50,12 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
     }
 
     public static class DeviceViewHolder extends RecyclerView.ViewHolder {
-        ImageView cardImageView;
+        ToggleButton deviceState;
         TextView cardTitleTextView;
 
         public DeviceViewHolder(View itemView) {
             super(itemView);
-            cardImageView = itemView.findViewById(R.id.device_image);
+            deviceState = itemView.findViewById(R.id.device_state);
             cardTitleTextView = itemView.findViewById(R.id.device_category);
         }
     }

@@ -1,56 +1,68 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright 2013-2016 Amazon.com,
-  ~ Inc. or its affiliates. All Rights Reserved.
-  ~
-  ~ Licensed under the Amazon Software License (the "License").
-  ~ You may not use this file except in compliance with the
-  ~ License. A copy of the License is located at
-  ~
-  ~     http://aws.amazon.com/asl/
-  ~
-  ~ or in the "license" file accompanying this file. This file is
-  ~ distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-  ~ CONDITIONS OF ANY KIND, express or implied. See the License
-  ~ for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.iot.letthingsspeak.device.DeviceActivity">
+    android:background="@color/device_background"
+    android:fitsSystemWindows="true">
 
+    <!-- Add the ActionBar -->
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/deviceAppbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/detail_backdrop_height"
         android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/device_collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?android:attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
+            app:expandedTitleTextAppearance="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/bedroom_actionbar"
-                app:layout_collapseMode="parallax" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/device_backdrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fitsSystemWindows="true"
+                    android:foreground="@drawable/image_overlay"
+                    android:scaleType="centerCrop"
+                    app:layout_collapseMode="parallax" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/device_view_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Smart Home"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/backdrop_title" />
+
+                </LinearLayout>
+            </RelativeLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/device_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
+                android:textAlignment="center"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
@@ -58,7 +70,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -66,9 +78,11 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/device_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:scrollbars="vertical" />
 
-    </android.support.v4.widget.NestedScrollView>
+    </RelativeLayout>
 
 
     <android.support.design.widget.FloatingActionButton

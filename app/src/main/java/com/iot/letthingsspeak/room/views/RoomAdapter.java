@@ -25,6 +25,8 @@ import java.util.List;
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
     public static final String TITLE_KEY = "letthingsspeak.constants.title";
     public static final String ROOM_DETAILS = "ROOM_DETAILS";
+    public static final String ROOM_NAME = "ROOM_NAME";
+    public static final String ROOM_IMAGE = "ROOM_IMAGE";
     public static final int ACTIVITY_REQUEST_CODE = 202;
     public int ROOM_DETAILS_REQUEST_CODE = 9283;
     private Context mContext;
@@ -38,7 +40,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     @NonNull
     @Override
     public RoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_view_home, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_view_room, parent, false);
         RoomViewHolder roomViewHolder = new RoomViewHolder(view);
         return roomViewHolder;
     }
@@ -100,7 +102,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             Context context = view.getContext();
             Intent intent = new Intent(context.getApplicationContext(), DeviceActivity.class);
             RoomDO roomDetail = roomDetails.get(getAdapterPosition());
-            intent.putExtra(TITLE_KEY, roomDetail.getName());
+            intent.putExtra(ROOM_NAME, roomDetail.getName());
+            intent.putExtra(ROOM_IMAGE, roomDetail.getImageId().intValue());
             ((Activity) context).startActivityForResult(intent, ROOM_DETAILS_REQUEST_CODE);
 
         }
