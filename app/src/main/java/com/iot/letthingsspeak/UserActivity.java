@@ -48,6 +48,7 @@ import com.iot.letthingsspeak.aws.AppHelper;
 import com.iot.letthingsspeak.aws.db.Constants;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
+import com.iot.letthingsspeak.common.views.BaseActivity;
 import com.iot.letthingsspeak.device.DeviceList;
 import com.iot.letthingsspeak.device.configuration.views.ConfigDeviceActivity;
 import com.iot.letthingsspeak.identity.views.ChangePasswordActivity;
@@ -60,7 +61,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class UserActivity extends AppCompatActivity implements DbDataListener {
+public class UserActivity extends BaseActivity implements DbDataListener {
     public static final int ACTIVITY_REQUEST_CODE = 201;
     // To track changes to user details
     List<RoomDO> room = new ArrayList<>();

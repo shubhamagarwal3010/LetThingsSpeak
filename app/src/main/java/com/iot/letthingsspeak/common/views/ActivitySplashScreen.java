@@ -23,7 +23,7 @@ import com.iot.letthingsspeak.R;
 import com.iot.letthingsspeak.identity.views.LoginActivity;
 
 
-public class ActivitySplashScreen extends Activity {
+public class ActivitySplashScreen extends BaseActivity {
 
     private static long SPLASH_MILLIS = 450;
 
