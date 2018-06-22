@@ -21,15 +21,22 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!-- Splash Screen Activity -->
+
         <activity
-            android:name=".identity.views.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".common.views.ActivitySplashScreen"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".identity.views.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".UserActivity"
             android:label="@string/title_activity_user"
