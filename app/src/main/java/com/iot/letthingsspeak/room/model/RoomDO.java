@@ -15,6 +15,7 @@ public class RoomDO implements Serializable {
     private String _roomId;
     private Double _imageId;
     private String _name;
+    private Boolean _state;
 
     @DynamoDBHashKey(attributeName = "userId")
     @DynamoDBAttribute(attributeName = "userId")
@@ -53,4 +54,14 @@ public class RoomDO implements Serializable {
     public void setName(final String _name) {
         this._name = _name;
     }
+
+    @DynamoDBAttribute(attributeName = "state")
+    public Boolean getState() {
+        return _state;
+    }
+
+    public void setState(final Boolean _state) {
+        this._state = _state;
+    }
+
 }

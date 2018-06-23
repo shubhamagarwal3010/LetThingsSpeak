@@ -26,23 +26,22 @@ import com.iot.letthingsspeak.aws.db.Constants;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
 import com.iot.letthingsspeak.device.model.DeviceDO;
+import com.iot.letthingsspeak.room.model.RoomDO;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.iot.letthingsspeak.room.views.RoomAdapter.ROOM_ID;
-import static com.iot.letthingsspeak.room.views.RoomAdapter.ROOM_IMAGE;
-import static com.iot.letthingsspeak.room.views.RoomAdapter.ROOM_NAME;
+import static com.iot.letthingsspeak.room.views.RoomAdapter.ROOM_DETAILS;
 
 public class DeviceActivity extends AppCompatActivity implements DbDataListener {
     public static final int DEVICE_ACTIVITY_REQUEST_CODE = 202;
     public static final String ROOM_ID_DEVICE = "ROOM_ID_DEVICE";
-    private static final String KEY_INDEX = "device_index";
     DynamoDBManager dynamoDBManager = LetThingsSpeakApplication.dynamoDBManager;
     private RecyclerView deviceRecyclerView;
     private String title;
     private String roomId;
+    private RoomDO roomDO;
     private Map<String, Object> roomData;
 
     @Override
@@ -77,9 +76,11 @@ public class DeviceActivity extends AppCompatActivity implements DbDataListener 
         TextView deviceViewTitle = findViewById(R.id.device_view_title);
 
         Bundle extras = getIntent().getExtras();
-        title = extras.getString(ROOM_NAME);
-        Integer roomImage = extras.getInt(ROOM_IMAGE);
-        roomId = extras.getString(ROOM_ID);
+
+        roomDO = (RoomDO) getIntent().getSerializableExtra(ROOM_DETAILS);
+        title = roomDO.getName();
+        Integer roomImage = roomDO.getImageId().intValue();
+        roomId = roomDO.getRoomId();
         roomData = new HashMap<String, Object>() {{
             put("roomId", roomId);
         }};
