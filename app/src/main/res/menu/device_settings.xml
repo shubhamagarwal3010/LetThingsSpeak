@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/device_update"
+        android:orderInCategory="100"
+        android:title="Settings" />
+    <item
+        android:orderInCategory="101"
+        android:title="Delete" />
+</menu>

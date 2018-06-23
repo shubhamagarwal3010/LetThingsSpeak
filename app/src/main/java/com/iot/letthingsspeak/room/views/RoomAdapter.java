@@ -16,14 +16,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.R;
-import com.iot.letthingsspeak.device.DeviceActivity;
+import com.iot.letthingsspeak.device.views.DeviceActivity;
 import com.iot.letthingsspeak.room.model.RoomDO;
 
 import java.util.List;
 
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
-    public static final String TITLE_KEY = "letthingsspeak.constants.title";
     public static final String ROOM_DETAILS = "ROOM_DETAILS";
     public static final String ROOM_ID = "ROOM_ID";
     public static final String ROOM_NAME = "ROOM_NAME";
@@ -81,7 +80,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         // inflate menu
         PopupMenu popup = new PopupMenu(mContext, view);
         MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.menu_album, popup.getMenu());
+        inflater.inflate(R.menu.room_settings, popup.getMenu());
         popup.setOnMenuItemClickListener(new MyMenuItemClickListener(roomDetails));
         popup.show();
     }

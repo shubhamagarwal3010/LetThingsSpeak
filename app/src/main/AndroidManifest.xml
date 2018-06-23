@@ -21,6 +21,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <!-- Splash Screen Activity -->
 
         <activity
@@ -77,14 +78,14 @@
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".device.DeviceActivity"
+            android:name=".device.views.DeviceActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".room.views.AddRoomActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".device.AddDeviceActivity"
+            android:name=".device.views.AddDeviceActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".device.configuration.views.ConfigDeviceActivity"
@@ -99,8 +100,12 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".device.DeviceList"
+            android:name=".device.views.DeviceList"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".device.views.UpdateDeviceActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>

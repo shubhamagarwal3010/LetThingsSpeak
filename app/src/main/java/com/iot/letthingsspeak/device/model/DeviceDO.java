@@ -6,9 +6,11 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 import com.iot.letthingsspeak.aws.db.Constants;
 
+import java.io.Serializable;
+
 @DynamoDBTable(tableName = Constants.DEVICE_TABLE)
 
-public class DeviceDO {
+public class DeviceDO implements Serializable {
     private String _roomId;
     private String _deviceId;
     private String _deviceName;

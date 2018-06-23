@@ -1,4 +1,4 @@
-package com.iot.letthingsspeak.device;
+package com.iot.letthingsspeak.device.views;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -17,7 +17,7 @@ import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 
 import java.util.HashMap;
 
-import static com.iot.letthingsspeak.device.DeviceActivity.ROOM_ID_DEVICE;
+import static com.iot.letthingsspeak.device.views.DeviceActivity.ROOM_ID_DEVICE;
 import static com.iot.letthingsspeak.util.Util.generateRandomChars;
 
 
@@ -61,6 +61,7 @@ public class AddDeviceActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 TextView label = findViewById(R.id.textViewDeviceNameMessage);
+                deviceName.setBackground(null);
                 label.setText("");
             }
 

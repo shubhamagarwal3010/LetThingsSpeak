@@ -73,6 +73,7 @@ public class UpdateRoomActivity extends AppCompatActivity implements ClickItemLi
         horizontalLayoutManager = new LinearLayoutManager(UpdateRoomActivity.this, LinearLayoutManager.HORIZONTAL, false);
         mHorizontalRecyclerView.setLayoutManager(horizontalLayoutManager);
         mHorizontalRecyclerView.setAdapter(horizontalAdapter);
+
         roomDO = (RoomDO) getIntent().getSerializableExtra(ROOM_DETAILS);
         init();
     }

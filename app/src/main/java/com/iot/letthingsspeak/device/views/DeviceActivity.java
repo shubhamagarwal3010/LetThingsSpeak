@@ -1,4 +1,4 @@
-package com.iot.letthingsspeak.device;
+package com.iot.letthingsspeak.device.views;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
