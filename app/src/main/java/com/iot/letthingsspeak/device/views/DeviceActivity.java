@@ -75,8 +75,6 @@ public class DeviceActivity extends AppCompatActivity implements DbDataListener 
 
         TextView deviceViewTitle = findViewById(R.id.device_view_title);
 
-        Bundle extras = getIntent().getExtras();
-
         roomDO = (RoomDO) getIntent().getSerializableExtra(ROOM_DETAILS);
         title = roomDO.getName();
         Integer roomImage = roomDO.getImageId().intValue();
@@ -158,7 +156,7 @@ public class DeviceActivity extends AppCompatActivity implements DbDataListener 
         if (type == Constants.DynamoDBManagerType.GET_DEVICES_FOR_ROOM) {
 
             DeviceAdapter deviceAdapter;
-            deviceAdapter = new DeviceAdapter(this, (List<DeviceDO>) data);
+            deviceAdapter = new DeviceAdapter(this, (List<DeviceDO>) data, roomDO);
             deviceRecyclerView.setAdapter(deviceAdapter);
         }
     }

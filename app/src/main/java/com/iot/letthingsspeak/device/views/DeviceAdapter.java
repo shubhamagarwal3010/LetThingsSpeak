@@ -18,6 +18,7 @@ import com.iot.letthingsspeak.LetThingsSpeakApplication;
 import com.iot.letthingsspeak.R;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 import com.iot.letthingsspeak.device.model.DeviceDO;
+import com.iot.letthingsspeak.room.model.RoomDO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,10 +30,14 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
     DynamoDBManager dynamoDBManager = LetThingsSpeakApplication.dynamoDBManager;
     private List<DeviceDO> deviceDetails;
     private Context context;
+    private RoomDO roomDO;
+    private int count = 0;
+    private boolean roomState = false;
 
-    public DeviceAdapter(Context context, List<DeviceDO> deviceDetails) {
+    public DeviceAdapter(Context context, List<DeviceDO> deviceDetails, RoomDO roomDO) {
         this.context = context;
         this.deviceDetails = deviceDetails;
+        this.roomDO = roomDO;
     }
 
     @NonNull
@@ -50,6 +55,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
         final Integer[] state = {0};
         final Boolean[] setState = {false};
         if (deviceDetail.getState()) {
+            count++;
             holder.deviceState.setChecked(true);
             state[0] = R.drawable.on;
         } else {
@@ -65,9 +71,11 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
                 if (holder.deviceState.isChecked()) {
                     state[0] = R.drawable.on;
                     setState[0] = true;
+                    count++;
                 } else {
                     state[0] = R.drawable.off;
                     setState[0] = false;
+                    count--;
                 }
 
                 holder.deviceState.setBackgroundResource(state[0]);
@@ -76,6 +84,19 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
                     put("deviceId", deviceDetail.getDeviceId());
                     put("name", deviceDetail.getDeviceName());
                     put("state", setState[0]);
+                }});
+
+                if (count > 0) {
+                    roomState = true;
+                } else {
+                    roomState = false;
+                }
+
+                dynamoDBManager.insertRoom(new HashMap<String, Object>() {{
+                    put("roomId", roomDO.getRoomId());
+                    put("roomName", roomDO.getName());
+                    put("imageId", roomDO.getImageId());
+                    put("state", roomState);
                 }});
             }
         });

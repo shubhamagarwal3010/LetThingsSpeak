@@ -88,6 +88,7 @@ public class DynamoDBClient {
             roomDO.setUserId(AppHelper.getCurrUser());
             roomDO.setName((String) parameterList.get("roomName"));
             roomDO.setImageId((double) parameterList.get("imageId"));
+            roomDO.setState((boolean) parameterList.get("state"));
 
             Log.d(TAG, "Inserting room details");
             mapper.save(roomDO);

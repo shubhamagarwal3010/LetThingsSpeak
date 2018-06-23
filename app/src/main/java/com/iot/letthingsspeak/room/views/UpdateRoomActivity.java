@@ -116,6 +116,7 @@ public class UpdateRoomActivity extends AppCompatActivity implements ClickItemLi
             put("roomId", roomDO.getRoomId());
             put("roomName", roomName.getText().toString());
             put("imageId", (double) roomImageId);
+            put("state", roomDO.getState());
         }});
 
         Intent intent = new Intent();

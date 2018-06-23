@@ -108,6 +108,7 @@ public class AddRoomActivity extends AppCompatActivity implements ClickItemListe
             put("roomId", roomId);
             put("roomName", roomName.getText().toString());
             put("imageId", (double) roomImageId);
+            put("state", false);
         }});
 
         dynamoDBManager.insertUserRoom(new HashMap<String, Object>() {{

@@ -11,14 +11,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.R;
+import com.iot.letthingsspeak.aws.db.DynamoDBManager;
+import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
 import com.iot.letthingsspeak.device.views.DeviceActivity;
 import com.iot.letthingsspeak.room.model.RoomDO;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -26,12 +31,14 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     public static final String ROOM_DETAILS = "ROOM_DETAILS";
     public static final int ACTIVITY_REQUEST_CODE = 202;
     public int ROOM_DETAILS_REQUEST_CODE = 9283;
+    DynamoDBManager dynamoDBManager;
     private Context mContext;
     private List<RoomDO> roomDetails;
 
-    public RoomAdapter(Context mContext, List<RoomDO> roomDetails) {
+    public RoomAdapter(Context mContext, List<RoomDO> roomDetails, DynamoDBManager dynamoDBManager) {
         this.mContext = mContext;
         this.roomDetails = roomDetails;
+        this.dynamoDBManager = dynamoDBManager;
     }
 
     @NonNull
@@ -62,6 +69,26 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
                 showPopupMenu(holder.overflow, roomDetails);
             }
         });
+        holder.roomState.setChecked(roomDetails.getState());
+
+        holder.roomState.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked) {
+                    dynamoDBManager.getDevicesForRoom((DbDataListener) mContext, new HashMap<String, Object>() {{
+                        put("roomId", roomDetails.getRoomId());
+                    }});
+
+                    dynamoDBManager.insertRoom(new HashMap<String, Object>() {{
+                        put("roomId", roomDetails.getRoomId());
+                        put("roomName", roomDetails.getName());
+                        put("imageId", roomDetails.getImageId());
+                        put("state", false);
+                    }});
+                }
+            }
+        });
     }
 
 
@@ -85,12 +112,14 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     public class RoomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView roomImage, overflow;
         TextView roomTitle;
+        Switch roomState;
 
         public RoomViewHolder(View itemView) {
             super(itemView);
             roomImage = itemView.findViewById(R.id.card_news_image);
             roomTitle = itemView.findViewById(R.id.room_category);
             overflow = itemView.findViewById(R.id.overflow);
+            roomState = itemView.findViewById(R.id.room_state);
             itemView.setOnClickListener(this);
         }
 

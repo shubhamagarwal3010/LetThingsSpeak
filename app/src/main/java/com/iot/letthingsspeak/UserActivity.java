@@ -49,6 +49,7 @@ import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
 import com.iot.letthingsspeak.common.views.BaseActivity;
 import com.iot.letthingsspeak.device.configuration.views.ConfigDeviceActivity;
+import com.iot.letthingsspeak.device.model.DeviceDO;
 import com.iot.letthingsspeak.device.views.DeviceList;
 import com.iot.letthingsspeak.identity.views.ChangePasswordActivity;
 import com.iot.letthingsspeak.identity.views.UserProfileActivity;
@@ -315,10 +316,22 @@ public class UserActivity extends BaseActivity implements DbDataListener {
         if (type == Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER) {
 
             RoomAdapter roomAdapter;
-            roomAdapter = new RoomAdapter(this, (List<RoomDO>) data);
+            roomAdapter = new RoomAdapter(this, (List<RoomDO>) data, dynamoDBManager);
             roomTypeRecyclerView.setAdapter(roomAdapter);
-            //Log.i("room name", ((Map<String, RoomDO>) data).get("1211").getName());
-            //Log.i("room name", ((Map<String, RoomDO>) data).get("1212").getName());
+        }
+        if (type == Constants.DynamoDBManagerType.GET_DEVICES_FOR_ROOM) {
+
+            List<DeviceDO> deviceDOS = (List<DeviceDO>) data;
+            for (final DeviceDO deviceDO : deviceDOS) {
+                if (deviceDO.getState()) {
+                    dynamoDBManager.insertDevice(new HashMap<String, Object>() {{
+                        put("roomId", deviceDO.getRoomId());
+                        put("deviceId", deviceDO.getDeviceId());
+                        put("name", deviceDO.getDeviceName());
+                        put("state", false);
+                    }});
+                }
+            }
         }
     }
 
