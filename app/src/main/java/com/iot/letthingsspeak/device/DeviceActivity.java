@@ -28,7 +28,6 @@ import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
 import com.iot.letthingsspeak.device.model.DeviceDO;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +41,6 @@ public class DeviceActivity extends AppCompatActivity implements DbDataListener 
     public static final String ROOM_ID_DEVICE = "ROOM_ID_DEVICE";
     private static final String KEY_INDEX = "device_index";
     DynamoDBManager dynamoDBManager = LetThingsSpeakApplication.dynamoDBManager;
-    List<DeviceDetails> device = new ArrayList<>();
     private RecyclerView deviceRecyclerView;
     private String title;
     private String roomId;
@@ -76,12 +74,6 @@ public class DeviceActivity extends AppCompatActivity implements DbDataListener 
             }
         });
         initCollapsingToolbar();
-
-        device.add(new DeviceDetails("Bulb", "1"));
-
-        device.add(new DeviceDetails("Fan", "0"));
-
-        DeviceStore.setDeviceDetails(device);
 
         deviceRecyclerView = findViewById(R.id.device_recyclerview);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 3);
