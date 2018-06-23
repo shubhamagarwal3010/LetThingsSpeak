@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Util {
     public static String generateRandomChars() {
-        int length = 16;
+        int length = 24;
         String candidateChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder sb = new StringBuilder();
         Random random = new Random();

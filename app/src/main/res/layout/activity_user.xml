@@ -97,27 +97,6 @@
                 android:scrollbars="vertical" />
 
         </RelativeLayout>
-        <!-- Set the Main content -->
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="bottom"
-            android:orientation="vertical">
-
-            <android.support.v7.widget.AppCompatButton
-                style="@style/Button.Primary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="25dp"
-                android:onClick="insertUsers"
-                android:padding="10dp"
-                android:text="Add Room"
-                android:textAllCaps="false"
-                android:textSize="18dp" />
-        </LinearLayout>
-
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
