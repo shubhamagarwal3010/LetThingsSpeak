@@ -1,6 +1,5 @@
 package com.iot.letthingsspeak.device.configuration.views;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,16 +9,15 @@ import android.widget.TextView;
 
 import com.iot.letthingsspeak.R;
 
-public class ConfigDeviceActivity extends AppCompatActivity {
-
+public class SearchDeviceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_config_device);
+        setContentView(R.layout.activity_search_device);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        Toolbar toolbar = findViewById(R.id.toolbarConfigDevice);
+        Toolbar toolbar = findViewById(R.id.toolbar_scan_wifi);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
@@ -34,21 +32,7 @@ public class ConfigDeviceActivity extends AppCompatActivity {
             }
         });
 
-        TextView main_title = findViewById(R.id.config_device_toolbar_title);
+        TextView main_title = findViewById(R.id.scan_wifi_toolbar_title);
         main_title.setText("Configure Device");
     }
-
-
-    public void scanWifiNear(View v) {
-        Intent scanIntent = new Intent(this, SearchDeviceActivity.class);
-        startActivity(scanIntent);
-    }
-
-    public void scanQRCode(View v) {
-
-        Intent scanIntent = new Intent(this, ScannerActivity.class);
-        startActivity(scanIntent);
-    }
-
-
 }

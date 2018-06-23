@@ -11,14 +11,14 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbarConfigDevice"
+            android:id="@+id/toolbar_scan_wifi"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:background="?android:attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <TextView
-                android:id="@+id/config_device_toolbar_title"
+                android:id="@+id/scan_wifi_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -64,7 +64,60 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:paddingBottom="10dp"
-                    android:text="Select mode:"
+                    android:text="Connect your device"
+                    android:textColor="@color/black_effective"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/songs_count_padding_bottom"
+                    android:paddingLeft="@dimen/album_title_padding"
+                    android:paddingRight="@dimen/album_title_padding"
+                    android:paddingTop="@dimen/album_title_padding">
+
+                    <Spinner
+                        android:id="@+id/wifi_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/scan_wifi"
+                        style="@style/Button.Primary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Scan"
+                        android:textAllCaps="false"
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:paddingTop="10dp"
+                    android:text="Device password"
+                    android:textColor="@color/black_effective"
+                    android:textSize="18sp" />
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/device_password"
+                    style="@style/TextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/input_border_bottom"
+                    android:gravity="center|left|bottom"
+                    android:inputType="text"
+                    android:maxLength="50"
+                    android:paddingBottom="10dp"
                     android:textColor="@color/black_effective"
                     android:textSize="18sp" />
 
@@ -74,22 +127,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="25dp"
-                    android:onClick="scanWifiNear"
                     android:padding="10dp"
-                    android:paddingTop="20dp"
-                    android:text="Connect Manually"
-                    android:textAllCaps="false"
-                    android:textSize="18dp" />
-
-                <android.support.v7.widget.AppCompatButton
-                    style="@style/Button.Primary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="25dp"
-                    android:onClick="scanQRCode"
-                    android:padding="10dp"
-                    android:text="Scan QR to add device"
+                    android:text="Connect"
                     android:textAllCaps="false"
                     android:textSize="18dp" />
             </LinearLayout>
