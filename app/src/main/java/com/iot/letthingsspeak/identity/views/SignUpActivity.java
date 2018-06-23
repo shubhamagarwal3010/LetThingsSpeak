@@ -45,9 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
     private EditText givenName;
-    private EditText familyName;
     private EditText email;
-    private EditText phone;
 
     private Button signUp;
     private AlertDialog userDialog;
@@ -183,23 +181,6 @@ public class SignUpActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-        //
-        phone = findViewById(R.id.editTextRegPhone);
-        phone.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TextView label = findViewById(R.id.textViewRegPhoneMessage);
-                label.setText("");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
 
         signUp = findViewById(R.id.signUp);
         signUp.setOnClickListener(new View.OnClickListener() {
@@ -236,13 +217,6 @@ public class SignUpActivity extends AppCompatActivity {
                 if (userInput != null) {
                     if (userInput.length() > 0) {
                         userAttributes.addAttribute(AppHelper.getSignUpFieldsC2O().get(email.getHint()).toString(), userInput);
-                    }
-                }
-
-                userInput = phone.getText().toString();
-                if (userInput != null) {
-                    if (userInput.length() > 0) {
-                        userAttributes.addAttribute(AppHelper.getSignUpFieldsC2O().get(phone.getHint()).toString(), userInput);
                     }
                 }
 
