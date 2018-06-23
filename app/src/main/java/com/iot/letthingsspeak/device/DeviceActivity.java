@@ -1,6 +1,5 @@
 package com.iot.letthingsspeak.device;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
@@ -45,12 +44,6 @@ public class DeviceActivity extends AppCompatActivity implements DbDataListener 
     private String title;
     private String roomId;
     private Map<String, Object> roomData;
-
-    public static void launch(Context context, int index) {
-        Intent intent = new Intent(context, DeviceActivity.class);
-        intent.putExtra(KEY_INDEX, index);
-        context.startActivity(intent);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,8 +159,6 @@ public class DeviceActivity extends AppCompatActivity implements DbDataListener 
             DeviceAdapter deviceAdapter;
             deviceAdapter = new DeviceAdapter(this, (List<DeviceDO>) data);
             deviceRecyclerView.setAdapter(deviceAdapter);
-            //Log.i("room name", ((Map<String, RoomDO>) data).get("1211").getName());
-            //Log.i("room name", ((Map<String, RoomDO>) data).get("1212").getName());
         }
     }
 

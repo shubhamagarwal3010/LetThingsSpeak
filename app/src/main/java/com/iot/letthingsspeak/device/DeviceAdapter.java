@@ -9,12 +9,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.iot.letthingsspeak.LetThingsSpeakApplication;
 import com.iot.letthingsspeak.R;
+import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 import com.iot.letthingsspeak.device.model.DeviceDO;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder> {
+    DynamoDBManager dynamoDBManager = LetThingsSpeakApplication.dynamoDBManager;
     private List<DeviceDO> deviceDetails;
     private Context context;
 
@@ -33,17 +37,38 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
 
     @Override
     public void onBindViewHolder(@NonNull final DeviceViewHolder holder, final int position) {
-        DeviceDO deviceDetail = this.deviceDetails.get(position);
+        final DeviceDO deviceDetail = this.deviceDetails.get(position);
         holder.cardTitleTextView.setText(deviceDetail.getDeviceName());
+        final Integer[] state = {0};
+        final Boolean[] setState = {false};
+        if (deviceDetail.getState()) {
+            holder.deviceState.setChecked(true);
+            state[0] = R.drawable.on;
+        } else {
+            holder.deviceState.setChecked(false);
+            state[0] = R.drawable.off;
+        }
+
+        holder.deviceState.setBackgroundResource(state[0]);
 
         holder.deviceState.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (holder.deviceState.isChecked()) {
-                    holder.deviceState.setBackgroundResource(R.drawable.on);
+                    state[0] = R.drawable.on;
+                    setState[0] = true;
                 } else {
-                    holder.deviceState.setBackgroundResource(R.drawable.off);
+                    state[0] = R.drawable.off;
+                    setState[0] = false;
                 }
+
+                holder.deviceState.setBackgroundResource(state[0]);
+                dynamoDBManager.insertDevice(new HashMap<String, Object>() {{
+                    put("roomId", deviceDetail.getRoomId());
+                    put("deviceId", deviceDetail.getDeviceId());
+                    put("name", deviceDetail.getDeviceName());
+                    put("state", setState[0]);
+                }});
             }
         });
     }
