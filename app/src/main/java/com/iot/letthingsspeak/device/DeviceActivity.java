@@ -21,20 +21,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.iot.letthingsspeak.LetThingsSpeakApplication;
 import com.iot.letthingsspeak.R;
+import com.iot.letthingsspeak.aws.db.Constants;
+import com.iot.letthingsspeak.aws.db.DynamoDBManager;
+import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
+import com.iot.letthingsspeak.device.model.DeviceDO;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import static com.iot.letthingsspeak.room.views.RoomAdapter.ROOM_ID;
 import static com.iot.letthingsspeak.room.views.RoomAdapter.ROOM_IMAGE;
 import static com.iot.letthingsspeak.room.views.RoomAdapter.ROOM_NAME;
 
-public class DeviceActivity extends AppCompatActivity {
+public class DeviceActivity extends AppCompatActivity implements DbDataListener {
     public static final int DEVICE_ACTIVITY_REQUEST_CODE = 202;
+    public static final String ROOM_ID_DEVICE = "ROOM_ID_DEVICE";
     private static final String KEY_INDEX = "device_index";
+    DynamoDBManager dynamoDBManager = LetThingsSpeakApplication.dynamoDBManager;
     List<DeviceDetails> device = new ArrayList<>();
     private RecyclerView deviceRecyclerView;
     private String title;
+    private String roomId;
+    private Map<String, Object> roomData;
 
     public static void launch(Context context, int index) {
         Intent intent = new Intent(context, DeviceActivity.class);
@@ -77,14 +89,17 @@ public class DeviceActivity extends AppCompatActivity {
         deviceRecyclerView.addItemDecoration(new DeviceActivity.GridSpacingItemDecoration(3, dpToPx(10), true));
         deviceRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        DeviceAdapter deviceAdapter = new DeviceAdapter(DeviceStore.getDeviceDetails());
-        deviceRecyclerView.setAdapter(deviceAdapter);
-
         TextView deviceViewTitle = findViewById(R.id.device_view_title);
 
         Bundle extras = getIntent().getExtras();
         title = extras.getString(ROOM_NAME);
         Integer roomImage = extras.getInt(ROOM_IMAGE);
+        roomId = extras.getString(ROOM_ID);
+        roomData = new HashMap<String, Object>() {{
+            put("roomId", roomId);
+        }};
+
+        dynamoDBManager.getDevicesForRoom(this, roomData);
 
         deviceViewTitle.setText(title);
         ActionBar actionBar = getSupportActionBar();
@@ -100,9 +115,16 @@ public class DeviceActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DeviceActivity.this, AddDeviceActivity.class);
+                intent.putExtra(ROOM_ID_DEVICE, roomId);
                 startActivityForResult(intent, DEVICE_ACTIVITY_REQUEST_CODE);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dynamoDBManager.getDevicesForRoom(this, roomData);
     }
 
     /**
@@ -146,19 +168,14 @@ public class DeviceActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == DEVICE_ACTIVITY_REQUEST_CODE) {
-                String message = data.getStringExtra(AddDeviceActivity.ADDED_DEVICE);
+    public void publishResultsOnSuccess(Constants.DynamoDBManagerType type, Object data) {
+        if (type == Constants.DynamoDBManagerType.GET_DEVICES_FOR_ROOM) {
 
-                device.add(new DeviceDetails(message, "1"));
-
-                DeviceStore.setDeviceDetails(device);
-
-                DeviceAdapter deviceAdapter = new DeviceAdapter(DeviceStore.getDeviceDetails());
-                deviceRecyclerView.setAdapter(deviceAdapter);
-            }
+            DeviceAdapter deviceAdapter;
+            deviceAdapter = new DeviceAdapter(this, (List<DeviceDO>) data);
+            deviceRecyclerView.setAdapter(deviceAdapter);
+            //Log.i("room name", ((Map<String, RoomDO>) data).get("1211").getName());
+            //Log.i("room name", ((Map<String, RoomDO>) data).get("1212").getName());
         }
     }
 

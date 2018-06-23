@@ -17,6 +17,9 @@ import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 
 import java.util.HashMap;
 
+import static com.iot.letthingsspeak.device.DeviceActivity.ROOM_ID_DEVICE;
+import static com.iot.letthingsspeak.util.Util.generateRandomChars;
+
 
 public class AddDeviceActivity extends AppCompatActivity {
 
@@ -24,6 +27,7 @@ public class AddDeviceActivity extends AppCompatActivity {
     DynamoDBManager dynamoDBManager = LetThingsSpeakApplication.dynamoDBManager;
     private EditText deviceName;
     private String deviceNameInput;
+    private String roomId;
 
 
     @Override
@@ -41,6 +45,9 @@ public class AddDeviceActivity extends AppCompatActivity {
 
         TextView main_title = findViewById(R.id.add_device_toolbar_title);
         main_title.setText("Device Config");
+        Bundle extras = getIntent().getExtras();
+        roomId = extras.getString(ROOM_ID_DEVICE);
+
         init();
     }
 
@@ -73,15 +80,12 @@ public class AddDeviceActivity extends AppCompatActivity {
             deviceName.setBackground(getDrawable(R.drawable.text_border_error));
             return;
         }
+        final String deviceId = generateRandomChars();
         dynamoDBManager.insertDevice(new HashMap<String, Object>() {{
-            put("deviceId", (double) 111);
-            put("currentState", false);
-            put("delegatedIds", null);
-            put("gatewayId", (double) 101);
-            put("gatewayPin", (double) 1);
+            put("roomId", roomId);
+            put("deviceId", deviceId);
             put("name", deviceNameInput);
-            put("roomId", (double) 1212);
-            put("tag", "Main light");
+            put("state", false);
         }});
         Intent intent = new Intent();
         intent.putExtra(ADDED_DEVICE, deviceName.getText().toString());

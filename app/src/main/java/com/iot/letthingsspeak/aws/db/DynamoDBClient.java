@@ -127,16 +127,10 @@ public class DynamoDBClient {
 
         try {
             DeviceDO deviceDO = new DeviceDO();
-            deviceDO.setUserId(AppHelper.getCurrUser());
-            deviceDO.setDeviceId((double) parameterList.get("deviceId"));
-            deviceDO.setCurrentState((Boolean) parameterList.get("currentState"));
-            deviceDO.setDelegatedIds((List<String>) parameterList.get("delegatedIds"));
-            deviceDO.setGatewayId((double) parameterList.get("gatewayId"));
-            deviceDO.setGatewayPin((double) parameterList.get("gatewayPin"));
-            deviceDO.setImageId((String) parameterList.get("image_id"));
-            deviceDO.setName((String) parameterList.get("name"));
-            deviceDO.setRoomId((double) parameterList.get("roomId"));
-            deviceDO.setTag((String) parameterList.get("tag"));
+            deviceDO.setRoomId((String) parameterList.get("roomId"));
+            deviceDO.setDeviceId((String) parameterList.get("deviceId"));
+            deviceDO.setDeviceName((String) parameterList.get("name"));
+            deviceDO.setState((boolean) parameterList.get("state"));
 
             Log.d(TAG, "Inserting device");
             mapper.save(deviceDO);
@@ -199,6 +193,29 @@ public class DynamoDBClient {
                 roomDOMap.add(roomDOList.get(0));
             }
             return roomDOMap;
+        } catch (AmazonServiceException ex) {
+            LetThingsSpeakApplication.amazonClientManager
+                    .wipeCredentialsOnAuthError(ex);
+        }
+        return null;
+    }
+
+
+    public static List<DeviceDO> getDevicesForRoom(Map<String, Object> parameterList) {
+        AmazonDynamoDBClient ddb = LetThingsSpeakApplication.amazonClientManager
+                .ddb();
+        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
+
+        String roomId = (String) parameterList.get("roomId");
+        Map<String, AttributeValue> eav1 = new HashMap<String, AttributeValue>();
+        eav1.put(":val1", new AttributeValue().withS(roomId));
+
+        DynamoDBScanExpression dynamoDBScanExpression1 = new DynamoDBScanExpression();
+        dynamoDBScanExpression1.withFilterExpression("roomId = :val1").withExpressionAttributeValues(eav1);
+
+        try {
+            List<DeviceDO> deviceDOList = mapper.scan(DeviceDO.class, dynamoDBScanExpression1);
+            return deviceDOList;
         } catch (AmazonServiceException ex) {
             LetThingsSpeakApplication.amazonClientManager
                     .wipeCredentialsOnAuthError(ex);

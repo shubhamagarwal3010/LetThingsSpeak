@@ -291,17 +291,17 @@ public class UserActivity extends BaseActivity implements DbDataListener {
             put("isAdmin", true);
         }});
 
-        dynamoDBManager.insertDevice(new HashMap<String, Object>() {{
-            put("deviceId", (double) 1);
-            put("currentState", false);
-            put("delegatedIds", null);
-            put("gatewayId", (double) 101);
-            put("gatewayPin", (double) 1);
-            put("imageId", "bulbImage");
-            put("name", "Bulb");
-            put("roomId", (double) 1211);
-            put("tag", "Main light");
-        }});
+//        dynamoDBManager.insertDevice(new HashMap<String, Object>() {{
+//            put("deviceId", (double) 1);
+//            put("currentState", false);
+//            put("delegatedIds", null);
+//            put("gatewayId", (double) 101);
+//            put("gatewayPin", (double) 1);
+//            put("imageId", "bulbImage");
+//            put("name", "Bulb");
+//            put("roomId", (double) 1211);
+//            put("tag", "Main light");
+//        }});
 
         dynamoDBManager.insertGateway(new HashMap<String, Object>() {{
             put("gatewayId", (double) 1012);

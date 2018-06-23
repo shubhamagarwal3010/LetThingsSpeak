@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
+import com.iot.letthingsspeak.device.model.DeviceDO;
 import com.iot.letthingsspeak.room.model.RoomDO;
 
 import java.util.List;
@@ -36,6 +37,10 @@ public class DynamoDBManager {
 
     public void getRoomsForUser(DbDataListener listener) {
         new DynamoDBManagerTask().execute(new Task(listener, Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER, Constants.ROOM_TABLE, null));
+    }
+
+    public void getDevicesForRoom(DbDataListener listener, final Map<String, Object> parameterList) {
+        new DynamoDBManagerTask().execute(new Task(listener, Constants.DynamoDBManagerType.GET_DEVICES_FOR_ROOM, Constants.DEVICE_TABLE, parameterList));
     }
 
 
@@ -74,6 +79,11 @@ public class DynamoDBManager {
                     List<RoomDO> roomDOMap = DynamoDBClient.getRoomsForUser();
                     result.setReturnValue(roomDOMap);
                 }
+            } else if (types[0].getDynamoDBManagerType() == Constants.DynamoDBManagerType.GET_DEVICES_FOR_ROOM) {
+                if (tableStatus.equalsIgnoreCase("ACTIVE")) {
+                    List<DeviceDO> deviceDOMap = DynamoDBClient.getDevicesForRoom(types[0].getParameterList());
+                    result.setReturnValue(deviceDOMap);
+                }
             }
             return result;
         }
@@ -96,6 +106,11 @@ public class DynamoDBManager {
                 returnValue = result.getReturnValue();
                 listener.publishResultsOnSuccess(Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER, returnValue);
                 Log.i("LetThingsSpeakMessages", "User Room retrieved successfully!");
+            } else if (result.getTableStatus(Constants.DEVICE_TABLE).equalsIgnoreCase("ACTIVE")
+                    && result.getTaskType() == Constants.DynamoDBManagerType.GET_DEVICES_FOR_ROOM) {
+                returnValue = result.getReturnValue();
+                listener.publishResultsOnSuccess(Constants.DynamoDBManagerType.GET_DEVICES_FOR_ROOM, returnValue);
+                Log.i("LetThingsSpeakMessages", "Room devices retrieved successfully!");
             }
         }
     }

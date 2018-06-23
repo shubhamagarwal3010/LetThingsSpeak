@@ -16,6 +16,7 @@
         <item name="drawerArrowStyle">@style/MaterialDrawer.DrawerArrowStyle</item>
         <item name="android:textAppearance">@style/TextAppearance.Text.Regular</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_white_24px</item>
+
     </style>
 
     <style name="MaterialDrawer.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
