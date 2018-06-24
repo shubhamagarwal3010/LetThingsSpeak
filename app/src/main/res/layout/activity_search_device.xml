@@ -91,8 +91,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Scan"
                         android:onClick="scanWifi"
+                        android:text="Scan"
                         android:textAllCaps="false"
                         android:textSize="18dp" />
                 </LinearLayout>
@@ -128,9 +128,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="25dp"
+                    android:onClick="connectWifi"
                     android:padding="10dp"
                     android:text="Connect"
-                    android:onClick="connectWifi"
                     android:textAllCaps="false"
                     android:textSize="18dp" />
             </LinearLayout>

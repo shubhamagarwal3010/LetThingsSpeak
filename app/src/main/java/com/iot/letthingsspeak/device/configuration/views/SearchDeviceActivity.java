@@ -1,18 +1,17 @@
 package com.iot.letthingsspeak.device.configuration.views;
 
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,7 +54,7 @@ public class SearchDeviceActivity extends AppCompatActivity {
         main_title.setText("Configure Device");
     }
 
-    public void scanWifi (View view) {
+    public void scanWifi(View view) {
         PermissionManager permissionManager = PermissionManager.getInstance(getApplicationContext());
         permissionManager.checkPermissions(Collections.singletonList(ACCESS_COARSE_LOCATION),
                 new PermissionManager.PermissionRequestListener() {
@@ -70,6 +69,7 @@ public class SearchDeviceActivity extends AppCompatActivity {
                     }
                 });
     }
+
     private void scanForAvailableNetworks() {
         WifiConnectionManager wifiConnectionManager = new WifiConnectionManager(getApplicationContext());
         wifiConnectionManager.scanForNetworks(new ScanResultsListener() {
@@ -95,8 +95,25 @@ public class SearchDeviceActivity extends AppCompatActivity {
         wifiList.setAdapter(dataAdapter);
 
     }
-    public void connectWifi (View view) {
-        String ssid = String.valueOf(wifiList.getSelectedItem());
-        String psk = ((EditText)findViewById(R.id.device_password)).getText().toString();
+
+    public void connectWifi(View view) {
+        String networkSSID = String.valueOf(wifiList.getSelectedItem());
+        String networkPass = ((EditText) findViewById(R.id.device_password)).getText().toString();
+        WifiConfiguration conf = new WifiConfiguration();
+        conf.SSID = "\"" + networkSSID + "\"";
+
+        conf.preSharedKey = "\"" + networkPass + "\"";
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        wifiManager.addNetwork(conf);
+        List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
+        for (WifiConfiguration i : list) {
+            if (i.SSID != null && i.SSID.equals("\"" + networkSSID + "\"")) {
+                wifiManager.disconnect();
+                wifiManager.enableNetwork(i.networkId, true);
+                wifiManager.reconnect();
+
+                break;
+            }
+        }
     }
 }
