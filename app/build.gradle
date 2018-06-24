@@ -42,4 +42,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-vision:15.0.2'
     implementation 'info.androidhive:barcode-reader:1.1.5'
     implementation 'com.jakewharton:butterknife:8.8.1'
+
+    implementation 'com.intentfilter:android-wificonnect:0.1.2'
+    implementation 'com.intentfilter:android-permissions:0.1.7'
 }
