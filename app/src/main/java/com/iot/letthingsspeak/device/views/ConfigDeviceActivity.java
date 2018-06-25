@@ -1,6 +1,5 @@
-package com.iot.letthingsspeak.device.configuration.views;
+package com.iot.letthingsspeak.device.views;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -40,14 +39,11 @@ public class ConfigDeviceActivity extends AppCompatActivity {
 
 
     public void scanWifiNear(View v) {
-        Intent scanIntent = new Intent(this, SearchDeviceActivity.class);
-        startActivity(scanIntent);
+
     }
 
     public void scanQRCode(View v) {
 
-        Intent scanIntent = new Intent(this, ScannerActivity.class);
-        startActivity(scanIntent);
     }
 
 
