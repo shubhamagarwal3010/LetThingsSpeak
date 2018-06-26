@@ -1,4 +1,4 @@
-package com.iot.letthingsspeak.home.presenter;
+package com.iot.letthingsspeak.device.presenter;
 
 import android.arch.lifecycle.Lifecycle;
 import android.os.AsyncTask;
@@ -10,47 +10,44 @@ import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 import com.iot.letthingsspeak.aws.db.DynamoDBManagerTaskResult;
 import com.iot.letthingsspeak.common.presenter.BasePresenter;
 import com.iot.letthingsspeak.common.views.BaseView;
-import com.iot.letthingsspeak.room.model.RoomDO;
+import com.iot.letthingsspeak.device.model.DeviceDO;
 
 import java.util.List;
 
-public class DashboardPresenter extends BasePresenter {
-
+public class DevicePresenter extends BasePresenter {
+    DevicePresenter.DeviceListingView mView;
     DynamoDBManager dynamoDBManager;
-    DashboardPresenter.RoomListingView mView;
 
-    public DashboardPresenter(Lifecycle mLifecycle, DashboardPresenter.RoomListingView mView) {
+    public DevicePresenter(Lifecycle mLifecycle, DevicePresenter.DeviceListingView mView) {
         super(mLifecycle);
         this.mView = mView;
         dynamoDBManager = new DynamoDBManager();
     }
 
-    public void getRoomsForUser() {
-        new DynamoDBManagerTask().execute(null, null);
+    public void getDeviceForUser(String parameter) {
+        new DynamoDBManagerTask().execute(parameter, null);
     }
 
+    public interface DeviceListingView extends BaseView {
+        void onDeviceFetchingSuccess(Object data);
 
-    public interface RoomListingView extends BaseView {
-        void onRoomsFetchingSuccess(Object data);
-
-        void onRoomsFetchingFail();
+        void onDeviceFetchingFail();
     }
-
 
     private class DynamoDBManagerTask extends
-            AsyncTask<Void, Void, DynamoDBManagerTaskResult> {
+            AsyncTask<String, Void, DynamoDBManagerTaskResult> {
 
 
-        protected DynamoDBManagerTaskResult doInBackground(Void... types) {
+        protected DynamoDBManagerTaskResult doInBackground(String... parameter) {
 
-            String tableStatus = DynamoDBClient.getTestTableStatus(Constants.ROOM_TABLE);
+            String tableStatus = DynamoDBClient.getTestTableStatus(Constants.DEVICE_TABLE);
 
             DynamoDBManagerTaskResult result = new DynamoDBManagerTaskResult();
             result.setTableStatus(tableStatus);
             try {
                 if (tableStatus.equalsIgnoreCase("ACTIVE")) {
-                    List<RoomDO> roomDOMap = DynamoDBClient.getRoomsForUser();
-                    result.setReturnValue(roomDOMap);
+                    List<DeviceDO> deviceDOMap = DynamoDBClient.getDeviceForRoom(parameter[0]);
+                    result.setReturnValue(deviceDOMap);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -60,8 +57,8 @@ public class DashboardPresenter extends BasePresenter {
         }
 
         protected void onPostExecute(DynamoDBManagerTaskResult result) {
-            mView.onRoomsFetchingSuccess(result.getReturnValue());
-            Log.i("LetThingsSpeakMessages", "User Room retrieved successfully!");
+            mView.onDeviceFetchingSuccess(result.getReturnValue());
+            Log.i("LetThingsSpeakMessages", "Room devices retrieved successfully!");
         }
     }
 }

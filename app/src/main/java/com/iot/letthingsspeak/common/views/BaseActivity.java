@@ -66,10 +66,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void initCollapsingToolbar() {
-        final CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        final CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle(" ");
-        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        AppBarLayout appBarLayout = findViewById(R.id.appbar);
         appBarLayout.setExpanded(true);
 
         // hiding & showing the title when toolbar expanded & collapsed
@@ -94,7 +93,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void setUpToolbar(String title) {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         try {
             getSupportActionBar().setTitle("");
@@ -106,13 +105,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        TextView txtHeader = (TextView) findViewById(R.id.tv_heading);
+        TextView txtHeader = findViewById(R.id.tv_heading);
         txtHeader.setText(title);
         // toolbar.setTitle(title);
     }
 
     public Toolbar getToolBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         return toolbar;
     }
 

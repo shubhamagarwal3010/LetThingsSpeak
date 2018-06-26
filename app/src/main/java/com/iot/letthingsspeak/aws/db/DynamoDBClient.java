@@ -27,15 +27,14 @@ public class DynamoDBClient {
     private static final String TAG = "DynamoDBClient";
 
 
-
-    public static void insertToTable(String tableName,Object mDo) {
+    public static void insertToTable(String tableName, Object mDo) {
         AmazonDynamoDBClient ddb = LetThingsSpeakApplication.amazonClientManager.ddb();
         DynamoDBMapper mapper = new DynamoDBMapper(ddb);
 
         try {
-            DynamoDBMapperConfig.TableNameOverride name= new DynamoDBMapperConfig.TableNameOverride(tableName);
-            DynamoDBMapperConfig mapperConfig= new DynamoDBMapperConfig(name);
-            mapper.save(mDo,mapperConfig);
+            DynamoDBMapperConfig.TableNameOverride name = new DynamoDBMapperConfig.TableNameOverride(tableName);
+            DynamoDBMapperConfig mapperConfig = new DynamoDBMapperConfig(name);
+            mapper.save(mDo, mapperConfig);
 
         } catch (AmazonServiceException ex) {
             Log.e(TAG, "Error inserting user");
@@ -244,6 +243,26 @@ public class DynamoDBClient {
     }
 
 
+    public static List<DeviceDO> getDeviceForRoom(final String roomId) {
+        String id = roomId;
+        AmazonDynamoDBClient ddb = LetThingsSpeakApplication.amazonClientManager
+                .ddb();
+        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
+        Map<String, AttributeValue> eav1 = new HashMap<String, AttributeValue>();
+        eav1.put(":val1", new AttributeValue().withS(roomId));
+
+        DynamoDBScanExpression dynamoDBScanExpression1 = new DynamoDBScanExpression();
+        dynamoDBScanExpression1.withFilterExpression("roomId = :val1").withExpressionAttributeValues(eav1);
+
+        try {
+            List<DeviceDO> deviceDOList = mapper.scan(DeviceDO.class, dynamoDBScanExpression1);
+            return deviceDOList;
+        } catch (AmazonServiceException ex) {
+            LetThingsSpeakApplication.amazonClientManager
+                    .wipeCredentialsOnAuthError(ex);
+        }
+        return null;
+    }
 //    public static void updateRoom(Map<String, Object> attributeValues) {
 //        AmazonDynamoDBClient ddb = LetThingsSpeakApplication.amazonClientManager
 //                .ddb();

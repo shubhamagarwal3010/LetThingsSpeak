@@ -18,12 +18,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.R;
-import com.iot.letthingsspeak.aws.db.DynamoDBManager;
-import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
 import com.iot.letthingsspeak.device.views.DeviceActivity;
 import com.iot.letthingsspeak.room.model.RoomDO;
 
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -74,16 +71,16 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!isChecked) {
-                    getDevicesForRoom((DbDataListener) mContext, new HashMap<String, Object>() {{
-                        put("roomId", roomDetails.getRoomId());
-                    }});
-
-                   insertRoom(new HashMap<String, Object>() {{
-                        put("roomId", roomDetails.getRoomId());
-                        put("roomName", roomDetails.getName());
-                        put("imageId", roomDetails.getImageId());
-                        put("state", false);
-                    }});
+//                    getDevicesForRoom((DbDataListener) mContext, new HashMap<String, Object>() {{
+//                        put("roomId", roomDetails.getRoomId());
+//                    }});
+//
+//                   insertRoom(new HashMap<String, Object>() {{
+//                        put("roomId", roomDetails.getRoomId());
+//                        put("roomName", roomDetails.getName());
+//                        put("imageId", roomDetails.getImageId());
+//                        put("state", false);
+//                    }});
                 }
             }
         });

@@ -1,8 +1,5 @@
 package com.iot.letthingsspeak.aws.db;
 
-import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
-import com.iot.letthingsspeak.common.views.BaseView;
-
 import java.util.Map;
 
 public class Task {
@@ -16,7 +13,6 @@ public class Task {
         this.tableName = tableName;
         this.parameterList = parameterList;
     }
-
 
 
     public Constants.DynamoDBManagerType getDynamoDBManagerType() {

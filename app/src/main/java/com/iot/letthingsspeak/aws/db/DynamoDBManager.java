@@ -3,8 +3,6 @@ package com.iot.letthingsspeak.aws.db;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
-import com.iot.letthingsspeak.common.views.BaseView;
 import com.iot.letthingsspeak.device.model.DeviceDO;
 import com.iot.letthingsspeak.room.model.RoomDO;
 
@@ -21,12 +19,12 @@ public class DynamoDBManager {
 
     public void insertUserRoom(final Map<String, Object> parameterList) {
         new DynamoDBManagerTask()
-                .execute(new Task( Constants.DynamoDBManagerType.INSERT_USER_ROOM, Constants.USER_ROOM_TABLE, parameterList));
+                .execute(new Task(Constants.DynamoDBManagerType.INSERT_USER_ROOM, Constants.USER_ROOM_TABLE, parameterList));
     }
 
     public void insertDevice(final Map<String, Object> parameterList) {
         new DynamoDBManagerTask()
-                .execute(new Task( Constants.DynamoDBManagerType.INSERT_DEVICE, Constants.DEVICE_TABLE, parameterList));
+                .execute(new Task(Constants.DynamoDBManagerType.INSERT_DEVICE, Constants.DEVICE_TABLE, parameterList));
     }
 
     public void insertGateway(final Map<String, Object> parameterList) {
@@ -36,7 +34,7 @@ public class DynamoDBManager {
 
 
     public void getDevicesForRoom(final Map<String, Object> parameterList) {
-        new DynamoDBManagerTask().execute(new Task( Constants.DynamoDBManagerType.GET_DEVICES_FOR_ROOM,
+        new DynamoDBManagerTask().execute(new Task(Constants.DynamoDBManagerType.GET_DEVICES_FOR_ROOM,
                 Constants.DEVICE_TABLE, parameterList));
     }
 

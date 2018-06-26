@@ -28,6 +28,11 @@ public class ActivitySplashScreen extends BaseActivity {
 
 
     @Override
+    public int getView() {
+        return 0;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

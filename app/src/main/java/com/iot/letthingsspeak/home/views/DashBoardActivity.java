@@ -36,14 +36,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.iot.letthingsspeak.AboutAppActivity;
 import com.iot.letthingsspeak.CrashHandler;
-import com.iot.letthingsspeak.LetThingsSpeakApplication;
 import com.iot.letthingsspeak.R;
 import com.iot.letthingsspeak.aws.AppHelper;
-import com.iot.letthingsspeak.aws.db.Constants;
 import com.iot.letthingsspeak.common.util.Util;
 import com.iot.letthingsspeak.common.util.views.GridSpacingItemDecoration;
 import com.iot.letthingsspeak.common.views.BaseActivity;
-import com.iot.letthingsspeak.device.model.DeviceDO;
 import com.iot.letthingsspeak.device.views.ConfigDeviceActivity;
 import com.iot.letthingsspeak.device.views.DeviceList;
 import com.iot.letthingsspeak.home.presenter.DashboardPresenter;
@@ -53,18 +50,16 @@ import com.iot.letthingsspeak.room.model.RoomDO;
 import com.iot.letthingsspeak.room.views.AddRoomActivity;
 import com.iot.letthingsspeak.room.views.RoomAdapter;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class DashBoardActivity extends BaseActivity implements DashboardPresenter.RoomListingView {
     public static final int ACTIVITY_REQUEST_CODE = 201;
+    DashboardPresenter mPresenter;
     // To track changes to user details
     private RecyclerView roomTypeRecyclerView;
     private NavigationView nDrawer;
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
-
-    DashboardPresenter mPresenter;
 
     @Override
     public int getView() {
@@ -78,7 +73,7 @@ public class DashBoardActivity extends BaseActivity implements DashboardPresente
         // Install a custom UncaughtExceptionHandler so we can debug crashes
         CrashHandler.installHandler(this);
 
-        mPresenter=new DashboardPresenter(getLifecycle(), this);
+        mPresenter = new DashboardPresenter(getLifecycle(), this);
         setUpToolbar("");
         initCollapsingToolbar();
 
@@ -129,6 +124,7 @@ public class DashBoardActivity extends BaseActivity implements DashboardPresente
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_user_menu, menu);
+
         return true;
     }
 
@@ -216,9 +212,9 @@ public class DashBoardActivity extends BaseActivity implements DashboardPresente
     public void onRoomsFetchingSuccess(Object data) {
 
 
-            RoomAdapter roomAdapter;
-            roomAdapter = new RoomAdapter(this, (List<RoomDO>) data);
-            roomTypeRecyclerView.setAdapter(roomAdapter);
+        RoomAdapter roomAdapter;
+        roomAdapter = new RoomAdapter(this, (List<RoomDO>) data);
+        roomTypeRecyclerView.setAdapter(roomAdapter);
 
         /*if (type == Constants.DynamoDBManagerType.GET_DEVICES_FOR_ROOM) {
 
