@@ -50,22 +50,13 @@ public class DeviceActivity extends BaseActivity implements DevicePresenter.Devi
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        roomDO = (RoomDO) getIntent().getSerializableExtra(ROOM_DETAILS);
+        title = roomDO.getName();
+        Integer roomImage = roomDO.getImageId().intValue();
+        roomId = roomDO.getRoomId();
+
         mPresenter = new DevicePresenter(getLifecycle(), this);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            toolbar.setTitle("");
-            setSupportActionBar(toolbar);
-        }
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        setUpToolbar(title, true);
         initCollapsingToolbar();
 
         deviceRecyclerView = findViewById(R.id.device_recyclerview);
@@ -74,19 +65,10 @@ public class DeviceActivity extends BaseActivity implements DevicePresenter.Devi
         deviceRecyclerView.addItemDecoration(new GridSpacingItemDecoration(3, Util.dpToPx(DeviceActivity.this, 10), true));
         deviceRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        TextView deviceViewTitle = findViewById(R.id.device_view_title);
 
-        roomDO = (RoomDO) getIntent().getSerializableExtra(ROOM_DETAILS);
-        title = roomDO.getName();
-        Integer roomImage = roomDO.getImageId().intValue();
-        roomId = roomDO.getRoomId();
 
         mPresenter.getDeviceForUser(roomId);
 
-        deviceViewTitle.setText(title);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(title);
-        actionBar.show();
         try {
             Glide.with(this).load(roomImage).into((ImageView) findViewById(R.id.device_backdrop));
         } catch (Exception e) {

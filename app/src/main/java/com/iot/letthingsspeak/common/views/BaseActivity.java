@@ -116,7 +116,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void setUpToolbar(String title, boolean isBackEnable) {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         try {
             getSupportActionBar().setTitle("");
@@ -128,9 +128,15 @@ public abstract class BaseActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(isBackEnable);
             getSupportActionBar().setDisplayShowHomeEnabled(isBackEnable);
         }
-        TextView txtHeader = (TextView) findViewById(R.id.tv_heading);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        TextView txtHeader = findViewById(R.id.tv_heading);
         txtHeader.setText(title);
-        //toolbar.setTitle(title);h
+        // toolbar.setTitle(title);
     }
 
     @Override
