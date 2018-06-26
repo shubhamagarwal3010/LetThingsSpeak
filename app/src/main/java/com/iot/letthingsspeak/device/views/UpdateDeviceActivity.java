@@ -18,7 +18,7 @@ import com.iot.letthingsspeak.device.model.DeviceDO;
 
 import java.util.HashMap;
 
-import static com.iot.letthingsspeak.util.Constants.DEVICE_DETAILS;
+import static com.iot.letthingsspeak.common.util.Constants.DEVICE_DETAILS;
 
 public class UpdateDeviceActivity extends AppCompatActivity {
     DynamoDBManager dynamoDBManager = LetThingsSpeakApplication.dynamoDBManager;

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import static com.iot.letthingsspeak.util.Util.generateRandomChars;
+import static com.iot.letthingsspeak.common.util.Util.generateRandomChars;
 
 
 public class AddRoomActivity extends AppCompatActivity implements ClickItemListener {

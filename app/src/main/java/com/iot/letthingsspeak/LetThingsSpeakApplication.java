@@ -1,23 +1,20 @@
 package com.iot.letthingsspeak;
 
 import android.app.Application;
-import android.content.Context;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.iot.letthingsspeak.aws.db.AmazonClientManager;
 import com.iot.letthingsspeak.aws.db.DynamoDBManager;
+import com.iot.letthingsspeak.common.util.Prefs;
 
 public class LetThingsSpeakApplication extends Application {
-    public static AmazonDynamoDBClient amazonDynamoDBClient = null;
     public static AmazonClientManager amazonClientManager;
     public static DynamoDBManager dynamoDBManager;
-    private static Context sContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        sContext = getApplicationContext();
-        amazonClientManager = new AmazonClientManager(sContext);
+        Prefs.initPrefs(getApplicationContext());
+        amazonClientManager = new AmazonClientManager(getApplicationContext());
         dynamoDBManager = new DynamoDBManager();
     }
 }

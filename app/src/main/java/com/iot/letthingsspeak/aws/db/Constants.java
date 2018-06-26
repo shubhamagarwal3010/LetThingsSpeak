@@ -20,6 +20,8 @@ import com.amazonaws.regions.Regions;
 
 public class Constants {
 
+
+
     public static final String IDENTITY_POOL_ID = "ap-south-1:9f293b03-7ce1-45c5-99e5-1b7ee44497c9";
     public static final Regions COGNITO_REGION = Regions.AP_SOUTH_1;  // Set your Cognito region if is different
 

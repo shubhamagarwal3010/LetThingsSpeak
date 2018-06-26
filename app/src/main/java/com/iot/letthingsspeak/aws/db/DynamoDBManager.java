@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
+import com.iot.letthingsspeak.common.views.BaseView;
 import com.iot.letthingsspeak.device.model.DeviceDO;
 import com.iot.letthingsspeak.room.model.RoomDO;
 
@@ -13,45 +14,39 @@ import java.util.Map;
 
 public class DynamoDBManager {
 
-    Object returnValue;
-
     public void insertRoom(final Map<String, Object> parameterList) {
         new DynamoDBManagerTask()
-                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_ROOM, Constants.ROOM_TABLE, parameterList));
+                .execute(new Task(Constants.DynamoDBManagerType.INSERT_ROOM, Constants.ROOM_TABLE, parameterList));
     }
 
     public void insertUserRoom(final Map<String, Object> parameterList) {
         new DynamoDBManagerTask()
-                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_USER_ROOM, Constants.USER_ROOM_TABLE, parameterList));
+                .execute(new Task( Constants.DynamoDBManagerType.INSERT_USER_ROOM, Constants.USER_ROOM_TABLE, parameterList));
     }
 
     public void insertDevice(final Map<String, Object> parameterList) {
         new DynamoDBManagerTask()
-                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_DEVICE, Constants.DEVICE_TABLE, parameterList));
+                .execute(new Task( Constants.DynamoDBManagerType.INSERT_DEVICE, Constants.DEVICE_TABLE, parameterList));
     }
 
     public void insertGateway(final Map<String, Object> parameterList) {
         new DynamoDBManagerTask()
-                .execute(new Task(null, Constants.DynamoDBManagerType.INSERT_GATEWAY, Constants.GATEWAY_TABLE, parameterList));
-    }
-
-    public void getRoomsForUser(DbDataListener listener) {
-        new DynamoDBManagerTask().execute(new Task(listener, Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER, Constants.ROOM_TABLE, null));
-    }
-
-    public void getDevicesForRoom(DbDataListener listener, final Map<String, Object> parameterList) {
-        new DynamoDBManagerTask().execute(new Task(listener, Constants.DynamoDBManagerType.GET_DEVICES_FOR_ROOM, Constants.DEVICE_TABLE, parameterList));
+                .execute(new Task(Constants.DynamoDBManagerType.INSERT_GATEWAY, Constants.GATEWAY_TABLE, parameterList));
     }
 
 
-    private class DynamoDBManagerTask extends
+    public void getDevicesForRoom(final Map<String, Object> parameterList) {
+        new DynamoDBManagerTask().execute(new Task( Constants.DynamoDBManagerType.GET_DEVICES_FOR_ROOM,
+                Constants.DEVICE_TABLE, parameterList));
+    }
+
+
+    private static class DynamoDBManagerTask extends
             AsyncTask<Task, Void, DynamoDBManagerTaskResult> {
 
-        DbDataListener listener;
 
         protected DynamoDBManagerTaskResult doInBackground(Task... types) {
 
-            listener = types[0].getListener();
             String tableStatus = DynamoDBClient.getTestTableStatus(types[0].getTableName());
 
             DynamoDBManagerTaskResult result = new DynamoDBManagerTaskResult();
@@ -103,13 +98,9 @@ public class DynamoDBManager {
                 Log.i("LetThingsSpeakMessages", "Gateway inserted successfully!");
             } else if (result.getTableStatus(Constants.USER_ROOM_TABLE).equalsIgnoreCase("ACTIVE")
                     && result.getTaskType() == Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER) {
-                returnValue = result.getReturnValue();
-                listener.publishResultsOnSuccess(Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER, returnValue);
                 Log.i("LetThingsSpeakMessages", "User Room retrieved successfully!");
             } else if (result.getTableStatus(Constants.DEVICE_TABLE).equalsIgnoreCase("ACTIVE")
                     && result.getTaskType() == Constants.DynamoDBManagerType.GET_DEVICES_FOR_ROOM) {
-                returnValue = result.getReturnValue();
-                listener.publishResultsOnSuccess(Constants.DynamoDBManagerType.GET_DEVICES_FOR_ROOM, returnValue);
                 Log.i("LetThingsSpeakMessages", "Room devices retrieved successfully!");
             }
         }

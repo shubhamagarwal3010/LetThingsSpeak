@@ -15,105 +15,92 @@
  * limitations under the License.
  */
 
-package com.iot.letthingsspeak;
+package com.iot.letthingsspeak.home.views;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Resources;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.bumptech.glide.Glide;
+import com.iot.letthingsspeak.AboutAppActivity;
+import com.iot.letthingsspeak.CrashHandler;
+import com.iot.letthingsspeak.LetThingsSpeakApplication;
+import com.iot.letthingsspeak.R;
 import com.iot.letthingsspeak.aws.AppHelper;
 import com.iot.letthingsspeak.aws.db.Constants;
-import com.iot.letthingsspeak.aws.db.DynamoDBManager;
-import com.iot.letthingsspeak.aws.db.callbacks.DbDataListener;
+import com.iot.letthingsspeak.common.util.Util;
+import com.iot.letthingsspeak.common.util.views.GridSpacingItemDecoration;
 import com.iot.letthingsspeak.common.views.BaseActivity;
 import com.iot.letthingsspeak.device.model.DeviceDO;
 import com.iot.letthingsspeak.device.views.ConfigDeviceActivity;
 import com.iot.letthingsspeak.device.views.DeviceList;
+import com.iot.letthingsspeak.home.presenter.DashboardPresenter;
 import com.iot.letthingsspeak.identity.views.ChangePasswordActivity;
 import com.iot.letthingsspeak.identity.views.UserProfileActivity;
 import com.iot.letthingsspeak.room.model.RoomDO;
 import com.iot.letthingsspeak.room.views.AddRoomActivity;
 import com.iot.letthingsspeak.room.views.RoomAdapter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class UserActivity extends BaseActivity implements DbDataListener {
+public class DashBoardActivity extends BaseActivity implements DashboardPresenter.RoomListingView {
     public static final int ACTIVITY_REQUEST_CODE = 201;
     // To track changes to user details
-    List<RoomDO> room = new ArrayList<>();
-    DynamoDBManager dynamoDBManager = LetThingsSpeakApplication.dynamoDBManager;
     private RecyclerView roomTypeRecyclerView;
     private NavigationView nDrawer;
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
-    private Toolbar toolbar;
-    private AlertDialog userDialog;
-    private ProgressDialog waitDialog;
-    // Cognito user objects
-    private CognitoUser user;
-    // User details
-    private String username;
+
+    DashboardPresenter mPresenter;
+
+    @Override
+    public int getView() {
+        return R.layout.activity_user;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         // Install a custom UncaughtExceptionHandler so we can debug crashes
         CrashHandler.installHandler(this);
 
-        // Set toolbar for this screen
-        toolbar = findViewById(R.id.main_toolbar);
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
-
+        mPresenter=new DashboardPresenter(getLifecycle(), this);
+        setUpToolbar("");
         initCollapsingToolbar();
 
         // Set navigation drawer for this screen
         mDrawer = findViewById(R.id.user_drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, getToolBar(), R.string.nav_drawer_open, R.string.nav_drawer_close);
         mDrawer.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
         nDrawer = findViewById(R.id.nav_view);
         setNavDrawer();
-        init();
         View navigationHeader = nDrawer.getHeaderView(0);
         TextView navHeaderSubTitle = navigationHeader.findViewById(R.id.textViewNavUserSub);
-        navHeaderSubTitle.setText(username);
+        navHeaderSubTitle.setText(AppHelper.getCurrUser());
 
         roomTypeRecyclerView = findViewById(R.id.activity_main_recyclerview);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         roomTypeRecyclerView.setLayoutManager(mLayoutManager);
-        roomTypeRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+        roomTypeRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, Util.dpToPx(DashBoardActivity.this, 10), true));
         roomTypeRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        dynamoDBManager.getRoomsForUser(this);
+        mPresenter.getRoomsForUser();
 
         try {
             Glide.with(this).load(R.drawable.smart_home).into((ImageView) findViewById(R.id.backdrop));
@@ -124,7 +111,7 @@ public class UserActivity extends BaseActivity implements DbDataListener {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UserActivity.this, AddRoomActivity.class);
+                Intent intent = new Intent(DashBoardActivity.this, AddRoomActivity.class);
                 startActivityForResult(intent, ACTIVITY_REQUEST_CODE);
             }
         });
@@ -134,48 +121,9 @@ public class UserActivity extends BaseActivity implements DbDataListener {
     @Override
     protected void onResume() {
         super.onResume();
-        dynamoDBManager.getRoomsForUser(this);
+        mPresenter.getRoomsForUser();
     }
 
-    /**
-     * Initializing collapsing toolbar
-     * Will show and hide the toolbar title on scroll
-     */
-    private void initCollapsingToolbar() {
-        final CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(" ");
-        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        appBarLayout.setExpanded(true);
-
-        // hiding & showing the title when toolbar expanded & collapsed
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
-            int scrollRange = -1;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.setTitle(getString(R.string.app_name));
-                    isShow = true;
-                } else if (isShow) {
-                    collapsingToolbar.setTitle(" ");
-                    isShow = false;
-                }
-            }
-        });
-    }
-
-    /**
-     * Converting dp to pixel
-     */
-    private int dpToPx(int dp) {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -186,7 +134,7 @@ public class UserActivity extends BaseActivity implements DbDataListener {
 
     @Override
     public void onBackPressed() {
-        exit();
+        signOut();
     }
 
 
@@ -259,67 +207,20 @@ public class UserActivity extends BaseActivity implements DbDataListener {
 
     // Sign out user
     private void signOut() {
-        user.signOut();
-        exit();
+        AppHelper.getPool().getUser(AppHelper.getCurrUser()).signOut();
+
     }
 
-    // Initialize this activity
-    private void init() {
-        // Get the user name
-        Bundle extras = getIntent().getExtras();
-        username = AppHelper.getCurrUser();
-        user = AppHelper.getPool().getUser(username);
-    }
-
-    private void exit() {
-        Intent intent = new Intent();
-        if (username == null)
-            username = "";
-        intent.putExtra("name", username);
-        setResult(RESULT_OK, intent);
-        finish();
-    }
-
-    public void insertUsers(View v) {
-        dynamoDBManager.insertRoom(new HashMap<String, Object>() {{
-            put("roomId", "1211");
-            put("roomName", "BedRoom");
-            put("imageId", (double) 2131492873);
-        }});
-
-        dynamoDBManager.insertUserRoom(new HashMap<String, Object>() {{
-            put("roomId", "1211");
-            put("isAdmin", true);
-        }});
-
-//        dynamoDBManager.insertDevice(new HashMap<String, Object>() {{
-//            put("deviceId", (double) 1);
-//            put("currentState", false);
-//            put("delegatedIds", null);
-//            put("gatewayId", (double) 101);
-//            put("gatewayPin", (double) 1);
-//            put("imageId", "bulbImage");
-//            put("name", "Bulb");
-//            put("roomId", (double) 1211);
-//            put("tag", "Main light");
-//        }});
-
-        dynamoDBManager.insertGateway(new HashMap<String, Object>() {{
-            put("gatewayId", (double) 1012);
-            put("name", "bed Switch Hub");
-            put("pinCount", (double) 3);
-        }});
-    }
 
     @Override
-    public void publishResultsOnSuccess(Constants.DynamoDBManagerType type, Object data) {
-        if (type == Constants.DynamoDBManagerType.GET_ROOMS_FOR_USER) {
+    public void onRoomsFetchingSuccess(Object data) {
+
 
             RoomAdapter roomAdapter;
-            roomAdapter = new RoomAdapter(this, (List<RoomDO>) data, dynamoDBManager);
+            roomAdapter = new RoomAdapter(this, (List<RoomDO>) data);
             roomTypeRecyclerView.setAdapter(roomAdapter);
-        }
-        if (type == Constants.DynamoDBManagerType.GET_DEVICES_FOR_ROOM) {
+
+        /*if (type == Constants.DynamoDBManagerType.GET_DEVICES_FOR_ROOM) {
 
             List<DeviceDO> deviceDOS = (List<DeviceDO>) data;
             for (final DeviceDO deviceDO : deviceDOS) {
@@ -332,44 +233,22 @@ public class UserActivity extends BaseActivity implements DbDataListener {
                     }});
                 }
             }
-        }
+        }*/
     }
 
-    /**
-     * RecyclerView item decoration - give equal margin around grid item
-     */
-    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
+    @Override
+    public void onRoomsFetchingFail() {
 
-        private int spanCount;
-        private int spacing;
-        private boolean includeEdge;
-
-        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
-            this.spanCount = spanCount;
-            this.spacing = spacing;
-            this.includeEdge = includeEdge;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int position = parent.getChildAdapterPosition(view); // item position
-            int column = position % spanCount; // item column
-
-            if (includeEdge) {
-                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
-                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
-
-                if (position < spanCount) { // top edge
-                    outRect.top = spacing;
-                }
-                outRect.bottom = spacing; // item bottom
-            } else {
-                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
-                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-                if (position >= spanCount) {
-                    outRect.top = spacing; // item top
-                }
-            }
-        }
     }
+
+    @Override
+    public void onShowProgress(String msg) {
+
+    }
+
+    @Override
+    public void onDismissProgress() {
+
+    }
+
 }

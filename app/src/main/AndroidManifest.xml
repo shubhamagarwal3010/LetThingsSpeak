@@ -41,7 +41,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UserActivity"
+            android:name=".home.views.DashBoardActivity"
             android:label="@string/title_activity_user"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

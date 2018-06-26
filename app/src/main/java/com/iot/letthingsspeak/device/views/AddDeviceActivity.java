@@ -17,8 +17,8 @@ import com.iot.letthingsspeak.aws.db.DynamoDBManager;
 
 import java.util.HashMap;
 
+import static com.iot.letthingsspeak.common.util.Util.generateRandomChars;
 import static com.iot.letthingsspeak.device.views.DeviceActivity.ROOM_ID_DEVICE;
-import static com.iot.letthingsspeak.util.Util.generateRandomChars;
 
 
 public class AddDeviceActivity extends AppCompatActivity {

@@ -31,14 +31,12 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     public static final String ROOM_DETAILS = "ROOM_DETAILS";
     public static final int ACTIVITY_REQUEST_CODE = 202;
     public int ROOM_DETAILS_REQUEST_CODE = 9283;
-    DynamoDBManager dynamoDBManager;
     private Context mContext;
     private List<RoomDO> roomDetails;
 
-    public RoomAdapter(Context mContext, List<RoomDO> roomDetails, DynamoDBManager dynamoDBManager) {
+    public RoomAdapter(Context mContext, List<RoomDO> roomDetails) {
         this.mContext = mContext;
         this.roomDetails = roomDetails;
-        this.dynamoDBManager = dynamoDBManager;
     }
 
     @NonNull
@@ -76,11 +74,11 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!isChecked) {
-                    dynamoDBManager.getDevicesForRoom((DbDataListener) mContext, new HashMap<String, Object>() {{
+                    getDevicesForRoom((DbDataListener) mContext, new HashMap<String, Object>() {{
                         put("roomId", roomDetails.getRoomId());
                     }});
 
-                    dynamoDBManager.insertRoom(new HashMap<String, Object>() {{
+                   insertRoom(new HashMap<String, Object>() {{
                         put("roomId", roomDetails.getRoomId());
                         put("roomName", roomDetails.getName());
                         put("imageId", roomDetails.getImageId());

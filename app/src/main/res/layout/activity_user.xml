@@ -73,12 +73,24 @@
                 </RelativeLayout>
 
                 <android.support.v7.widget.Toolbar
-                    android:id="@+id/main_toolbar"
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?android:attr/actionBarSize"
                     android:textAlignment="center"
                     app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                    <TextView
+                        android:id="@+id/tv_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:text="@string/Menu"
+                        android:textAlignment="center"
+                        android:textColor="@color/toolbar_items"
+                        android:textSize="@dimen/action_bar_text" />
+                </android.support.v7.widget.Toolbar>
 
             </android.support.design.widget.CollapsingToolbarLayout>
 

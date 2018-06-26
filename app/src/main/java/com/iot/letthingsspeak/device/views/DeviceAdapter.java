@@ -23,8 +23,8 @@ import com.iot.letthingsspeak.room.model.RoomDO;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.iot.letthingsspeak.util.Constants.DEVICE_DETAILS;
-import static com.iot.letthingsspeak.util.Constants.UPDATE_DEVICE_ACTIVITY_REQUEST_CODE;
+import static com.iot.letthingsspeak.common.util.Constants.DEVICE_DETAILS;
+import static com.iot.letthingsspeak.common.util.Constants.UPDATE_DEVICE_ACTIVITY_REQUEST_CODE;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder> {
     DynamoDBManager dynamoDBManager = LetThingsSpeakApplication.dynamoDBManager;

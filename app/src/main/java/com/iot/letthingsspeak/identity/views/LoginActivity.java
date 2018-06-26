@@ -29,8 +29,8 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.NewP
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.AuthenticationHandler;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.ForgotPasswordHandler;
 import com.iot.letthingsspeak.R;
-import com.iot.letthingsspeak.UserActivity;
 import com.iot.letthingsspeak.aws.AppHelper;
+import com.iot.letthingsspeak.home.views.DashBoardActivity;
 
 import java.util.List;
 import java.util.Locale;
@@ -389,7 +389,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void launchUser() {
-        Intent userActivity = new Intent(this, UserActivity.class);
+        Intent userActivity = new Intent(this, DashBoardActivity.class);
         userActivity.putExtra("name", username);
         startActivityForResult(userActivity, 4);
     }

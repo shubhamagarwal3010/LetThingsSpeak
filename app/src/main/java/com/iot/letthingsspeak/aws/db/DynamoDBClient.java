@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapperConfig;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
@@ -24,6 +25,24 @@ import java.util.Map;
 
 public class DynamoDBClient {
     private static final String TAG = "DynamoDBClient";
+
+
+
+    public static void insertToTable(String tableName,Object mDo) {
+        AmazonDynamoDBClient ddb = LetThingsSpeakApplication.amazonClientManager.ddb();
+        DynamoDBMapper mapper = new DynamoDBMapper(ddb);
+
+        try {
+            DynamoDBMapperConfig.TableNameOverride name= new DynamoDBMapperConfig.TableNameOverride(tableName);
+            DynamoDBMapperConfig mapperConfig= new DynamoDBMapperConfig(name);
+            mapper.save(mDo,mapperConfig);
+
+        } catch (AmazonServiceException ex) {
+            Log.e(TAG, "Error inserting user");
+            LetThingsSpeakApplication.amazonClientManager
+                    .wipeCredentialsOnAuthError(ex);
+        }
+    }
 
 
     /*

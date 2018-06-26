@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserProfileActivity extends AppCompatActivity {
-    private final String TAG = "UserActivity";
+    private final String TAG = "DashBoardActivity";
     // To track changes to user details
     private final List<String> attributesToDelete = new ArrayList<>();
     private AlertDialog userDialog;
@@ -207,7 +207,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private void trustedDeviceDialog(final CognitoDevice newDevice) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Remember this device?");
-        //final EditText input = new EditText(UserActivity.this);
+        //final EditText input = new EditText(DashBoardActivity.this);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
